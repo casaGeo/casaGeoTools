@@ -1,0 +1,107 @@
+[project]
+name = "casaGeoTools"
+version = "1.0.0"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [
+    { name = "casaGeo Data + Services GmbH", email = "info@casageo.de" },
+]
+dependencies = [
+    "flexpolyline>=0.1.0",
+    "geopandas>=1.1.0",
+    "httpx>=0.28.1",
+    "numpy>=2.3.0",
+    "pandas>=2.3.0",
+    "shapely>=2.1.1",
+]
+requires-python = ">=3.13"
+description = "HERE Connector for Python"
+readme = "README.md"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://www.casageo.de/en/here-connector-for-python.html"
+# Documentation = ""
+Source = "https://github.com/casaGeo-Data-Services-GmbH/casaGeoTools"
+Issues = "https://github.com/casaGeo-Data-Services-GmbH/casaGeoTools/issues"
+Changelog = "https://github.com/casaGeo-Data-Services-GmbH/casaGeoTools/blob/main/CHANGELOG.md"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.0",
+    "pandas-stubs>=2.3.0",
+    "types-geopandas>=1.1.0",
+    "types-python-dateutil>=2.9.0",
+    "types-shapely>=2.1.0",
+]
+docs = [
+    "sphinx>=9.0.4",
+]
+examples = [
+    "folium>=0.20.0",
+    "mapclassify>=2.10.0",
+    "matplotlib>=3.10.7",
+    "notebook>=7.4.7",
+    "python-dotenv>=1.2.1",
+]
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools>=80.9.0",
+]
+
+# Allow mypy to recurse into the flexpolyline package for dynamic type
+# analysis, since the package doesn’t provide types natively. This should be
+# fine from a performance standpoint since flexpolyline is a rather small
+# package.
+[[tool.mypy.overrides]]
+module = ["flexpolyline", "flexpolyline.*"]
+follow_untyped_imports = true
+
+[tool.ruff.format]
+preview = true
+
+[tool.ruff.lint]
+select = [
+    "A",
+    "B",
+    "E",
+    "F",
+    "G",
+    "N",
+    "C4",
+    "PD",
+    "UP",
+    "FBT",
+    "FLY",
+    "ISC",
+    "NPY",
+    "PIE",
+    "PLE",
+    "PLW",
+    "RUF",
+    "SIM",
+    "TRY",
+    "YTT",
+    "FURB",
+    "PERF",
+]
+ignore = [
+    "E501",
+    "RUF001",
+    "RUF002",
+    "RUF003",
+    "SIM102",
+    "TRY003",
+]
+
+[tool.setuptools.packages.find]
+include = ["casageo", "casageo.*"]

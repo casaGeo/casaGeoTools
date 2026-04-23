@@ -1,0 +1,108 @@
+{
+  "result": {
+    "request_id": "84897f1e-f3a7-4b71-9f93-9c87d6051755",
+    "results": [
+      {
+        "value": {
+          "items": [
+            {
+              "title": "Plietsch und Lecker",
+              "id": "here:pds:place:276u1wfb-d84cd3a3cb6b2bea0ca97ac6c55fefc5",
+              "language": "de",
+              "resultType": "place",
+              "address": {
+                "label": "Plietsch und Lecker, Emmy-Noether-Straße 2, 25524 Itzehoe, Deutschland",
+                "countryCode": "DEU",
+                "countryName": "Deutschland",
+                "stateCode": "SH",
+                "state": "Schleswig-Holstein",
+                "countyCode": "IZ",
+                "county": "Steinburg",
+                "city": "Itzehoe",
+                "district": "Itzehoe",
+                "street": "Emmy-Noether-Straße",
+                "postalCode": "25524",
+                "houseNumber": "2"
+              },
+              "position": {
+                "lat": 53.95869,
+                "lng": 9.49558
+              },
+              "access": [
+                {
+                  "lat": 53.9588,
+                  "lng": 9.49557
+                }
+              ],
+              "distance": 667,
+              "categories": [
+                {
+                  "id": "100-1000-0009",
+                  "name": "Fastfood",
+                  "primary": true
+                },
+                {
+                  "id": "100-1000-0000",
+                  "name": "Restaurant"
+                },
+                {
+                  "id": "200-2000-0011",
+                  "name": "Bar oder Pub"
+                }
+              ],
+              "foodTypes": [
+                {
+                  "id": "800-058",
+                  "name": "Snacks und Getränke",
+                  "primary": true
+                }
+              ]
+            },
+            {
+              "title": "Kalle Bäcker",
+              "id": "here:pds:place:276u1wfb-508b9e15a4134f04b816df9d08c338b4",
+              "language": "de",
+              "resultType": "place",
+              "address": {
+                "label": "Kalle Bäcker, Lise-Meitner-Straße 2, 25524 Itzehoe, Deutschland",
+                "countryCode": "DEU",
+                "countryName": "Deutschland",
+                "stateCode": "SH",
+                "state": "Schleswig-Holstein",
+                "countyCode": "IZ",
+                "county": "Steinburg",
+                "city": "Itzehoe",
+                "district": "Itzehoe",
+                "street": "Lise-Meitner-Straße",
+                "postalCode": "25524",
+                "houseNumber": "2"
+              },
+              "position": {
+                "lat": 53.95202,
+                "lng": 9.49377
+              },
+              "access": [
+                {
+                  "lat": 53.95192,
+                  "lng": 9.49378
+                }
+              ],
+              "distance": 860,
+              "categories": [
+                {
+                  "id": "600-6300-0244",
+                  "name": "Bäckerei",
+                  "primary": true
+                },
+                {
+                  "id": "100-1000-0001",
+                  "name": "Speiselokal"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

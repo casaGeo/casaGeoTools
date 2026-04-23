@@ -1,0 +1,39 @@
+#!/bin/bash
+# SC2317: Command appears to be unreachable.
+# SC2329: This function is never invoked.
+# shellcheck disable=SC2317,SC2329
+set -Ceufo pipefail
+
+#####################
+# Global Parameters #
+#####################
+
+SPHINX_SOURCEDIR='docs/source/'
+SPHINX_BUILDDIR='docs/build/'
+
+##############
+# Main Tasks #
+##############
+
+run-tests() {
+	uv run python -m unittest discover --start-directory='tests'
+}
+
+build-docs() {
+	sphinx-make html
+}
+
+sphinx-make() {
+	uv run sphinx-build        \
+		-M "${1:-help}"        \
+		"${SPHINX_SOURCEDIR}"  \
+		"${SPHINX_BUILDDIR}"   \
+		"${@:2}"
+}
+
+generate-fixtures() {
+	uv run tests/generate_fixtures.py
+}
+
+while [[ ${1-} == +([[:word:]])=* ]]; do declare -- "$1"; shift; done
+time { set -x; "$@"; }; exit;
