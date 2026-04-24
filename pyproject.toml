@@ -29,9 +29,9 @@ classifiers = [
 [project.urls]
 Homepage = "https://www.casageo.de/en/here-connector-for-python.html"
 # Documentation = ""
-Source = "https://github.com/casaGeo-Data-Services-GmbH/casaGeoTools"
-Issues = "https://github.com/casaGeo-Data-Services-GmbH/casaGeoTools/issues"
-Changelog = "https://github.com/casaGeo-Data-Services-GmbH/casaGeoTools/blob/main/CHANGELOG.md"
+Source = "https://github.com/casaGeo/casaGeoTools"
+Issues = "https://github.com/casaGeo/casaGeoTools/issues"
+Changelog = "https://github.com/casaGeo/casaGeoTools/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
