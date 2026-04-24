@@ -38,21 +38,20 @@ Changelog = "https://github.com/casaGeo/casaGeoTools/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
-    "mypy>=1.20.0",
-    "pandas-stubs>=2.3.0",
-    "ruff>=0.15.11",
-    "types-geopandas>=1.1.0",
-    "types-python-dateutil>=2.9.0",
-    "types-shapely>=2.1.0",
+    "mypy==1.20.2",
+    "pandas-stubs==2.3.3.260113",
+    "ruff==0.15.12",
+    "types-geopandas==1.1.1.20251214",
+    "types-python-dateutil==2.9.0.20260408",
+    "types-shapely==2.1.0.20260408",
 ]
 docs = [
-    "sphinx>=9.0.4",
+    "sphinx==9.1.0",
 ]
 examples = [
     "folium>=0.20.0",
     "mapclassify>=2.10.0",
     "matplotlib>=3.10.7",
-    "notebook>=7.4.7",
     "python-dotenv>=1.2.1",
 ]
 
