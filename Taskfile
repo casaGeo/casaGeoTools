@@ -18,7 +18,7 @@ SPHINX_BUILDDIR='docs/build/'
 run-checks() {
 	uv run ruff check
 	uv run ruff format --check
-	uv run mypy --explicit-package-bases --exclude 'tests/generate_fixtures\.py$' .
+	uv run mypy .
 }
 
 run-tests() {

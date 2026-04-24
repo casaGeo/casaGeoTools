@@ -36,7 +36,7 @@ Changelog = "https://github.com/casaGeo/casaGeoTools/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
-    "mypy>=1.19.0",
+    "mypy>=1.20.0",
     "pandas-stubs>=2.3.0",
     "ruff>=0.15.11",
     "types-geopandas>=1.1.0",
@@ -58,6 +58,14 @@ examples = [
 build-backend = "setuptools.build_meta"
 requires = [
     "setuptools>=80.9.0",
+]
+
+[tool.mypy]
+explicit_package_bases = true
+local_partial_types = true
+strict_bytes = true
+exclude = [
+    'tests/generate_fixtures\.py$',
 ]
 
 # Allow mypy to recurse into the flexpolyline package for dynamic type
