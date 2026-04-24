@@ -15,6 +15,12 @@ SPHINX_BUILDDIR='docs/build/'
 # Main Tasks #
 ##############
 
+run-checks() {
+	uv run ruff check
+	uv run ruff format --check
+	uv run mypy --explicit-package-bases --exclude 'tests/generate_fixtures\.py$' .
+}
+
 run-tests() {
 	uv run python -m unittest discover --start-directory='tests'
 }
