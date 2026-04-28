@@ -26,6 +26,8 @@ jobs:
         run: ./Taskfile test-artifact dist/*.whl
       - name: Smoke test (source distribution)
         run: ./Taskfile test-artifact dist/*.tar.gz
+      - name: Generate release information
+        run: ./Taskfile generate-release-information
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
@@ -47,10 +49,13 @@ jobs:
         with:
           name: release-dists
           path: dist/
+      - name: Prepare release description
+        run: sed 1d -- dist/RELEASE-*.md > RELEASE.md
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v3
         with:
-          draft: true
+          name: ${{ format('{0} {0}', github.event.repository.name, github.ref_name) }}
+          body_path: RELEASE.md
           prerelease: ${{ contains(github.ref_name, 'a') || contains(github.ref_name, 'b') || contains(github.ref_name, 'c') }}
           fail_on_unmatched_files: true
           working_directory: dist

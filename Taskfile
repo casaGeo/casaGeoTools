@@ -63,5 +63,26 @@ test-artifact() {
 	uv run --isolated --no-project --with="${artifact:?}" tests/smoke_test.py
 }
 
+extract-changelog-for-version() {
+	local version=$1 pattern
+	pattern=$(printf %s\\n "${version#v}" | sed 's/[][^$.*/\\]/\\&/g')
+	sed '/^##\s*\['"$pattern"'\]/!d;:x;n;/^##[^#]/Q;/^---/Q;bx' CHANGELOG.md
+}
+
+generate-release-information() {
+	local version infofile
+	version=$(uv version --short)
+	infofile="dist/RELEASE-${version}.md"
+
+	mkdir -p -- "${infofile%/*}"
+	extract-changelog-for-version "$version" >| "$infofile"
+
+	if ! [[ -s "$infofile" ]] && ! [[ "$version" == *.dev* ]]; then
+		[[ -f "$infofile" ]] && rm -- "$infofile"
+		printf >&2 %s\\n "ERROR: No entry for version $version in CHANGELOG.md"
+		return 1
+	fi
+}
+
 while [[ ${1-} == +([[:word:]])=* ]]; do declare -- "$1"; shift; done
 time { set -x; "$@"; }; exit;
