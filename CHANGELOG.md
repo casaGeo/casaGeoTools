@@ -5,6 +5,7 @@
 ### Added
 
 - Add support for Python 3.12
+- Document routing behavior regarding traffic data
 
 ### Fixed
 
