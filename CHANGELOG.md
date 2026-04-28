@@ -3,7 +3,7 @@
 ## Next Release
 
 
-## [1.0.1rc3] - 2026-04-29
+## [1.0.1] - 2026-04-29
 
 ### Changed
 
@@ -18,11 +18,11 @@
 
 - Reduce memory consumption the module objects
 
-[1.0.1rc2]: https://github.com/casaGeo/casaGeoTools/releases/tag/v1.0.1rc2
+[1.0.1]: https://github.com/casaGeo/casaGeoTools/releases/tag/v1.0.1
 
 
 ## [1.0.0] - 2026-04-23
 
-Initial public release.
+*First public release.*
 
 [1.0.0]: https://github.com/casaGeo/casaGeoTools/releases/tag/v1.0.0
