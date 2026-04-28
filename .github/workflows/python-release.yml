@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: ${{ format('https://pypi.org/project/{0}', vars.PYPI_PROJECT_NAME) }}
+      url: ${{ format('https://pypi.org/project/{0}', vars.PYPI_PROJECT_NAME || github.event.repository.name) }}
     permissions:
       id-token: write
     steps:
