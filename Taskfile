@@ -22,12 +22,29 @@ run-checks() {
 }
 
 run-tests() {
+	run-smoke-tests
+	run-unit-tests
+}
+
+run-smoke-tests() {
+	uv run tests/smoke_test.py
+}
+
+run-unit-tests() {
 	uv run python -m unittest discover --start-directory='tests'
+}
+
+build() {
+	uv build
 }
 
 build-docs() {
 	sphinx-make html
 }
+
+#######################
+# Supplementary Tasks #
+#######################
 
 sphinx-make() {
 	uv run sphinx-build        \
@@ -39,6 +56,11 @@ sphinx-make() {
 
 generate-fixtures() {
 	uv run tests/generate_fixtures.py
+}
+
+test-artifact() {
+	local artifact=$1
+	uv run --isolated --no-project --with="${artifact:?}" tests/smoke_test.py
 }
 
 while [[ ${1-} == +([[:word:]])=* ]]; do declare -- "$1"; shift; done
