@@ -1,17 +1,16 @@
 # 🗺️ casaGeoTools
 
-**A Python connector for the HERE Location Platform — designed for
-geocoding, routing, and isoline analytics.**
+**A Python connector for the HERE Location Platform — designed for geocoding,
+routing, and isoline analytics.**
 
 ---
 
 ## 🚀 Overview
 
-**casaGeoTools** provides a simple and Pythonic way to access the power
-of the **HERE Location Platform** directly from your Python environment.
-It allows developers, analysts, and data scientists to integrate
-**location intelligence** into their workflows with just a few lines of
-code.
+**casaGeoTools** provides a simple and Pythonic way to access the power of the
+**HERE Location Platform** directly from your Python environment. It allows
+developers, analysts, and data scientists to integrate **location intelligence**
+into their workflows with just a few lines of code.
 
 With casaGeoTools, you can easily:
 
@@ -20,8 +19,8 @@ With casaGeoTools, you can easily:
 - 🕒 **Generate isolines** (isochrones or isodistances)
 - 🌍 **Visualize results** interactively on a map
 
-casaGeoTools wraps the HERE APIs with a clean, consistent interface
-optimized for Python.
+casaGeoTools wraps the HERE APIs with a clean, consistent interface optimized
+for Python.
 
 ---
 
@@ -31,8 +30,8 @@ casaGeoTools is built on top of the **HERE Platform** and provides a
 ready-to-use Python connector to HERE’s core location services.
 
 You don’t need to manage REST requests or API authentication manually —
-casaGeoTools handles that for you while giving you a natural, Pandas-
-and GeoPandas-friendly interface.
+casaGeoTools handles that for you while giving you a natural, Pandas- and
+GeoPandas-friendly interface.
 
 ---
 
@@ -40,11 +39,11 @@ and GeoPandas-friendly interface.
 
 casaGeoTools uses a **credit-based API model**.
 
-Each API key includes a balance of credits that are **valid for 1
-year**. Unused credits **expire after 12 months**.
+Each API key includes a balance of credits that are **valid for 1 year**. Unused
+credits **expire after 12 months**.
 
-During the **public Beta phase**, every registered user receives **3,000
-free credits**.
+During the **public Beta phase**, every registered user receives **3,000 free
+credits**.
 
 ### 🔢 Credit usage per API call
 
@@ -80,5 +79,5 @@ pip install casaGeoTools
 
 ## casaGeoTools Beta Example Script
 
-See the example script under `examples/beta_example_script.py` for a
-complete example of how to use casaGeoTools.
+See the example script under `examples/beta_example_script.py` for a complete
+example of how to use casaGeoTools.
