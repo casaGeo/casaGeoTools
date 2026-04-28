@@ -15,7 +15,7 @@
 #  SPDX-License-Identifier: Apache-2.0
 
 """
-Provides geocoding operations.
+This module provides geocoding and search operations.
 """
 
 import argparse

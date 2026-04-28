@@ -14,6 +14,11 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
+"""
+This module provides vocabulary types and shared implementation code
+used throughout the casaGeoTools library.
+"""
+
 __all__ = [  # noqa: RUF022
     "CasaGeoClient",
     #

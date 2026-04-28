@@ -1,3 +1,5 @@
+.. _coder-module:
+
 ====================
 casageo.coder module
 ====================

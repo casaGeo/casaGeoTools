@@ -1,5 +1,8 @@
-casageo.tools package
-=====================
+.. _tools-module:
+
+====================
+casageo.tools module
+====================
 
 .. automodule:: casageo.tools
    :members:

@@ -15,7 +15,7 @@
 #  SPDX-License-Identifier: Apache-2.0
 
 """
-Provides spatial routing operations.
+This module provides spatial routing operations.
 """
 
 import argparse

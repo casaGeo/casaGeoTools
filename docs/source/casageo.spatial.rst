@@ -1,3 +1,6 @@
+.. _spatial-module:
+
+======================
 casageo.spatial module
 ======================
 
