@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: ${{ format('https://pypi.org/project/{0}', vars.PYPI_PROJECT_NAME || github.event.repository.name) }}
+      url: ${{ format('https://pypi.org/project/{0}/{1}/', needs.build.outputs.project-name, needs.build.outputs.project-version) }}
     permissions:
       id-token: write
     steps:
@@ -90,5 +90,7 @@ jobs:
         with:
           name: release-dists
           path: dist/
+      - name: Delete non-package artifacts
+        run: rm -f -- dist/*.md dist/*.rst dist/*.txt
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
