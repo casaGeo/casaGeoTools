@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      project-name: ${{ vars.PYPI_PROJECT_NAME || github.event.repository.name }}
+      project-version: ${{ steps.check-version.outputs.project-version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -20,6 +23,15 @@ jobs:
           version-file: '.tool-versions'
       - name: Install dependencies
         run: uv sync --locked --all-extras --dev
+      - name: Check version
+        id: check-version
+        run: |
+          version="$(uv version --short)"
+          if ! [[ "${GITHUB_REF_NAME#v}" == "$version" ]]; then
+            printf >&2 %s\\n 'ERROR: Git tag does not match project version'
+            exit 1
+          fi
+          printf 'project-version=%s\n' "$version" >> "$GITHUB_OUTPUT"
       - name: Build project
         run: ./Taskfile build
       - name: Smoke test (wheel)
