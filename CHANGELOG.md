@@ -3,6 +3,15 @@
 ## Next Release
 
 
+## [1.0.2] - 2026-05-04
+
+### Added
+
+- Add documentation on https://casageotools.readthedocs.io
+
+[1.0.1]: https://github.com/casaGeo/casaGeoTools/releases/tag/v1.0.2
+
+
 ## [1.0.1] - 2026-04-29
 
 ### Changed
