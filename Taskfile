@@ -4,13 +4,6 @@
 # shellcheck disable=SC2317,SC2329
 set -Ceufo pipefail
 
-#####################
-# Global Parameters #
-#####################
-
-SPHINX_SOURCEDIR='docs/source/'
-SPHINX_BUILDDIR='docs/build/'
-
 ##############
 # Main Tasks #
 ##############
@@ -47,11 +40,7 @@ build-docs() {
 #######################
 
 sphinx-make() {
-	uv run sphinx-build        \
-		-M "${1:-help}"        \
-		"${SPHINX_SOURCEDIR}"  \
-		"${SPHINX_BUILDDIR}"   \
-		"${@:2}"
+	make -C docs SPHINXBUILD='uv run sphinx-build' "$@"
 }
 
 generate-fixtures() {
