@@ -1,3 +1,6 @@
+# Copyright 2026 casaGeo Data + Services GmbH <info@casageo.de>
+# SPDX-License-Identifier: CC0-1.0
+
 """
 CasaGeoTools Beta Example Script
 ================================
