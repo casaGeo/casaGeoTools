@@ -72,7 +72,8 @@ casageo.spatial module
       or ``"imperial"``.
 
    transport_mode : str
-      The mode of transport to use for routing, e.g. ``"car"``.
+      The mode of transport to use for routing, one of ``"car"``,
+      ``"pedestrian"`` or ``"bicycle"``.
 
    routing_mode : str
       Whether to prefer ``"fast"`` or ``"short"`` routes.
@@ -232,7 +233,8 @@ casageo.spatial module
       or ``"imperial"``.
 
    transport_mode : str
-      The mode of transport to use for routing, e.g. ``"car"``.
+      The mode of transport to use for routing, one of ``"car"``,
+      ``"pedestrian"``, ``"bicycle"`` or ``"truck"``.
 
    routing_mode : str
       Whether to prefer ``"fast"`` or ``"short"`` routes.
