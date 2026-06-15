@@ -33,7 +33,7 @@ RANGE_UNIT_BY_TYPE: Final = {
     "distance": "meters",
 }
 
-TRANSPORT_MODES: Final = ["car", "pedestrian", "bicycle"]
+TRANSPORT_MODES: Final = ["car", "pedestrian", "bicycle", "truck"]
 ROUTING_MODES: Final = ["fast", "short"]
 DIRECTION_TYPES: Final = ["outgoing", "incoming"]
 
