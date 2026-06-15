@@ -38,7 +38,7 @@ Changelog = "https://github.com/casaGeo/casaGeoTools/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
-    "mypy==1.20.2",
+    "basedpyright==1.39.5",
     "pandas-stubs==2.3.3.260113",
     "ruff==0.15.12",
     "types-geopandas==1.1.1.20251214",
@@ -61,6 +61,13 @@ build-backend = "setuptools.build_meta"
 requires = [
     "setuptools>=80.9.0",
 ]
+
+[tool.basedpyright]
+typeCheckingMode = "standard"
+allowedUntypedLibraries = ["flexpolyline"]
+reportMissingTypeArgument = "warning"
+reportUnusedCallResult = false
+
 
 [tool.mypy]
 explicit_package_bases = true
