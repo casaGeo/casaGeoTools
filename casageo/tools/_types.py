@@ -14,9 +14,9 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-import datetime
 import uuid
 from collections.abc import Mapping, Sequence
+from datetime import datetime
 from typing import Any
 
 import pandas as pd
@@ -25,11 +25,18 @@ from ._errors import SubqueryError
 
 
 class CasaGeoResult:
-    def __init__(self, *, _data: dict, _error: Exception | None = None) -> None:
-        self._timestamp = datetime.datetime.now()
-        self._uuid = uuid.uuid4()
+    def __init__(
+        self,
+        *,
+        _data: dict,
+        _error: Exception | None = None,
+        _timestamp: datetime | None = None,
+        _uuid: uuid.UUID | None = None,
+    ) -> None:
         self._data = _data
         self._error = _error
+        self._timestamp = _timestamp if _timestamp is not None else datetime.now()
+        self._uuid = _uuid if _uuid is not None else uuid.uuid4()
 
     def __bool__(self) -> bool:
         return self._error is None
@@ -38,7 +45,7 @@ class CasaGeoResult:
         classname = type(self).__qualname__
         return f"<{classname} {self._uuid} [{'OK' if self else repr(self._error)}]>"
 
-    def timestamp(self) -> datetime.datetime:
+    def timestamp(self) -> datetime:
         """
         Return the timestamp of the API response.
 
@@ -74,20 +81,18 @@ class CasaGeoResult:
         """
         return self._error
 
-    def dataframe(self, id_: Any | None) -> pd.DataFrame:
+    def dataframe(self, id_: Any | None, *, error_info: bool) -> pd.DataFrame:
         raise NotImplementedError("dataframe() not implemented for CasaGeoResult")
 
 
-class MultiResult(Sequence):
-    ResultType = CasaGeoResult
-
+class MultiResult[T: CasaGeoResult](Sequence[T]):
     def __init__(
         self,
-        json: dict,
+        json: dict[str, Any],
         *,
         ids: Sequence[Any],
         options: Mapping[str, Any],
-        result_type: type[CasaGeoResult] | None = None,
+        result_type: type[T] = CasaGeoResult,
     ):
         assert isinstance(json, dict)
         assert isinstance(json["results"], list)
@@ -97,9 +102,9 @@ class MultiResult(Sequence):
             uuid.UUID(rqid) if (rqid := json.get("request_id")) else uuid.uuid4()
         )
         self._timestamp = (
-            datetime.datetime.fromisoformat(rqts)
-            if (rqts := json.get("timestamp"))
-            else datetime.datetime.now()
+            datetime.fromisoformat(rqts)
+            if (rqts := json.get("timestamp")) and isinstance(rqts, str)
+            else datetime.now()
         )
 
         if result_type is not None:
@@ -129,7 +134,7 @@ class MultiResult(Sequence):
 
     def _make_result(self, index: int, data: Any):
         assert isinstance(data, dict)
-        result = self.ResultType(
+        return self.ResultType(
             _data=data.get("value", {}),
             _error=SubqueryError(
                 e.get("message", repr(e)),
@@ -139,23 +144,22 @@ class MultiResult(Sequence):
             )
             if (e := data.get("error"))
             else None,
+            _timestamp=self._timestamp,
+            _uuid=self._uuid,  # NOTE: Should this be the correlation ID?
         )
-        result._timestamp = self._timestamp
-        result._uuid = self._uuid  # NOTE: Should this be the correlation ID?
-        return result
 
     def _make_dataframe(self, index: int, result: CasaGeoResult):
         # noinspection PyArgumentList
-        df = result.dataframe(id_=self._ids[index], **self._options)
+        df = result.dataframe(id_=self._ids[index], error_info=True, **self._options)
         if (err := result.error()) and not df.empty:
             df["error_code"] = getattr(err, "code", "generic")
             df["error_message"] = str(err)
-        elif not df.empty:
-            df["error_code"] = None
-            df["error_message"] = None
+        # elif not df.empty:
+        #     df["error_code"] = None
+        #     df["error_message"] = None
         return df
 
-    def timestamp(self) -> datetime.datetime:
+    def timestamp(self) -> datetime:
         """
         Return the timestamp of the API response.
 
@@ -173,7 +177,7 @@ class MultiResult(Sequence):
         """
         return self._uuid
 
-    def json(self) -> dict:
+    def json(self) -> dict[str, Any]:
         """
         Return the raw API response as a dictionary.
 
