@@ -19,6 +19,7 @@ This module provides spatial routing operations.
 """
 
 import argparse
+import logging
 import math
 import os
 import sys
@@ -85,6 +86,9 @@ DEFAULT_RANGE_UNIT: str = "minutes"
 
 DEFAULT_ALTERNATIVES: int = 0
 """The default number of alternative routes to compute."""
+
+
+_logger = logging.getLogger(__name__)
 
 
 def _spatial_params(q: Mapping) -> dict:
@@ -629,6 +633,8 @@ def isolines_result(
     ]
 
     json = _apiv2.isolines(client._httpxclient, queryspecs, options)
+    _logger.debug("Isolines Response: %r", json)
+
     return MultiResult(json=json, ids=ids, options=options, result_type=IsolinesResult)
 
 
@@ -707,6 +713,8 @@ def routes_result(
     ]
 
     json = _apiv2.routes(client._httpxclient, queryspecs, options)
+    _logger.debug("Routing Response: %r", json)
+
     return MultiResult(json=json, ids=ids, options=options, result_type=RoutesResult)
 
 

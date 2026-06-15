@@ -19,6 +19,7 @@ This module provides geocoding and search operations.
 """
 
 import argparse
+import logging
 import os
 import statistics
 import sys
@@ -56,6 +57,9 @@ DEFAULT_ADDRESS_NAMES_MODE: str = "default"
 
 DEFAULT_POSTAL_CODE_MODE: str = "default"
 """The default postal code mode."""
+
+
+_logger = logging.getLogger(__name__)
 
 
 def _average(nums):
@@ -452,6 +456,8 @@ def address_result(
     ]
 
     json = _apiv2.address(client._httpxclient, queryspecs, options)
+    _logger.debug("Address Response: %r", json)
+
     return MultiResult(json=json, ids=ids, options=options, result_type=AddressResult)
 
 
@@ -534,6 +540,8 @@ def poi_result(
     ]
 
     json = _apiv2.poi(client._httpxclient, queryspecs, options)
+    _logger.debug("POI Response: %r", json)
+
     return MultiResult(json=json, ids=ids, options=options, result_type=PoiResult)
 
 
