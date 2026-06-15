@@ -19,7 +19,7 @@ This module provides operations for logistical calculations.
 """
 
 import logging
-from collections.abc import Collection, Hashable, Sequence
+from collections.abc import Collection, Sequence
 from datetime import datetime, timedelta
 from typing import Any, Final, cast
 
@@ -33,8 +33,8 @@ from casageo.tools._util import (
     delna,
     dict_to_point,
     enlist_if_str,
-    iso_datetime,
     getpoint,
+    iso_datetime,
     minutes_to_seconds,
     point_xy,
     to_records,
@@ -169,8 +169,8 @@ def tsp(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    origin: Hashable | None = None,
-    destination: Hashable | None = None,
+    origin: str | None = None,
+    destination: str | None = None,
     clustering: str | None = None,
     break_times: Collection[tuple[datetime | str, timedelta | float | int]] = (),
     rest_schedule: str | None = None,
@@ -223,8 +223,8 @@ def tsp_result(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    origin: Hashable | None = None,
-    destination: Hashable | None = None,
+    origin: str | None = None,
+    destination: str | None = None,
     clustering: str | None = None,
     break_times: Collection[tuple[datetime | str, timedelta | float | int]] = (),
     rest_schedule: str | None = None,
@@ -247,21 +247,9 @@ def tsp_result(
 ) -> MultiResult[TSPResult]:
     """:meta private:"""
 
-    orig_name = (
-        waypoints.at[origin, "name"]
-        if origin is not None
-        else waypoints.iloc[0].at["name"]
-    )
-
-    dest_name = (
-        waypoints.at[destination, "name"]  #
-        if destination is not None
-        else None
-    )
-
     options = delna({
-        "origin": orig_name,
-        "destination": dest_name,
+        "origin": origin if origin is not None else waypoints.iloc[0].at["name"],
+        "destination": destination,
         "clustering": clustering,
         "break_times": [
             {"start": iso_datetime(start), "duration": minutes_to_seconds(duration)}
