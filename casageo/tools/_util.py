@@ -20,7 +20,7 @@ import contextlib
 import re
 from collections import ChainMap
 from collections.abc import Callable, Generator, Mapping, MutableMapping
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any, cast
 
 import flexpolyline.decoding
@@ -141,11 +141,31 @@ def point_xy(p: Point) -> tuple[float, float]:
     return (p.x, p.y)
 
 
+def enlist_if_str[T](s: str | T) -> list[str] | T:
+    return [s] if isinstance(s, str) else s
+
+
 def split_if_str(sep: str | None = None, maxsplit: int = -1):
     def splitter[T](s: str | T) -> list[str] | T:
         return s.split(sep, maxsplit) if isinstance(s, str) else s
 
     return splitter
+
+
+def iso_datetime(value: Any) -> str:
+    if isinstance(value, datetime):
+        return value.isoformat()
+    if isinstance(value, str):
+        return datetime.fromisoformat(value).isoformat()
+    raise TypeError(f"Expected datetime, got {type(value).__name__}")
+
+
+def minutes_to_seconds(minutes: Any) -> int:
+    if isinstance(minutes, timedelta):
+        return int(minutes.total_seconds())
+    if isinstance(minutes, (int, float)):
+        return int(minutes * 60)
+    raise TypeError(f"Expected float, int, or timedelta, got {type(minutes).__name__}")
 
 
 def to_records(
