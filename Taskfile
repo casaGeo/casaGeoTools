@@ -27,7 +27,7 @@ set -Ceufo pipefail
 run-checks() {
 	uv run ruff check
 	uv run ruff format --check
-	uv run mypy -- casageo tests
+	uv run basedpyright
 }
 
 run-tests() {

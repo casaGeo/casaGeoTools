@@ -67,7 +67,10 @@ typeCheckingMode = "standard"
 allowedUntypedLibraries = ["flexpolyline"]
 reportMissingTypeArgument = "warning"
 reportUnusedCallResult = false
-
+exclude = [
+    "**/node_modules", "**/__pycache__", "**/.*",
+    "tests/generate_fixtures.py",
+]
 
 [tool.mypy]
 explicit_package_bases = true
