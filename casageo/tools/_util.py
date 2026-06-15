@@ -152,7 +152,7 @@ def split_if_str(sep: str | None = None, maxsplit: int = -1):
     return splitter
 
 
-def iso_datetime(value: Any) -> str:
+def iso_datetime(value: datetime | str | Any) -> str:
     if isinstance(value, datetime):
         return value.isoformat()
     if isinstance(value, str):
@@ -160,7 +160,7 @@ def iso_datetime(value: Any) -> str:
     raise TypeError(f"Expected datetime, got {type(value).__name__}")
 
 
-def minutes_to_seconds(minutes: Any) -> int:
+def minutes_to_seconds(minutes: timedelta | float | int | Any) -> int:
     if isinstance(minutes, timedelta):
         return int(minutes.total_seconds())
     if isinstance(minutes, (int, float)):
