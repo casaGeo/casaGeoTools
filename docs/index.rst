@@ -17,3 +17,4 @@ into their workflows with just a few lines of code.
    casageo.tools
    casageo.coder
    casageo.spatial
+   casageo.logistics

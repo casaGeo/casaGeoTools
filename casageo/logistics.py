@@ -50,6 +50,25 @@ AVOIDABLE_FEATURES: Final[Sequence[str]] = [
     "park",
     "uTurns",
 ]
+"""Features that can be avoided."""
+
+CLUSTERING_MODES: Final[Sequence[str]] = [
+    "drivingDistance",
+    "topologySegment",
+]
+"""Supported clustering modes."""
+
+OPTIMIZATION_TARGETS: Final[Sequence[str]] = [
+    "time",
+    "distance",
+]
+"""Supported optimization targets."""
+
+ROUTING_MODES: Final[Sequence[str]] = [
+    "fast",
+    "short",
+]
+"""Supported routing modes."""
 
 TRANSPORT_MODES: Final[Sequence[str]] = [
     "car",
@@ -57,6 +76,7 @@ TRANSPORT_MODES: Final[Sequence[str]] = [
     "bicycle",
     "truck",
 ]
+"""Supported transport modes."""
 
 HAZARDOUS_CARGO_TYPES: Final[Sequence[str]] = [
     "explosive",
@@ -71,6 +91,7 @@ HAZARDOUS_CARGO_TYPES: Final[Sequence[str]] = [
     "harmfulToWater",
     "other",
 ]
+"""Supported types of hazardous cargo."""
 
 
 _logger = logging.getLogger(__name__)
@@ -191,6 +212,81 @@ def tsp(
     walking_speed: int | None = None,  # m/s
     with_coordinates: bool = False,
 ) -> GeoDataFrame:
+    """
+    Calculate the shortest path among a set of waypoints.
+
+    See :ref:`logistics-tsp-queries` in the module documentation.
+
+    Args:
+        client (CasaGeoClient):
+            The client object authorizing these queries.
+        waypoints (~pandas.DataFrame):
+            The dataframe of waypoints to visit.
+        origin:
+            Name of the starting waypoint, defaults to the first waypoint.
+        destination:
+            Name of the destination waypoint, if any.
+        clustering:
+            Enables clustering of waypoints
+            (see :py:const:`CLUSTERING_MODES`).
+        break_times:
+            Sets up to five break time slots. Each time slot consists
+            of a starting datetime and a duration in minutes.
+        rest_schedule:
+            Sets a rest schedule for the driver. Set this to
+            ``"default"`` to activate simplified European rules.
+        transport_mode:
+            The mode of transport to use for routing
+            (see :py:const:`TRANSPORT_MODES`).
+        routing_mode:
+            Whether to prefer ``"fast"`` or ``"short"`` routes
+            (see :py:const:`ROUTING_MODES`).
+        optimize:
+            Whether to optimize the waypoint sequence for ``"time"`` or
+            for ``"distance"`` (see :py:const:`OPTIMIZATION_TARGETS`).
+        departure_time:
+            The date and time of departure for time-dependent routing.
+        traffic:
+            Whether to consider traffic data during routing.
+        avoid_features:
+            If set, these route features are avoided during routing.
+        exclude_countries:
+            If set, these countries are excluded from routing. Must be
+            a sequence of valid `ISO 3166-1 alpha-3`_ country codes.
+        vehicle_length:
+            Specifies the length of the vehicle in centimeters.
+        vehicle_width:
+            Specifies the width of the vehicle in centimeters.
+        vehicle_height:
+            Specifies the height of the vehicle in centimeters.
+        vehicle_axle_weight:
+            Specifies the per-axle weight of the vehicle in kilograms.
+        vehicle_total_weight:
+            Specifies the total weight of the vehicle in kilograms.
+        vehicle_trailers:
+            Specifies the number of trailers attached to the vehicle.
+        hazardous_cargo:
+            Specifies the types of hazardous cargo carried by the
+            vehicle (see :py:const:`HAZARDOUS_CARGO_TYPES`).
+        walking_speed:
+            Specifies the pedestrian walking speed in meters per second.
+        with_coordinates:
+            Whether to include numeric coordinates in the output.
+
+    Returns:
+        ~geopandas.GeoDataFrame: The sorted list of waypoints as an
+        EPSG:4326 GeoDataFrame. If waypoint constraints could not be
+        satisfied, the offending waypoints are returned instead with an
+        error code of ``"failed_constraints"``.
+
+        The shape of the dataframe is described under
+        :ref:`logistics-tsp-output-columns` in the module
+        documentation. The geometry column is the ``navigation`` column.
+
+    Raises:
+        InsufficientCreditsError: If the account does not have enough credits.
+        CasaGeoError: If the request could not be executed for another reason.
+    """
     df = tsp_result(
         client,
         waypoints,
