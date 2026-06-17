@@ -221,7 +221,8 @@ def tsp(
         client (CasaGeoClient):
             The client object authorizing these queries.
         waypoints (~pandas.DataFrame):
-            The dataframe of waypoints to visit.
+            The dataframe of waypoints to visit
+            (see :ref:`logistics-tsp-input-columns`).
         origin:
             Name of the starting waypoint, defaults to the first waypoint.
         destination:
