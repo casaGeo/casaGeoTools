@@ -24,7 +24,7 @@ share/python-wheels/
 MANIFEST
 
 # Sphinx documentation
-docs/_build/
+_build/
 
 # Environments
 .env
@@ -49,4 +49,5 @@ routes_map.html
 
 # IDE configuration
 .idea/
+.qtcreator/
 .vscode/

@@ -70,6 +70,7 @@ reportUnusedCallResult = false
 exclude = [
     "**/node_modules", "**/__pycache__", "**/.*",
     "tests/generate_fixtures.py",
+    "qgis",
 ]
 
 [tool.mypy]
@@ -87,6 +88,10 @@ exclude = [
 [[tool.mypy.overrides]]
 module = ["flexpolyline", "flexpolyline.*"]
 follow_untyped_imports = true
+
+[[tool.mypy.overrides]]
+module = ["qgis.*"]
+ignore_missing_imports = true
 
 [tool.ruff.format]
 preview = true

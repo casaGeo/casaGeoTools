@@ -89,5 +89,11 @@ generate-release-information() {
 	fi
 }
 
+##################
+# Subdirectories #
+##################
+
+qgis() { (cd qgis; exec ./Taskfile "$@"); }
+
 while [[ ${1-} == +([[:word:]])=* ]]; do declare -- "$1"; shift; done
 time { set -x; "$@"; }; exit;
