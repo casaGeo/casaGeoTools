@@ -36,11 +36,11 @@ run-tests() {
 }
 
 run-smoke-tests() {
-	uv run tests/smoke_test.py
+	uv run tests/offline/smoke_test.py
 }
 
 run-unit-tests() {
-	uv run python -m unittest discover --start-directory='tests'
+	uv run python -m unittest discover --start-directory='tests/offline'
 }
 
 build() {
@@ -60,12 +60,12 @@ sphinx-make() {
 }
 
 generate-fixtures() {
-	uv run tests/generate_fixtures.py
+	uv run tests/offline/generate_fixtures.py
 }
 
 test-artifact() {
 	local artifact=$1
-	uv run --isolated --no-project --with="${artifact:?}" tests/smoke_test.py
+	uv run --isolated --no-project --with="${artifact:?}" tests/offline/smoke_test.py
 }
 
 extract-changelog-for-version() {
