@@ -69,7 +69,7 @@ reportMissingTypeArgument = "warning"
 reportUnusedCallResult = false
 exclude = [
     "**/node_modules", "**/__pycache__", "**/.*",
-    "tests/generate_fixtures.py",
+    "tests/offline/generate_fixtures.py",
     "qgis",
 ]
 
@@ -78,7 +78,7 @@ explicit_package_bases = true
 local_partial_types = true
 strict_bytes = true
 exclude = [
-    'tests/generate_fixtures\.py$',
+    'tests/offline/generate_fixtures\.py$',
 ]
 
 # Allow mypy to recurse into the flexpolyline package for dynamic type
