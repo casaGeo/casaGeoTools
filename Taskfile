@@ -43,6 +43,12 @@ run-unit-tests() {
 	uv run python -m unittest discover --start-directory='tests/offline'
 }
 
+# You must set CASAGEOTOOLS_API_KEY for this to work
+# You should also set CASAGEOTOOLS_PROXY_SERVER
+run-live-tests() {
+	uv run python -m unittest discover --start-directory='tests/online'
+}
+
 build() {
 	uv build
 }
