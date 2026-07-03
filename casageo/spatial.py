@@ -25,7 +25,7 @@ import os
 import sys
 from collections.abc import Mapping, Sequence
 from datetime import datetime
-from typing import Any, cast
+from typing import Any, Final, cast
 
 from geopandas import GeoDataFrame
 from pandas import DataFrame
@@ -34,7 +34,7 @@ from shapely import (
     MultiPolygon,
 )
 
-from casageo.tools import CasaGeoClient, CasaGeoError, _apiv2, _consts, _util
+from casageo.tools import UNIT_SYSTEMS, CasaGeoClient, CasaGeoError, _apiv2, _util
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
@@ -44,6 +44,34 @@ from casageo.tools._util import (
     split_if_str,
     to_records,
 )
+
+# Constants
+
+RANGE_TYPES: Final = ["time", "distance"]
+RANGE_UNITS: Final = ["minutes", "meters"]
+RANGE_TYPE_BY_UNIT: Final = {
+    "minutes": "time",
+    "meters": "distance",
+}
+RANGE_UNIT_BY_TYPE: Final = {
+    "time": "minutes",
+    "distance": "meters",
+}
+
+TRANSPORT_MODES: Final = ["car", "pedestrian", "bicycle", "truck"]
+ROUTING_MODES: Final = ["fast", "short"]
+DIRECTION_TYPES: Final = ["outgoing", "incoming"]
+
+AVOIDABLE_FEATURES: Final = [
+    "carShuttleTrain",
+    "controlledAccessHighway",
+    "dirtRoad",
+    "ferry",
+    "seasonalClosure",
+    "tollRoad",
+    "tunnel",
+    "uTurns",  # Not supported for pedestrian, bicycle and scooter transport modes.
+]
 
 # Spatial
 
@@ -171,7 +199,7 @@ class IsolinesResult(CasaGeoResult):
     @staticmethod
     def _range_unit(isoline: dict) -> str | None:
         try:
-            return _consts.RANGE_UNIT_BY_TYPE[isoline["range"]["type"]]
+            return RANGE_UNIT_BY_TYPE[isoline["range"]["type"]]
         except KeyError:
             return None
 
@@ -741,19 +769,19 @@ def _main(args: Sequence[str] | None = None) -> None:
     common_params.add_argument(
         "--unit-system",
         default=DEFAULT_UNIT_SYSTEM,
-        choices=_consts.UNIT_SYSTEMS,
+        choices=UNIT_SYSTEMS,
         help="the system of units to use for localized quantities",
     )
     common_params.add_argument(
         "--transport-mode",
         default=DEFAULT_TRANSPORT_MODE,
-        choices=_consts.TRANSPORT_MODES,
+        choices=TRANSPORT_MODES,
         help="the mode of transport used for routing",
     )
     common_params.add_argument(
         "--routing-mode",
         default=DEFAULT_ROUTING_MODE,
-        choices=_consts.ROUTING_MODES,
+        choices=ROUTING_MODES,
         help="whether to prefer 'fast' or 'short' routes",
     )
     common_params.add_argument(
@@ -816,14 +844,14 @@ def _main(args: Sequence[str] | None = None) -> None:
     isolines_params.add_argument(
         "--unit",
         default=DEFAULT_RANGE_UNIT,
-        choices=_consts.RANGE_UNITS,
+        choices=RANGE_UNITS,
         help="the unit of the range values",
         dest="ranges_unit",
     )
     isolines_params.add_argument(
         "--direction",
         default=DEFAULT_DIRECTION,
-        choices=_consts.DIRECTION_TYPES,
+        choices=DIRECTION_TYPES,
         help="the direction of travel relative to the center point",
     )
 

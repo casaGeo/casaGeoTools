@@ -24,12 +24,12 @@ import os
 import statistics
 import sys
 from collections.abc import Generator, Iterable, Mapping, Sequence
-from typing import Any, cast
+from typing import Any, Final, cast
 
 from geopandas import GeoDataFrame
 from pandas import DataFrame
 
-from casageo.tools import CasaGeoClient, CasaGeoError, _apiv2, _consts, _util
+from casageo.tools import CasaGeoClient, CasaGeoError, _apiv2, _util
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
@@ -39,6 +39,13 @@ from casageo.tools._util import (
     split_if_str,
     to_records,
 )
+
+# Constants
+
+ADDRESS_NAMES_MODES: Final = ["default", "matched", "normalized"]
+POSTAL_CODE_MODES: Final = ["default", "cityLookup", "districtLookup"]
+
+# Coder
 
 DEFAULT_LANGUAGE: str = "en-US"
 """The default language used in the results."""
@@ -582,12 +589,12 @@ def _main(args: Sequence[str] | None = None) -> None:
     )
     common_params.add_argument(
         "--address-names-mode",
-        choices=_consts.ADDRESS_NAMES_MODES,
+        choices=ADDRESS_NAMES_MODES,
         help="the address names mode",
     )
     common_params.add_argument(
         "--postal-code-mode",
-        choices=_consts.POSTAL_CODE_MODES,
+        choices=POSTAL_CODE_MODES,
         help="the postal code mode",
     )
     common_params.add_argument(

@@ -20,6 +20,9 @@ used throughout the casaGeoTools library.
 """
 
 __all__ = [  # noqa: RUF022
+    "SERVER",
+    "UNIT_SYSTEMS",
+    #
     "CasaGeoClient",
     #
     "CasaGeoError",
@@ -30,6 +33,7 @@ __all__ = [  # noqa: RUF022
     "SubqueryError",
 ]
 
+from ._consts import SERVER, UNIT_SYSTEMS
 from ._client import CasaGeoClient
 from ._errors import (
     APIReturnTypeError,

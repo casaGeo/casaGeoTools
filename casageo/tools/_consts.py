@@ -18,32 +18,4 @@ from typing import Final
 
 SERVER: Final = "https://cg-license.casageo.eu/"
 
-ADDRESS_NAMES_MODES: Final = ["default", "matched", "normalized"]
-POSTAL_CODE_MODES: Final = ["default", "cityLookup", "districtLookup"]
 UNIT_SYSTEMS: Final = ["metric", "imperial"]
-
-RANGE_TYPES: Final = ["time", "distance"]
-RANGE_UNITS: Final = ["minutes", "meters"]
-RANGE_TYPE_BY_UNIT: Final = {
-    "minutes": "time",
-    "meters": "distance",
-}
-RANGE_UNIT_BY_TYPE: Final = {
-    "time": "minutes",
-    "distance": "meters",
-}
-
-TRANSPORT_MODES: Final = ["car", "pedestrian", "bicycle", "truck"]
-ROUTING_MODES: Final = ["fast", "short"]
-DIRECTION_TYPES: Final = ["outgoing", "incoming"]
-
-AVOIDABLE_FEATURES: Final = [
-    "carShuttleTrain",
-    "controlledAccessHighway",
-    "dirtRoad",
-    "ferry",
-    "seasonalClosure",
-    "tollRoad",
-    "tunnel",
-    "uTurns",  # Not supported for pedestrian, bicycle and scooter transport modes.
-]

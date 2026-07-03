@@ -222,11 +222,13 @@ def cli_datetime(value: str) -> datetime:
 
 @rename("comma-separated feature list")
 def cli_avoidable_feature_list(value: str) -> list[str]:
+    from casageo.spatial import AVOIDABLE_FEATURES
+
     features = value.split(",")
     for feature in features:
-        if feature not in _consts.AVOIDABLE_FEATURES:
+        if feature not in AVOIDABLE_FEATURES:
             raise ValueError(
-                f"avoidable features may only contain {_consts.AVOIDABLE_FEATURES}, got {feature!r}"
+                f"avoidable features may only contain {AVOIDABLE_FEATURES}, got {feature!r}"
             )
     return features
 
