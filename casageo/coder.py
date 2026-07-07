@@ -39,6 +39,7 @@ from casageo.tools._util import (
     split_if_str,
     to_records,
 )
+import contextlib
 
 # Constants
 
@@ -91,7 +92,8 @@ def _split_navigation(items: Iterable[dict]) -> Generator[dict]:
                 yield item | {"access": nav_pos}
         else:
             single = item.copy()
-            del single["access"]
+            with contextlib.suppress(KeyError):
+                del single["access"]
             yield single
 
 
