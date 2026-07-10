@@ -146,8 +146,11 @@ def enlist_if_str[T](s: str | T) -> list[str] | T:
 
 
 def split_if_str(sep: str | None = None, maxsplit: int = -1):
-    def splitter[T](s: str | T) -> list[str] | T:
-        return s.split(sep, maxsplit) if isinstance(s, str) else s
+    def splitter[T](s: str | T, /) -> list[str] | T:
+        if isinstance(s, str):
+            parts = map(str.strip, s.split(sep, maxsplit))
+            return [part for part in parts if part]
+        return s
 
     return splitter
 
