@@ -2,6 +2,16 @@
 
 ## Next Release
 
+### Added
+
+- Ignore whitespace in comma-separated lists
+- Add support for library versions `geopandas>=1.0.0`, `numpy>=2.0.0`, `pandas>=2.2.0`
+- Add support for truck routing
+
+### Fixed
+
+- Fix `KeyError` when no navigation points are returned
+
 
 ## [1.0.2] - 2026-05-04
 
