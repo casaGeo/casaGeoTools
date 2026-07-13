@@ -29,8 +29,6 @@ import pandas as pd
 import shapely
 from shapely import Point
 
-from . import _consts
-
 ietf_bcp47_language_tag_pattern = re.compile(r"[A-Za-z0-9]+(-[A-Za-z0-9]+)*")
 iso3166_alpha3_country_code_pattern = re.compile(r"[A-Z]{3}")
 # https://www.here.com/docs/bundle/geocoding-and-search-api-developer-guide/page/topics-places/places-category-system-full.html
