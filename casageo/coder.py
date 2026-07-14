@@ -19,6 +19,7 @@ This module provides geocoding and search operations.
 """
 
 import argparse
+import contextlib
 import logging
 import os
 import statistics
@@ -29,7 +30,7 @@ from typing import Any, Final, cast
 from geopandas import GeoDataFrame
 from pandas import DataFrame
 
-from casageo.tools import CasaGeoClient, CasaGeoError, _apiv2, _util
+from casageo.tools import CasaGeoClient, CasaGeoError, _util
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
@@ -39,7 +40,6 @@ from casageo.tools._util import (
     split_if_str,
     to_records,
 )
-import contextlib
 
 # Constants
 
@@ -450,24 +450,31 @@ def address_result(
         "coordinates": coordinates,
         "match_quality": match_quality,
     }
-    queryspecs = [
-        {
-            "address": q.get("address"),
-            "country": q.get("country"),
-            "state": q.get("state"),
-            "county": q.get("county"),
-            "city": q.get("city"),
-            "district": q.get("district"),
-            "street": q.get("street"),
-            "housenumber": q.get("housenumber"),
-            "postalcode": q.get("postalcode"),
-            "position": and_then(getpoint(q, "position"), point_xy),
-            **_coder_params(q),
-        }
-        for q in to_records(queries, *fallbacks)
-    ]
 
-    json = _apiv2.address(client._httpxclient, queryspecs, options)
+    json = client.request(
+        "POST",
+        "/api/v2/address",
+        json={
+            "options": options,
+            "queries": [
+                {
+                    "address": q.get("address"),
+                    "country": q.get("country"),
+                    "state": q.get("state"),
+                    "county": q.get("county"),
+                    "city": q.get("city"),
+                    "district": q.get("district"),
+                    "street": q.get("street"),
+                    "housenumber": q.get("housenumber"),
+                    "postalcode": q.get("postalcode"),
+                    "position": and_then(getpoint(q, "position"), point_xy),
+                    **_coder_params(q),
+                }
+                for q in to_records(queries, *fallbacks)
+            ],
+        },
+    )
+
     _logger.debug("Address Response: %r", json)
 
     return MultiResult(json=json, ids=ids, options=options, result_type=AddressResult)
@@ -543,15 +550,22 @@ def poi_result(
         "coordinates": coordinates,
         "category_codes": category_codes,
     }
-    queryspecs = [
-        {
-            "position": and_then(getpoint(q, "position"), point_xy),
-            **_coder_params(q),
-        }
-        for q in to_records(queries, *fallbacks)
-    ]
 
-    json = _apiv2.poi(client._httpxclient, queryspecs, options)
+    json = client.request(
+        "POST",
+        "/api/v2/poi",
+        json={
+            "options": options,
+            "queries": [
+                {
+                    "position": and_then(getpoint(q, "position"), point_xy),
+                    **_coder_params(q),
+                }
+                for q in to_records(queries, *fallbacks)
+            ],
+        },
+    )
+
     _logger.debug("POI Response: %r", json)
 
     return MultiResult(json=json, ids=ids, options=options, result_type=PoiResult)

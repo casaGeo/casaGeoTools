@@ -47,73 +47,77 @@ class TestAddressQuery(unittest.TestCase):
             {"id": 3, "address": "Sophienblatt 25, 24114 Kiel DEU"},
         ])
 
-    @patch("casageo.tools._apiv2.address", autospec=True)
+    @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
         fixture = load_fixture("coder_address_simple_query")
         mock.return_value = fixture["result"]
         results = cc.address(self.client, self.address_queries)
         mock.assert_called_once_with(
-            self.client._httpxclient,
-            [
-                {
-                    "address": "Fraunhoferstr. 3, 25524 Itzehoe DEU",
-                    "country": None,
-                    "state": None,
-                    "county": None,
-                    "city": None,
-                    "district": None,
-                    "street": None,
-                    "housenumber": None,
-                    "postalcode": None,
-                    "position": None,
-                    "language": "en-US",
-                    "political_view": None,
-                    "limit": 20,
-                    "countries": None,
-                    "address_names_mode": "default",
-                    "postal_code_mode": "default",
+            self.client,
+            "POST",
+            "/api/v2/address",
+            json={
+                "queries": [
+                    {
+                        "address": "Fraunhoferstr. 3, 25524 Itzehoe DEU",
+                        "country": None,
+                        "state": None,
+                        "county": None,
+                        "city": None,
+                        "district": None,
+                        "street": None,
+                        "housenumber": None,
+                        "postalcode": None,
+                        "position": None,
+                        "language": "en-US",
+                        "political_view": None,
+                        "limit": 20,
+                        "countries": None,
+                        "address_names_mode": "default",
+                        "postal_code_mode": "default",
+                    },
+                    {
+                        "address": "Hachmannplatz 16, 20099 Hamburg DEU",
+                        "country": None,
+                        "state": None,
+                        "county": None,
+                        "city": None,
+                        "district": None,
+                        "street": None,
+                        "housenumber": None,
+                        "postalcode": None,
+                        "position": None,
+                        "language": "en-US",
+                        "political_view": None,
+                        "limit": 20,
+                        "countries": None,
+                        "address_names_mode": "default",
+                        "postal_code_mode": "default",
+                    },
+                    {
+                        "address": "Sophienblatt 25, 24114 Kiel DEU",
+                        "country": None,
+                        "state": None,
+                        "county": None,
+                        "city": None,
+                        "district": None,
+                        "street": None,
+                        "housenumber": None,
+                        "postalcode": None,
+                        "position": None,
+                        "language": "en-US",
+                        "political_view": None,
+                        "limit": 20,
+                        "countries": None,
+                        "address_names_mode": "default",
+                        "postal_code_mode": "default",
+                    },
+                ],
+                "options": {
+                    "address_details": False,
+                    "coordinates": False,
+                    "match_quality": False,
                 },
-                {
-                    "address": "Hachmannplatz 16, 20099 Hamburg DEU",
-                    "country": None,
-                    "state": None,
-                    "county": None,
-                    "city": None,
-                    "district": None,
-                    "street": None,
-                    "housenumber": None,
-                    "postalcode": None,
-                    "position": None,
-                    "language": "en-US",
-                    "political_view": None,
-                    "limit": 20,
-                    "countries": None,
-                    "address_names_mode": "default",
-                    "postal_code_mode": "default",
-                },
-                {
-                    "address": "Sophienblatt 25, 24114 Kiel DEU",
-                    "country": None,
-                    "state": None,
-                    "county": None,
-                    "city": None,
-                    "district": None,
-                    "street": None,
-                    "housenumber": None,
-                    "postalcode": None,
-                    "position": None,
-                    "language": "en-US",
-                    "political_view": None,
-                    "limit": 20,
-                    "countries": None,
-                    "address_names_mode": "default",
-                    "postal_code_mode": "default",
-                },
-            ],
-            {
-                "address_details": False,
-                "coordinates": False,
-                "match_quality": False,
             },
         )
 
@@ -165,28 +169,32 @@ class TestPOIQuery(unittest.TestCase):
             },
         ])
 
-    @patch("casageo.tools._apiv2.poi", autospec=True)
+    @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
         fixture = load_fixture("coder_poi_simple_query")
         mock.return_value = fixture["result"]
         results = cc.poi(self.client, self.poi_queries)
         mock.assert_called_once_with(
-            self.client._httpxclient,
-            [
-                {
-                    "position": (9.48545, 53.95801),
-                    "language": "de,en",
-                    "political_view": None,
-                    "limit": 2,
-                    "countries": None,
-                    "address_names_mode": "default",
-                    "postal_code_mode": "default",
-                }
-            ],
-            {
-                "address_details": False,
-                "coordinates": False,
-                "category_codes": False,
+            self.client,
+            "POST",
+            "/api/v2/poi",
+            json={
+                "queries": [
+                    {
+                        "position": (9.48545, 53.95801),
+                        "language": "de,en",
+                        "political_view": None,
+                        "limit": 2,
+                        "countries": None,
+                        "address_names_mode": "default",
+                        "postal_code_mode": "default",
+                    }
+                ],
+                "options": {
+                    "address_details": False,
+                    "coordinates": False,
+                    "category_codes": False,
+                },
             },
         )
 

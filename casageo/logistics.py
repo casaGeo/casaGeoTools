@@ -26,7 +26,7 @@ from typing import Any, Final, cast
 from geopandas import GeoDataFrame
 from pandas import DataFrame
 
-from casageo.tools import CasaGeoClient, _apiv2
+from casageo.tools import CasaGeoClient
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
@@ -386,11 +386,10 @@ def tsp_result(
         for wp in to_records(waypoints)
     ]
 
-    response = client._httpxclient.post(
-        "/api/v2/tsp", json={"options": options, "waypoints": points}
+    json = client.request(
+        "POST", "/api/v2/tsp", json={"options": options, "waypoints": points}
     )
 
-    json = _apiv2._decode_dict(response)
     _logger.debug("TSP Response: %r", json)
 
     return MultiResult(

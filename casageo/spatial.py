@@ -34,7 +34,7 @@ from shapely import (
     MultiPolygon,
 )
 
-from casageo.tools import UNIT_SYSTEMS, CasaGeoClient, CasaGeoError, _apiv2, _util
+from casageo.tools import UNIT_SYSTEMS, CasaGeoClient, CasaGeoError, _util
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
@@ -652,18 +652,25 @@ def isolines_result(
         "departure_info": departure_info,
         "arrival_info": arrival_info,
     }
-    queryspecs = [
-        {
-            "position": and_then(getpoint(q, "position"), point_xy),
-            "ranges": and_then(q.get("ranges"), split_if_str(",")),
-            "ranges_unit": _isolines_ranges_unit(q, DEFAULT_RANGE_UNIT),
-            "direction": q.get("direction", DEFAULT_DIRECTION),
-            **_spatial_params(q),
-        }
-        for q in to_records(queries, *fallbacks)
-    ]
 
-    json = _apiv2.isolines(client._httpxclient, queryspecs, options)
+    json = client.request(
+        "POST",
+        "/api/v2/isolines",
+        json={
+            "options": options,
+            "queries": [
+                {
+                    "position": and_then(getpoint(q, "position"), point_xy),
+                    "ranges": and_then(q.get("ranges"), split_if_str(",")),
+                    "ranges_unit": _isolines_ranges_unit(q, DEFAULT_RANGE_UNIT),
+                    "direction": q.get("direction", DEFAULT_DIRECTION),
+                    **_spatial_params(q),
+                }
+                for q in to_records(queries, *fallbacks)
+            ],
+        },
+    )
+
     _logger.debug("Isolines Response: %r", json)
 
     return MultiResult(json=json, ids=ids, options=options, result_type=IsolinesResult)
@@ -733,17 +740,24 @@ def routes_result(
         "departure_info": departure_info,
         "arrival_info": arrival_info,
     }
-    queryspecs = [
-        {
-            "origin": and_then(getpoint(q, "origin"), point_xy),
-            "destination": and_then(getpoint(q, "destination"), point_xy),
-            "alternatives": q.get("alternatives", DEFAULT_ALTERNATIVES),
-            **_spatial_params(q),
-        }
-        for q in to_records(queries, *fallbacks)
-    ]
 
-    json = _apiv2.routes(client._httpxclient, queryspecs, options)
+    json = client.request(
+        "POST",
+        "/api/v2/routes",
+        json={
+            "options": options,
+            "queries": [
+                {
+                    "origin": and_then(getpoint(q, "origin"), point_xy),
+                    "destination": and_then(getpoint(q, "destination"), point_xy),
+                    "alternatives": q.get("alternatives", DEFAULT_ALTERNATIVES),
+                    **_spatial_params(q),
+                }
+                for q in to_records(queries, *fallbacks)
+            ],
+        },
+    )
+
     _logger.debug("Routing Response: %r", json)
 
     return MultiResult(json=json, ids=ids, options=options, result_type=RoutesResult)

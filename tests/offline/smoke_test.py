@@ -104,25 +104,25 @@ def main(args: Sequence[str] | None = None) -> None:
         },
     ])
 
-    with patch("casageo.tools._apiv2.address") as mock:
+    with patch("casageo.tools._client.CasaGeoClient.request") as mock:
         fixture = load_fixture("coder_address_simple_query")
         mock.return_value = fixture["result"]
         cc.address(client, address_queries)
         assert mock.called
 
-    with patch("casageo.tools._apiv2.poi") as mock:
+    with patch("casageo.tools._client.CasaGeoClient.request") as mock:
         fixture = load_fixture("coder_poi_simple_query")
         mock.return_value = fixture["result"]
         cc.poi(client, poi_queries)
         assert mock.called
 
-    with patch("casageo.tools._apiv2.isolines") as mock:
+    with patch("casageo.tools._client.CasaGeoClient.request") as mock:
         fixture = load_fixture("spatial_isolines_simple_query")
         mock.return_value = fixture["result"]
         cs.isolines(client, isolines_queries)
         assert mock.called
 
-    with patch("casageo.tools._apiv2.routes") as mock:
+    with patch("casageo.tools._client.CasaGeoClient.request") as mock:
         fixture = load_fixture("spatial_routes_simple_query")
         mock.return_value = fixture["result"]
         cs.routes(client, routes_queries)

@@ -14,12 +14,16 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
+import contextlib
 import os
 from collections.abc import Generator
+from typing import Any
 
 import httpx
 
 from . import _consts
+from ._errors import APIValueError, CasaGeoError, InsufficientCreditsError
+from ._util import and_then
 
 
 class TokenAuth(httpx.Auth):
@@ -69,10 +73,32 @@ class CasaGeoClient:
         preferred_political_view: str | None = None,
         preferred_unit_system: str | None = None,
     ):
-        server = os.getenv("CASAGEOTOOLS_PROXY_SERVER") or _consts.SERVER
-
-        self._httpxclient = httpx.Client(auth=TokenAuth(key), base_url=server)
+        self.server = os.getenv("CASAGEOTOOLS_PROXY_SERVER") or _consts.SERVER
 
         self.preferred_language = preferred_language
         self.preferred_political_view = preferred_political_view
         self.preferred_unit_system = preferred_unit_system
+
+        self._httpxclient = httpx.Client(auth=TokenAuth(key), base_url=self.server)
+
+    def request(self, method: str, url: str, *, json: Any | None = None) -> Any:
+        response = self._httpxclient.request(method, url, json=json)
+        if response.is_success:
+            return response.json()
+
+        if response.status_code == httpx.codes.BAD_REQUEST:
+            raise APIValueError(response.text)
+
+        if response.status_code == httpx.codes.PAYMENT_REQUIRED:
+            with contextlib.suppress(TypeError, ValueError):
+                json = dict(response.json())
+                raise InsufficientCreditsError(
+                    message=and_then(json.get("detail"), str),
+                    required=and_then(json.get("required"), int),
+                    available=and_then(json.get("available"), int),
+                )
+            raise InsufficientCreditsError(response.text)
+
+        response.raise_for_status()
+
+        raise CasaGeoError(f"Unexpected status code {response.status_code}")

@@ -68,64 +68,68 @@ class TestIsolinesQuery(unittest.TestCase):
             },
         ])
 
-    @patch("casageo.tools._apiv2.isolines", autospec=True)
+    @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
         fixture = load_fixture("spatial_isolines_simple_query")
         mock.return_value = fixture["result"]
         results = cs.isolines(self.client, self.queries)
 
         mock.assert_called_once_with(
-            self.client._httpxclient,
-            [
-                {
-                    "arrival_time": None,
-                    "avoid_features": (),
-                    "departure_time": None,
-                    "direction": "outgoing",
-                    "exclude_countries": (),
-                    "language": "en-US",
-                    "position": (10.008223, 53.553089),
-                    "ranges": [5, 15],
-                    "ranges_unit": "minutes",
-                    "routing_mode": "fast",
-                    "traffic": False,
-                    "transport_mode": "car",
-                    "unit_system": "metric",
+            self.client,
+            "POST",
+            "/api/v2/isolines",
+            json={
+                "queries": [
+                    {
+                        "arrival_time": None,
+                        "avoid_features": (),
+                        "departure_time": None,
+                        "direction": "outgoing",
+                        "exclude_countries": (),
+                        "language": "en-US",
+                        "position": (10.008223, 53.553089),
+                        "ranges": [5, 15],
+                        "ranges_unit": "minutes",
+                        "routing_mode": "fast",
+                        "traffic": False,
+                        "transport_mode": "car",
+                        "unit_system": "metric",
+                    },
+                    {
+                        "arrival_time": None,
+                        "avoid_features": (),
+                        "departure_time": None,
+                        "direction": "outgoing",
+                        "exclude_countries": (),
+                        "language": "en-US",
+                        "position": (10.66865, 53.86621),
+                        "ranges": [3000],
+                        "ranges_unit": "meters",
+                        "routing_mode": "fast",
+                        "traffic": False,
+                        "transport_mode": "pedestrian",
+                        "unit_system": "metric",
+                    },
+                    {
+                        "arrival_time": None,
+                        "avoid_features": (),
+                        "departure_time": None,
+                        "direction": "outgoing",
+                        "exclude_countries": (),
+                        "language": "en-US",
+                        "position": (10.13008, 54.31367),
+                        "ranges": [10],
+                        "ranges_unit": "minutes",
+                        "routing_mode": "fast",
+                        "traffic": False,
+                        "transport_mode": "car",
+                        "unit_system": "metric",
+                    },
+                ],
+                "options": {
+                    "departure_info": False,
+                    "arrival_info": False,
                 },
-                {
-                    "arrival_time": None,
-                    "avoid_features": (),
-                    "departure_time": None,
-                    "direction": "outgoing",
-                    "exclude_countries": (),
-                    "language": "en-US",
-                    "position": (10.66865, 53.86621),
-                    "ranges": [3000],
-                    "ranges_unit": "meters",
-                    "routing_mode": "fast",
-                    "traffic": False,
-                    "transport_mode": "pedestrian",
-                    "unit_system": "metric",
-                },
-                {
-                    "arrival_time": None,
-                    "avoid_features": (),
-                    "departure_time": None,
-                    "direction": "outgoing",
-                    "exclude_countries": (),
-                    "language": "en-US",
-                    "position": (10.13008, 54.31367),
-                    "ranges": [10],
-                    "ranges_unit": "minutes",
-                    "routing_mode": "fast",
-                    "traffic": False,
-                    "transport_mode": "car",
-                    "unit_system": "metric",
-                },
-            ],
-            {
-                "departure_info": False,
-                "arrival_info": False,
             },
         )
 
@@ -179,61 +183,65 @@ class TestRoutesQuery(unittest.TestCase):
             },
         ])
 
-    @patch("casageo.tools._apiv2.routes", autospec=True)
+    @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
         fixture = load_fixture("spatial_routes_simple_query")
         mock.return_value = fixture["result"]
         results = cs.routes(self.client, self.queries)
 
         mock.assert_called_once_with(
-            self.client._httpxclient,
-            [
-                {
-                    "alternatives": 0,
-                    "arrival_time": None,
-                    "avoid_features": (),
-                    "departure_time": None,
-                    "destination": (10.008223, 53.553089),
-                    "exclude_countries": (),
-                    "language": "en-US",
-                    "origin": (9.4854461, 53.9580118),
-                    "routing_mode": "fast",
-                    "traffic": False,
-                    "transport_mode": "car",
-                    "unit_system": "metric",
+            self.client,
+            "POST",
+            "/api/v2/routes",
+            json={
+                "queries": [
+                    {
+                        "alternatives": 0,
+                        "arrival_time": None,
+                        "avoid_features": (),
+                        "departure_time": None,
+                        "destination": (10.008223, 53.553089),
+                        "exclude_countries": (),
+                        "language": "en-US",
+                        "origin": (9.4854461, 53.9580118),
+                        "routing_mode": "fast",
+                        "traffic": False,
+                        "transport_mode": "car",
+                        "unit_system": "metric",
+                    },
+                    {
+                        "alternatives": 0,
+                        "arrival_time": None,
+                        "avoid_features": (),
+                        "departure_time": None,
+                        "destination": (10.13008, 54.31367),
+                        "exclude_countries": (),
+                        "language": "en-US",
+                        "origin": (9.4854461, 53.9580118),
+                        "routing_mode": "fast",
+                        "traffic": False,
+                        "transport_mode": "car",
+                        "unit_system": "metric",
+                    },
+                    {
+                        "alternatives": 0,
+                        "arrival_time": None,
+                        "avoid_features": (),
+                        "departure_time": None,
+                        "destination": (10.66865, 53.86621),
+                        "exclude_countries": (),
+                        "language": "en-US",
+                        "origin": (9.4854461, 53.9580118),
+                        "routing_mode": "fast",
+                        "traffic": False,
+                        "transport_mode": "car",
+                        "unit_system": "metric",
+                    },
+                ],
+                "options": {
+                    "arrival_info": False,
+                    "departure_info": False,
                 },
-                {
-                    "alternatives": 0,
-                    "arrival_time": None,
-                    "avoid_features": (),
-                    "departure_time": None,
-                    "destination": (10.13008, 54.31367),
-                    "exclude_countries": (),
-                    "language": "en-US",
-                    "origin": (9.4854461, 53.9580118),
-                    "routing_mode": "fast",
-                    "traffic": False,
-                    "transport_mode": "car",
-                    "unit_system": "metric",
-                },
-                {
-                    "alternatives": 0,
-                    "arrival_time": None,
-                    "avoid_features": (),
-                    "departure_time": None,
-                    "destination": (10.66865, 53.86621),
-                    "exclude_countries": (),
-                    "language": "en-US",
-                    "origin": (9.4854461, 53.9580118),
-                    "routing_mode": "fast",
-                    "traffic": False,
-                    "transport_mode": "car",
-                    "unit_system": "metric",
-                },
-            ],
-            {
-                "arrival_info": False,
-                "departure_info": False,
             },
         )
 
