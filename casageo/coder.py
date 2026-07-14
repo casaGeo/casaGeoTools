@@ -46,6 +46,9 @@ import contextlib
 ADDRESS_NAMES_MODES: Final = ["default", "matched", "normalized"]
 POSTAL_CODE_MODES: Final = ["default", "cityLookup", "districtLookup"]
 
+MIN_LIMIT: Final = 1
+MAX_LIMIT: Final = 100
+
 # Coder
 
 DEFAULT_LANGUAGE: str = "en-US"

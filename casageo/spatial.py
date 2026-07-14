@@ -73,6 +73,9 @@ AVOIDABLE_FEATURES: Final = [
     "uTurns",  # Not supported for pedestrian, bicycle and scooter transport modes.
 ]
 
+MIN_ALTERNATIVES: Final = 0
+MAX_ALTERNATIVES: Final = 6
+
 # Spatial
 
 DEFAULT_LANGUAGE: str = "en-US"
