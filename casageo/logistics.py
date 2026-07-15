@@ -146,7 +146,7 @@ class TSPResult(CasaGeoResult):
                 row["subid"]                = index
                 row["clusterid"]            = item.get("cluster")
                 row["name"]                 = item.get("id")
-                row["navigation"]           = dict_to_point(item)
+                row["position"]             = dict_to_point(item)
                 row["arrival_time"]         = item.get("estimatedArrival")
                 row["departure_time"]       = item.get("estimatedDeparture")
                 row["travel_distance"]      = conn.get("distance")
@@ -160,8 +160,8 @@ class TSPResult(CasaGeoResult):
 
             if coordinates:
                 # fmt: off
-                row["navigation_longitude"] = item.get("lng")
-                row["navigation_latitude"]  = item.get("lat")
+                row["position_longitude"]   = item.get("lng")
+                row["position_latitude"]    = item.get("lat")
                 # fmt: on
 
             if fcs := item.get("failedConstraints", []):
@@ -183,7 +183,7 @@ class TSPResult(CasaGeoResult):
         if not data:
             return GeoDataFrame()
 
-        return GeoDataFrame(data, geometry="navigation", crs="EPSG:4326")
+        return GeoDataFrame(data, geometry="position", crs="EPSG:4326")
 
 
 def tsp(
@@ -282,7 +282,7 @@ def tsp(
 
         The shape of the dataframe is described under
         :ref:`logistics-tsp-output-columns` in the module
-        documentation. The geometry column is the ``navigation`` column.
+        documentation. The geometry column is the ``position`` column.
 
     Raises:
         InsufficientCreditsError: If the account does not have enough credits.
@@ -373,8 +373,11 @@ def tsp_result(
     points = [
         delna({
             "name": and_then(wp.get("name"), str),
-            "position": and_then(getpoint(wp, "position"), point_xy),
-            "navigation": and_then(getpoint(wp, "navigation"), point_xy),
+            "position": and_then(
+                getpoint(wp, "position") or getpoint(wp, "navigation"),
+                point_xy,
+            ),
+            "streetposition": and_then(getpoint(wp, "streetposition"), point_xy),
             "course": and_then(wp.get("course"), int),  # degrees (int)
             # Enlist instead of splitting because names might contain
             # commas. We can always change this later.

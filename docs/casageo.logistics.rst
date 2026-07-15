@@ -44,16 +44,20 @@ casageo.logistics module
    name : str
       Unique string identifier for the waypoint. **Required**.
 
-   navigation : :class:`~shapely.Point`
+   position : :class:`~shapely.Point`
       Navigation coordinates corresponding to the waypoint. Instead of a
       geometry object, you may also specify this as two separate fields
-      ``navigation_latitude`` and ``navigation_longitude`` of type
-      :class:`float`. **Required**.
+      ``position_latitude`` and ``position_longitude`` of type :class:`float`.
+      **Required**.
+
+   streetposition : :class:`~shapely.Point`
+      Coordinates of the destination corresponding to the waypoint, if any. This
+      is used to select the the correct side of the street where necessary.
+      Instead of a geometry object, you may also specify this as two separate
+      fields ``streetposition_latitude`` and ``streetposition_longitude`` of
+      type :class:`float`.
 
    course : int
-      Optional.
-
-   position : :class:`~shapely.Point`
       Optional.
 
    before : list[str]
