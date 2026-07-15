@@ -2,8 +2,13 @@
 
 ## Next Release
 
+### Changed
+
+- No longer return multiple rows when a result has multiple navigation points in `address()` and `poi()`
+
 ### Added
 
+- Add option to return all navigation points to `address()` and `poi()`
 - Ignore whitespace in comma-separated lists
 - Add support for library versions `geopandas>=1.0.0`, `numpy>=2.0.0`, `pandas>=2.2.0`
 - Add support for truck routing

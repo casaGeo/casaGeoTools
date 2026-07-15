@@ -95,6 +95,10 @@ def dict_to_point(pos: dict) -> Point | None:
     return None
 
 
+def list_first[T](lst: list[T]) -> T | None:
+    return lst[0] if lst else None
+
+
 def rename(newname: str):
     def decorator(func):
         func.__name__ = newname
