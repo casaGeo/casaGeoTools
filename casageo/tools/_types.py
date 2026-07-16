@@ -21,7 +21,7 @@ from typing import Any
 
 import pandas as pd
 
-from ._errors import SubqueryError
+from ._errors import APIReturnTypeError, SubqueryError
 
 
 class CasaGeoResult:
@@ -88,14 +88,18 @@ class CasaGeoResult:
 class MultiResult[T: CasaGeoResult](Sequence[T]):
     def __init__(
         self,
-        json: dict[str, Any],
+        json: Any | None,
         *,
         ids: Sequence[Any],
         options: Mapping[str, Any],
         result_type: type[T] = CasaGeoResult,
     ):
-        assert isinstance(json, dict)
-        assert isinstance(json["results"], list)
+        if json is None:
+            json = {}
+
+        if not isinstance(json, dict):
+            msg = f"Invalid JSON response type: {type(json)}"
+            raise APIReturnTypeError(msg)
 
         self._json = json
         self._uuid = (
@@ -113,7 +117,7 @@ class MultiResult[T: CasaGeoResult](Sequence[T]):
         self._ids = list(ids)
         self._options = dict(options)
         self._results = [
-            self._make_result(i, r) for i, r in enumerate(self._json["results"])
+            self._make_result(i, r) for i, r in enumerate(self._json.get("results", []))
         ]
 
         assert len(self._ids) == len(self._results)
