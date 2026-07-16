@@ -23,7 +23,7 @@ import logging
 import math
 import os
 import sys
-from collections.abc import Mapping, Sequence
+from collections.abc import Collection, Mapping, Sequence
 from datetime import datetime
 from typing import Any, Final, cast
 
@@ -38,8 +38,10 @@ from casageo.tools import UNIT_SYSTEMS, CasaGeoClient, CasaGeoError, _util
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
+    delna,
     dict_to_point,
     getpoint,
+    iso_datetime,
     point_xy,
     split_if_str,
     to_records,
@@ -761,6 +763,99 @@ def routes_result(
     _logger.debug("Routing Response: %r", json)
 
     return MultiResult(json=json, ids=ids, options=options, result_type=RoutesResult)
+
+
+def routesvia(
+    client: CasaGeoClient,
+    waypoints: DataFrame,
+    *,
+    alternatives: int = 0,
+    transport_mode: str = TRANSPORT_MODES[0],
+    routing_mode: str = ROUTING_MODES[0],
+    departure_time: datetime | str | None = None,
+    arrival_time: datetime | str | None = None,
+    avoid_features: Collection[str] = (),
+    exclude_countries: Collection[str] = (),
+    with_departure_info: bool = False,
+    with_arrival_info: bool = False,
+) -> GeoDataFrame:
+    df = routesvia_result(
+        client,
+        waypoints,
+        alternatives=alternatives,
+        transport_mode=transport_mode,
+        routing_mode=routing_mode,
+        departure_time=departure_time,
+        arrival_time=arrival_time,
+        avoid_features=avoid_features,
+        exclude_countries=exclude_countries,
+        with_departure_info=with_departure_info,
+        with_arrival_info=with_arrival_info,
+    )
+    return cast(GeoDataFrame, df)
+
+
+def routesvia_result(
+    client: CasaGeoClient,
+    waypoints: DataFrame,
+    *,
+    alternatives: int = 0,
+    transport_mode: str = TRANSPORT_MODES[0],
+    routing_mode: str = ROUTING_MODES[0],
+    departure_time: datetime | str | None = None,
+    arrival_time: datetime | str | None = None,
+    avoid_features: Collection[str] = (),
+    exclude_countries: Collection[str] = (),
+    with_departure_info: bool = False,
+    with_arrival_info: bool = False,
+) -> MultiResult[RoutesResult]:
+    """:meta private:"""
+
+    options = delna({
+        "alternatives": alternatives,
+        "transport_mode": transport_mode,
+        "routing_mode": routing_mode,
+        "departure_time": and_then(departure_time, iso_datetime),
+        "arrival_time": and_then(arrival_time, iso_datetime),
+        "avoid_features": list(avoid_features),
+        "exclude_countries": list(exclude_countries),
+    })
+
+    points = [
+        delna({
+            "position": and_then(getpoint(wp, "position"), point_xy),
+            # Generation of result IDs is still unsolved...
+            # "isorigin": and_then(wp.get("isorigin"), bool),
+            "displayposition": and_then(getpoint(wp, "displayposition"), point_xy),
+            "streetposition": and_then(getpoint(wp, "streetposition"), point_xy),
+            "placename": and_then(wp.get("placename"), str),
+            "course": and_then(wp.get("course"), int),
+            "radius": and_then(wp.get("radius"), int),
+            "snap": and_then(wp.get("snap"), bool),
+        })
+        for wp in to_records(waypoints)
+    ]
+
+    json = client.request(
+        "POST",
+        "/api/v2/routesvia",
+        json={
+            "options": options,
+            "waypoints": points,
+        },
+    )
+
+    _logger.debug("RoutesVia Response: %r", json)
+
+    return MultiResult(
+        json=json,
+        ids=[1],  # FIXME
+        options={
+            "departure_info": with_departure_info,
+            "arrival_info": with_arrival_info,
+        },
+        result_type=RoutesResult,
+    )
 
 
 def _main(args: Sequence[str] | None = None) -> None:
