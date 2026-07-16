@@ -57,6 +57,12 @@ class TestAddressQuery(unittest.TestCase):
             "POST",
             "/api/v2/address",
             json={
+                "options": {
+                    "address_details": False,
+                    "coordinates": False,
+                    "match_quality": False,
+                    "navigation_points": False,
+                },
                 "queries": [
                     {
                         "address": "Fraunhoferstr. 3, 25524 Itzehoe DEU",
@@ -113,11 +119,6 @@ class TestAddressQuery(unittest.TestCase):
                         "postal_code_mode": "default",
                     },
                 ],
-                "options": {
-                    "address_details": False,
-                    "coordinates": False,
-                    "match_quality": False,
-                },
             },
         )
 
@@ -179,6 +180,12 @@ class TestPOIQuery(unittest.TestCase):
             "POST",
             "/api/v2/poi",
             json={
+                "options": {
+                    "address_details": False,
+                    "coordinates": False,
+                    "category_codes": False,
+                    "navigation_points": False,
+                },
                 "queries": [
                     {
                         "position": (9.48545, 53.95801),
@@ -190,11 +197,6 @@ class TestPOIQuery(unittest.TestCase):
                         "postal_code_mode": "default",
                     }
                 ],
-                "options": {
-                    "address_details": False,
-                    "coordinates": False,
-                    "category_codes": False,
-                },
             },
         )
 
