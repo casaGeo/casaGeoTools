@@ -33,8 +33,8 @@ __all__ = [  # noqa: RUF022
     "SubqueryError",
 ]
 
-from ._consts import SERVER, UNIT_SYSTEMS
 from ._client import CasaGeoClient
+from ._consts import SERVER, UNIT_SYSTEMS
 from ._errors import (
     APIReturnTypeError,
     APIValueError,

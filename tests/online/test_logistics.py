@@ -17,8 +17,8 @@
 import os
 import unittest
 
-import casageo.tools as ct
 import casageo.logistics as cl
+import casageo.tools as ct
 
 
 class TestLogistics(unittest.TestCase):
@@ -27,9 +27,9 @@ class TestLogistics(unittest.TestCase):
         self.client = ct.CasaGeoClient(key)
 
     def test_tsp(self):
+        from geopandas import GeoDataFrame
         from pandas import DataFrame
         from shapely import Point
-        from geopandas import GeoDataFrame
 
         waypoints = DataFrame([
             {
