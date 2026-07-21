@@ -10,11 +10,10 @@ casaGeoTools documentation
 developers, analysts, and data scientists to integrate **location intelligence**
 into their workflows with just a few lines of code.
 
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   casageo.tools
-   casageo.coder
-   casageo.spatial
-   casageo.logistics
+   library
+   QGIS Plugin <qgis/index>
