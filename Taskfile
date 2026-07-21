@@ -31,8 +31,13 @@ run-checks() {
 }
 
 run-tests() {
+	run-version-tests
 	run-smoke-tests
 	run-unit-tests
+}
+
+run-version-tests() {
+	uv run tests/offline/version_test.py
 }
 
 run-smoke-tests() {
