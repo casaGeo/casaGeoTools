@@ -128,7 +128,7 @@ class AddressResult(CasaGeoResult):
         if id_ is None:
             id_ = 1
 
-        def item2row(item, subid: int, navid: int = 0) -> dict[str, Any]:
+        def item2row(item, subid: int, navid: int = -1) -> dict[str, Any]:
             row = {}
 
             address = item.get("address", {})
@@ -211,9 +211,9 @@ class AddressResult(CasaGeoResult):
             data.append(item2row(item, subid))
 
             if navigation_points:
-                for navindex, navpos in enumerate(item.get("access", [])):
+                for navid, navpos in enumerate(item.get("access", [])):
                     navitem = item | {"position": navpos, "access": None}
-                    data.append(item2row(navitem, subid, navindex + 1))
+                    data.append(item2row(navitem, subid, navid))
 
         if not data:
             return GeoDataFrame()
@@ -270,7 +270,7 @@ class PoiResult(CasaGeoResult):
         if id_ is None:
             id_ = 1
 
-        def item2row(item, subid: int, navid: int = 0) -> dict[str, Any]:
+        def item2row(item, subid: int, navid: int = -1) -> dict[str, Any]:
             row = {}
 
             address = item.get("address", {})
@@ -334,9 +334,9 @@ class PoiResult(CasaGeoResult):
             data.append(item2row(item, subid))
 
             if navigation_points:
-                for navindex, navpos in enumerate(item.get("access", [])):
+                for navid, navpos in enumerate(item.get("access", [])):
                     navitem = item | {"position": navpos, "access": None}
-                    data.append(item2row(navitem, subid, navindex + 1))
+                    data.append(item2row(navitem, subid, navid))
 
         if not data:
             return GeoDataFrame()
