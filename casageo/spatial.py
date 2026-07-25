@@ -791,7 +791,7 @@ def routesvia(
         exclude_countries=exclude_countries,
         with_departure_info=with_departure_info,
         with_arrival_info=with_arrival_info,
-    )
+    ).dataframe()
     return cast(GeoDataFrame, df)
 
 
