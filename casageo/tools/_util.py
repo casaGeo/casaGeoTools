@@ -19,9 +19,9 @@
 import contextlib
 import re
 from collections import ChainMap
-from collections.abc import Callable, Generator, Mapping, MutableMapping
+from collections.abc import Callable, Generator, Mapping, MutableMapping, Sequence
 from datetime import datetime, timedelta
-from typing import Any, cast
+from typing import Any, cast, overload
 
 import flexpolyline.decoding
 import numpy as np
@@ -87,7 +87,7 @@ def flexpolyline_points(encoded: str) -> np.ndarray:
     ])
 
 
-def dict_to_point(pos: dict) -> Point | None:
+def dict_to_point(pos: Mapping[str, Any], /) -> Point | None:
     with contextlib.suppress(KeyError):
         return Point(pos["lng"], pos["lat"], pos["elv"])
     with contextlib.suppress(KeyError):
@@ -95,8 +95,8 @@ def dict_to_point(pos: dict) -> Point | None:
     return None
 
 
-def list_first[T](lst: list[T]) -> T | None:
-    return lst[0] if lst else None
+def list_first[T, D](lst: Sequence[T], /, default: D = None) -> T | D:
+    return lst[0] if lst else default
 
 
 def rename(newname: str):
@@ -107,7 +107,49 @@ def rename(newname: str):
     return decorator
 
 
-def and_then(val, *funcs: Callable):
+@overload
+def and_then[T0](val: T0, /) -> T0: ...
+@overload
+def and_then[T0, T1](
+    val: T0 | None,
+    f1: Callable[[T0], T1 | None],
+    /,
+) -> T1 | None: ...
+@overload
+def and_then[T0, T1, T2](
+    val: T0 | None,
+    f1: Callable[[T0], T1 | None],
+    f2: Callable[[T1], T2 | None],
+    /,
+) -> T2 | None: ...
+@overload
+def and_then[T0, T1, T2, T3](
+    val: T0 | None,
+    f1: Callable[[T0], T1 | None],
+    f2: Callable[[T1], T2 | None],
+    f3: Callable[[T2], T3 | None],
+    /,
+) -> T3 | None: ...
+@overload
+def and_then[T0, T1, T2, T3, T4](
+    val: T0 | None,
+    f1: Callable[[T0], T1 | None],
+    f2: Callable[[T1], T2 | None],
+    f3: Callable[[T2], T3 | None],
+    f4: Callable[[T3], T4 | None],
+    /,
+) -> T4 | None: ...
+@overload
+def and_then[T0, T1, T2, T3, T4, T5](
+    val: T0 | None,
+    f1: Callable[[T0], T1 | None],
+    f2: Callable[[T1], T2 | None],
+    f3: Callable[[T2], T3 | None],
+    f4: Callable[[T3], T4 | None],
+    f5: Callable[[T4], T5 | None],
+    /,
+) -> T5 | None: ...
+def and_then(val: Any | None, /, *funcs: Callable[[Any], Any | None]) -> Any | None:
     for func in funcs:
         if val is None:
             break
@@ -119,15 +161,15 @@ def isscalarna(x: Any) -> bool:
     return pd.api.types.is_scalar(x) and cast(bool, pd.isna(x))
 
 
-def delna(d: dict) -> dict:
+def delna[K, V](d: Mapping[K, V]) -> dict[K, V]:
     return {k: v for k, v in d.items() if not isscalarna(v)}
 
 
-def replacena(d: dict) -> dict:
+def replacena[K, V](d: Mapping[K, V]) -> dict[K, V | None]:
     return {k: (None if isscalarna(v) else v) for k, v in d.items()}
 
 
-def getpoint(q: Mapping, key: str) -> Point | None:
+def getpoint(q: Mapping[str, Any], key: str) -> Point | None:
     with contextlib.suppress(KeyError):
         return Point(q[key])
     with contextlib.suppress(KeyError):
