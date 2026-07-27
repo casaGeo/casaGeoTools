@@ -142,7 +142,7 @@ class AddressResult(CasaGeoResult):
                 row["address"]          = item.get("title")
                 row["resulttype"]       = item.get("resultType")
                 row["position"]         = and_then(item.get("position"), dict_to_point)
-                row["navigation"]       = and_then(item.get("access"), list_first, dict_to_point)
+                row["navigation"]       = and_then(item.get("access"), dict_to_point)
                 row["distance"]         = item.get("distance")
                 row["relevance"]        = scoring.get("queryScore")
                 row["timestamp"]        = self._timestamp
@@ -208,10 +208,11 @@ class AddressResult(CasaGeoResult):
 
         data: list[dict] = []
         for subid, item in enumerate(self._data.get("items", [{}])):
-            data.append(item2row(item, subid))
+            accesspoints = item.get("access", [])
+            data.append(item2row(item | {"access": list_first(accesspoints)}, subid))
 
             if navigation_points:
-                for navid, navpos in enumerate(item.get("access", [])):
+                for navid, navpos in enumerate(accesspoints):
                     navitem = item | {"position": navpos, "access": None}
                     data.append(item2row(navitem, subid, navid))
 
@@ -283,7 +284,7 @@ class PoiResult(CasaGeoResult):
                 row["title"]            = item.get("title")
                 row["resulttype"]       = item.get("resultType")
                 row["position"]         = and_then(item.get("position"), dict_to_point)
-                row["navigation"]       = and_then(item.get("access"), list_first, dict_to_point)
+                row["navigation"]       = and_then(item.get("access"), dict_to_point)
                 row["distance"]         = item.get("distance")
                 row["timestamp"]        = self._timestamp
                 # fmt: on
@@ -331,10 +332,11 @@ class PoiResult(CasaGeoResult):
 
         data: list[dict[str, Any]] = []
         for subid, item in enumerate(self._data.get("items", [{}])):
-            data.append(item2row(item, subid))
+            accesspoints = item.get("access", [])
+            data.append(item2row(item | {"access": list_first(accesspoints)}, subid))
 
             if navigation_points:
-                for navid, navpos in enumerate(item.get("access", [])):
+                for navid, navpos in enumerate(accesspoints):
                     navitem = item | {"position": navpos, "access": None}
                     data.append(item2row(navitem, subid, navid))
 
