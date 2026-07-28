@@ -24,6 +24,7 @@ import os
 import statistics
 import sys
 from collections.abc import Collection, Mapping, Sequence
+from enum import StrEnum
 from typing import Any, Final, cast
 
 from geopandas import GeoDataFrame
@@ -43,8 +44,18 @@ from casageo.tools._util import (
 
 # Constants
 
-ADDRESS_NAMES_MODES: Final = ["default", "matched", "normalized"]
-POSTAL_CODE_MODES: Final = ["default", "cityLookup", "districtLookup"]
+
+class AddressNamesMode(StrEnum):
+    DEFAULT = "default"
+    MATCHED = "matched"
+    NORMALIZED = "normalized"
+
+
+class PostalCodeMode(StrEnum):
+    DEFAULT = "default"
+    CITY_LOOKUP = "cityLookup"
+    DISTRICT_LOOKUP = "districtLookup"
+
 
 MIN_LIMIT: Final = 1
 MAX_LIMIT: Final = 100
@@ -63,10 +74,10 @@ DEFAULT_LIMIT: int = 20
 DEFAULT_COUNTRIES: Collection[str] | None = None
 """The default list of countries to restrict the search to."""
 
-DEFAULT_ADDRESS_NAMES_MODE: str = "default"
+DEFAULT_ADDRESS_NAMES_MODE: AddressNamesMode = AddressNamesMode.DEFAULT
 """The default address names mode."""
 
-DEFAULT_POSTAL_CODE_MODE: str = "default"
+DEFAULT_POSTAL_CODE_MODE: PostalCodeMode = PostalCodeMode.DEFAULT
 """The default postal code mode."""
 
 
@@ -634,12 +645,12 @@ def _main(args: Sequence[str] | None = None) -> None:
     )
     common_params.add_argument(
         "--address-names-mode",
-        choices=ADDRESS_NAMES_MODES,
+        choices=list(AddressNamesMode),
         help="the address names mode",
     )
     common_params.add_argument(
         "--postal-code-mode",
-        choices=POSTAL_CODE_MODES,
+        choices=list(PostalCodeMode),
         help="the postal code mode",
     )
     common_params.add_argument(

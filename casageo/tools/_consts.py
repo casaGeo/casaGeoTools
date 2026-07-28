@@ -14,8 +14,12 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
+from enum import StrEnum
 from typing import Final
 
 SERVER: Final = "https://cg-license.casageo.eu/"
 
-UNIT_SYSTEMS: Final = ["metric", "imperial"]
+
+class UnitSystem(StrEnum):
+    METRIC = "metric"
+    IMPERIAL = "imperial"

@@ -21,7 +21,7 @@ used throughout the casaGeoTools library.
 
 __all__ = [  # noqa: RUF022
     "SERVER",
-    "UNIT_SYSTEMS",
+    "UnitSystem",
     #
     "CasaGeoClient",
     #
@@ -34,7 +34,7 @@ __all__ = [  # noqa: RUF022
 ]
 
 from ._client import CasaGeoClient
-from ._consts import SERVER, UNIT_SYSTEMS
+from ._consts import SERVER, UnitSystem
 from ._errors import (
     APIReturnTypeError,
     APIValueError,

@@ -25,6 +25,7 @@ import os
 import sys
 from collections.abc import Collection, Mapping, Sequence
 from datetime import datetime
+from enum import StrEnum
 from typing import Any, Final, cast
 
 from geopandas import GeoDataFrame
@@ -34,7 +35,7 @@ from shapely import (
     MultiPolygon,
 )
 
-from casageo.tools import UNIT_SYSTEMS, CasaGeoClient, CasaGeoError, _util
+from casageo.tools import CasaGeoClient, CasaGeoError, UnitSystem, _util
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
@@ -49,31 +50,56 @@ from casageo.tools._util import (
 
 # Constants
 
-RANGE_TYPES: Final = ["time", "distance"]
-RANGE_UNITS: Final = ["minutes", "meters"]
-RANGE_TYPE_BY_UNIT: Final = {
-    "minutes": "time",
-    "meters": "distance",
-}
-RANGE_UNIT_BY_TYPE: Final = {
-    "time": "minutes",
-    "distance": "meters",
+
+class RangeType(StrEnum):
+    TIME = "time"
+    DISTANCE = "distance"
+
+
+class RangeUnit(StrEnum):
+    MINUTES = "minutes"
+    METERS = "meters"
+
+
+class TransportMode(StrEnum):
+    CAR = "car"
+    PEDESTRIAN = "pedestrian"
+    BICYCLE = "bicycle"
+    TRUCK = "truck"
+
+
+class RoutingMode(StrEnum):
+    FAST = "fast"
+    SHORT = "short"
+
+
+class DirectionType(StrEnum):
+    OUTGOING = "outgoing"
+    INCOMING = "incoming"
+
+
+class AvoidableFeature(StrEnum):
+    SEASONAL_CLOSURE = "seasonalClosure"
+    TOLL_ROAD = "tollRoad"
+    CONTROLLED_ACCESS_HIGHWAY = "controlledAccessHighway"
+    FERRY = "ferry"
+    CAR_SHUTTLE_TRAIN = "carShuttleTrain"
+    TUNNEL = "tunnel"
+    DIRT_ROAD = "dirtRoad"
+    # U-Turns is not supported for pedestrian, bicycle and scooter transport modes.
+    U_TURNS = "uTurns"
+
+
+RANGE_TYPE_BY_UNIT: Final[Mapping[str, RangeType]] = {
+    RangeUnit.MINUTES: RangeType.TIME,
+    RangeUnit.METERS: RangeType.DISTANCE,
 }
 
-TRANSPORT_MODES: Final = ["car", "pedestrian", "bicycle", "truck"]
-ROUTING_MODES: Final = ["fast", "short"]
-DIRECTION_TYPES: Final = ["outgoing", "incoming"]
+RANGE_COEFFICIENT_BY_UNIT: Final[Mapping[str, int]] = {
+    RangeUnit.MINUTES: 60,
+    RangeUnit.METERS: 1,
+}
 
-AVOIDABLE_FEATURES: Final = [
-    "carShuttleTrain",
-    "controlledAccessHighway",
-    "dirtRoad",
-    "ferry",
-    "seasonalClosure",
-    "tollRoad",
-    "tunnel",
-    "uTurns",  # Not supported for pedestrian, bicycle and scooter transport modes.
-]
 
 MIN_ALTERNATIVES: Final = 0
 MAX_ALTERNATIVES: Final = 6
@@ -83,16 +109,16 @@ MAX_ALTERNATIVES: Final = 6
 DEFAULT_LANGUAGE: str = "en-US"
 """The default language used in the results."""
 
-DEFAULT_UNIT_SYSTEM: str = "metric"
+DEFAULT_UNIT_SYSTEM: UnitSystem = UnitSystem.METRIC
 """The default unit system used in the results."""
 
-DEFAULT_TRANSPORT_MODE: str = "car"
+DEFAULT_TRANSPORT_MODE: TransportMode = TransportMode.CAR
 """The default transport mode."""
 
-DEFAULT_ROUTING_MODE: str = "fast"
+DEFAULT_ROUTING_MODE: RoutingMode = RoutingMode.FAST
 """The default routing mode."""
 
-DEFAULT_DIRECTION: str = "outgoing"
+DEFAULT_DIRECTION: DirectionType = DirectionType.OUTGOING
 """The default routing direction."""
 
 DEFAULT_DEPARTURE_TIME: datetime | None = None
@@ -112,8 +138,14 @@ DEFAULT_EXCLUDE_COUNTRIES: Collection[str] = ()
 
 # Isolines
 
-DEFAULT_RANGE_UNIT: str = "minutes"
+DEFAULT_RANGE_UNIT: RangeUnit = RangeUnit.MINUTES
 """The default unit for range values."""
+
+RESULT_RANGE_UNIT_BY_TYPE: dict[str, RangeUnit] = {
+    RangeType.TIME: RangeUnit.MINUTES,
+    RangeType.DISTANCE: RangeUnit.METERS,
+}
+"""The unit for returned range values by type."""
 
 # Routes
 
@@ -206,7 +238,7 @@ class IsolinesResult(CasaGeoResult):
     @staticmethod
     def _range_unit(isoline: dict[str, Any]) -> str | None:
         try:
-            return RANGE_UNIT_BY_TYPE[isoline["range"]["type"]]
+            return RESULT_RANGE_UNIT_BY_TYPE[isoline["range"]["type"]]
         except KeyError:
             return None
 
@@ -218,8 +250,8 @@ class IsolinesResult(CasaGeoResult):
             return None
 
         # We interpret range_values as minutes, while HERE interprets them as seconds.
-        if IsolinesResult._range_type(isoline) == "time":
-            value /= 60
+        if (unit := IsolinesResult._range_unit(isoline)) is not None:
+            value /= RANGE_COEFFICIENT_BY_UNIT.get(unit, 1)
 
         return value
 
@@ -772,8 +804,8 @@ def routesvia(
     waypoints: DataFrame,
     *,
     alternatives: int = 0,
-    transport_mode: str = TRANSPORT_MODES[0],
-    routing_mode: str = ROUTING_MODES[0],
+    transport_mode: str = TransportMode.CAR,
+    routing_mode: str = RoutingMode.FAST,
     departure_time: datetime | str | None = None,
     arrival_time: datetime | str | None = None,
     avoid_features: Collection[str] = (),
@@ -802,8 +834,8 @@ def routesvia_result(
     waypoints: DataFrame,
     *,
     alternatives: int = 0,
-    transport_mode: str = TRANSPORT_MODES[0],
-    routing_mode: str = ROUTING_MODES[0],
+    transport_mode: str = TransportMode.CAR,
+    routing_mode: str = RoutingMode.FAST,
     departure_time: datetime | str | None = None,
     arrival_time: datetime | str | None = None,
     avoid_features: Collection[str] = (),
@@ -883,19 +915,19 @@ def _main(args: Sequence[str] | None = None) -> None:
     common_params.add_argument(
         "--unit-system",
         default=DEFAULT_UNIT_SYSTEM,
-        choices=UNIT_SYSTEMS,
+        choices=list(UnitSystem),
         help="the system of units to use for localized quantities",
     )
     common_params.add_argument(
         "--transport-mode",
         default=DEFAULT_TRANSPORT_MODE,
-        choices=TRANSPORT_MODES,
+        choices=list(TransportMode),
         help="the mode of transport used for routing",
     )
     common_params.add_argument(
         "--routing-mode",
         default=DEFAULT_ROUTING_MODE,
-        choices=ROUTING_MODES,
+        choices=list(RoutingMode),
         help="whether to prefer 'fast' or 'short' routes",
     )
     common_params.add_argument(
@@ -958,14 +990,14 @@ def _main(args: Sequence[str] | None = None) -> None:
     isolines_params.add_argument(
         "--unit",
         default=DEFAULT_RANGE_UNIT,
-        choices=RANGE_UNITS,
+        choices=list(RangeUnit),
         help="the unit of the range values",
         dest="ranges_unit",
     )
     isolines_params.add_argument(
         "--direction",
         default=DEFAULT_DIRECTION,
-        choices=DIRECTION_TYPES,
+        choices=list(DirectionType),
         help="the direction of travel relative to the center point",
     )
 
