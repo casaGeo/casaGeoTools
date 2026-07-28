@@ -104,10 +104,10 @@ DEFAULT_ARRIVAL_TIME: datetime | None = None
 DEFAULT_TRAFFIC: bool = False
 """The default setting of the traffic option."""
 
-DEFAULT_AVOID_FEATURES: tuple[str, ...] = ()
+DEFAULT_AVOID_FEATURES: Collection[str] = ()
 """The default list of route features to avoid."""
 
-DEFAULT_EXCLUDE_COUNTRIES: tuple[str, ...] = ()
+DEFAULT_EXCLUDE_COUNTRIES: Collection[str] = ()
 """The default list of countries to exclude from the search."""
 
 # Isolines
@@ -124,7 +124,7 @@ DEFAULT_ALTERNATIVES: int = 0
 _logger = logging.getLogger(__name__)
 
 
-def _spatial_params(q: Mapping) -> dict:
+def _spatial_params(q: Mapping[str, Any]) -> dict[str, Any]:
     return {
         "language": q.get("language", DEFAULT_LANGUAGE),
         "unit_system": q.get("unit_system", DEFAULT_UNIT_SYSTEM),
@@ -144,7 +144,9 @@ def _spatial_params(q: Mapping) -> dict:
     }
 
 
-def _isolines_ranges_unit(q: Mapping, default: str | None = None) -> str | None:
+def _isolines_ranges_unit(
+    q: Mapping[str, Any], default: str | None = None
+) -> str | None:
     match q.get("ranges_unit"):
         case None:
             pass
@@ -176,7 +178,7 @@ class IsolinesResult(CasaGeoResult):
     """
 
     @staticmethod
-    def _geometry(isoline: dict) -> MultiPolygon | None:
+    def _geometry(isoline: dict[str, Any]) -> MultiPolygon | None:
         try:
             polygons = isoline["polygons"]
         except KeyError:
@@ -195,21 +197,21 @@ class IsolinesResult(CasaGeoResult):
         ])
 
     @staticmethod
-    def _range_type(isoline: dict) -> str | None:
+    def _range_type(isoline: dict[str, Any]) -> str | None:
         try:
             return isoline["range"]["type"]
         except KeyError:
             return None
 
     @staticmethod
-    def _range_unit(isoline: dict) -> str | None:
+    def _range_unit(isoline: dict[str, Any]) -> str | None:
         try:
             return RANGE_UNIT_BY_TYPE[isoline["range"]["type"]]
         except KeyError:
             return None
 
     @staticmethod
-    def _range_value(isoline: dict) -> float | None:
+    def _range_value(isoline: dict[str, Any]) -> float | None:
         try:
             value = float(isoline["range"]["value"])
         except KeyError:
@@ -252,7 +254,7 @@ class IsolinesResult(CasaGeoResult):
         if id_ is None:
             id_ = 1
 
-        data: list[dict] = []
+        data: list[dict[str, Any]] = []
         for index, isoline in enumerate(self._data.get("isolines", [{}])):
             data.append(row := {})
 
@@ -306,7 +308,7 @@ class IsolinesResult(CasaGeoResult):
         """Return ``True`` if the API response includes departure information."""
         return "departure" in self._data
 
-    def departure_info(self) -> dict | None:
+    def departure_info(self) -> dict[str, Any] | None:
         """
         Return departure information, if available.
 
@@ -349,7 +351,7 @@ class IsolinesResult(CasaGeoResult):
         """Return ``True`` if the API response includes arrival information."""
         return "arrival" in self._data
 
-    def arrival_info(self) -> dict | None:
+    def arrival_info(self) -> dict[str, Any] | None:
         """
         Return arrival information, if available.
 
@@ -396,7 +398,7 @@ class RoutesResult(CasaGeoResult):
     """
 
     @staticmethod
-    def _geometry(route: dict) -> MultiLineString | None:
+    def _geometry(route: dict[str, Any]) -> MultiLineString | None:
         try:
             return MultiLineString([
                 _util.flexpolyline_points(section["polyline"])
@@ -406,14 +408,14 @@ class RoutesResult(CasaGeoResult):
             return None
 
     @staticmethod
-    def _length(route: dict) -> float:
+    def _length(route: dict[str, Any]) -> float:
         return sum(
             section.get("summary", {}).get("length", math.nan)
             for section in route.get("sections", [])
         )
 
     @staticmethod
-    def _duration(route: dict) -> float:
+    def _duration(route: dict[str, Any]) -> float:
         duration_seconds = sum(
             section.get("summary", {}).get("duration", math.nan)
             for section in route.get("sections", [])
@@ -451,7 +453,7 @@ class RoutesResult(CasaGeoResult):
         if id_ is None:
             id_ = 1
 
-        data: list[dict] = []
+        data: list[dict[str, Any]] = []
         for index, route in enumerate(self._data.get("routes", [{}])):
             data.append(row := {})
 
@@ -500,7 +502,7 @@ class RoutesResult(CasaGeoResult):
 
         return df
 
-    def departure_info(self, route: int, section: int = 0) -> dict | None:
+    def departure_info(self, route: int, section: int = 0) -> dict[str, Any] | None:
         """
         Returns departure information for a specific route or section.
 
@@ -545,7 +547,7 @@ class RoutesResult(CasaGeoResult):
             "queryposition": and_then(place.get("originalLocation"), dict_to_point),
         }
 
-    def arrival_info(self, route: int, section: int = -1) -> dict | None:
+    def arrival_info(self, route: int, section: int = -1) -> dict[str, Any] | None:
         """
         Returns arrival information for a specific route or section.
 
@@ -593,7 +595,7 @@ class RoutesResult(CasaGeoResult):
 def isolines(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict | None = None,
+    defaults: dict[str, Any] | None = None,
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
@@ -635,11 +637,11 @@ def isolines(
 def isolines_result(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict | None = None,
+    defaults: dict[str, Any] | None = None,
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
-) -> MultiResult:
+) -> MultiResult[IsolinesResult]:
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []
@@ -681,7 +683,7 @@ def isolines_result(
 def routes(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict | None = None,
+    defaults: dict[str, Any] | None = None,
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
@@ -723,11 +725,11 @@ def routes(
 def routes_result(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict | None = None,
+    defaults: dict[str, Any] | None = None,
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
-) -> MultiResult:
+) -> MultiResult[RoutesResult]:
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []

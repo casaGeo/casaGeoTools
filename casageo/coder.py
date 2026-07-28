@@ -23,7 +23,7 @@ import logging
 import os
 import statistics
 import sys
-from collections.abc import Mapping, Sequence
+from collections.abc import Collection, Mapping, Sequence
 from typing import Any, Final, cast
 
 from geopandas import GeoDataFrame
@@ -60,7 +60,7 @@ DEFAULT_POLITICAL_VIEW: str | None = None
 DEFAULT_LIMIT: int = 20
 """The default limit on the number of computed results."""
 
-DEFAULT_COUNTRIES: tuple[str, ...] | None = None
+DEFAULT_COUNTRIES: Collection[str] | None = None
 """The default list of countries to restrict the search to."""
 
 DEFAULT_ADDRESS_NAMES_MODE: str = "default"
@@ -77,7 +77,7 @@ def _average(nums):
     return statistics.mean(nums) if nums else None
 
 
-def _coder_params(q: Mapping) -> dict:
+def _coder_params(q: Mapping[str, Any]) -> dict[str, Any]:
     return {
         "language": q.get("language", DEFAULT_LANGUAGE),
         "political_view": q.get("political_view", DEFAULT_POLITICAL_VIEW),
@@ -206,7 +206,7 @@ class AddressResult(CasaGeoResult):
 
             return row
 
-        data: list[dict] = []
+        data: list[dict[str, Any]] = []
         for subid, item in enumerate(self._data.get("items", [{}])):
             accesspoints = item.get("access", [])
             data.append(item2row(item | {"access": list_first(accesspoints)}, subid))
@@ -359,7 +359,7 @@ class PoiResult(CasaGeoResult):
         """
         Returns a DataFrame containing category information about the search results.
         """
-        data: list[dict] = []
+        data: list[dict[str, Any]] = []
         for index, item in enumerate(self._data.get("items", [])):
             for category in item.get("categories", []):
                 data.append(row := {})
@@ -376,7 +376,7 @@ class PoiResult(CasaGeoResult):
         """
         Returns a DataFrame containing contact information about the search results.
         """
-        data: list[dict] = []
+        data: list[dict[str, Any]] = []
         for index, item in enumerate(self._data.get("items", [])):
             for contact_map in item.get("contacts", []):
                 for contact_type, contact_info_list in contact_map.items():
@@ -399,7 +399,7 @@ class PoiResult(CasaGeoResult):
 def address(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict | None = None,
+    defaults: dict[str, Any] | None = None,
     *,
     address_details: bool = False,
     coordinates: bool = False,
@@ -448,13 +448,13 @@ def address(
 def address_result(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict | None = None,
+    defaults: dict[str, Any] | None = None,
     *,
     address_details: bool = False,
     coordinates: bool = False,
     match_quality: bool = False,
     navigation_points: bool = False,
-) -> MultiResult:
+) -> MultiResult[AddressResult]:
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []
@@ -504,7 +504,7 @@ def address_result(
 def poi(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict | None = None,
+    defaults: dict[str, Any] | None = None,
     *,
     address_details: bool = False,
     coordinates: bool = False,
@@ -553,13 +553,13 @@ def poi(
 def poi_result(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict | None = None,
+    defaults: dict[str, Any] | None = None,
     *,
     address_details: bool = False,
     coordinates: bool = False,
     category_codes: bool = False,
     navigation_points: bool = False,
-) -> MultiResult:
+) -> MultiResult[PoiResult]:
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []
