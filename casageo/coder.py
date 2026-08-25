@@ -112,7 +112,6 @@ class AddressResult(CasaGeoResult):
         address_details: bool = False,
         coordinates: bool = False,
         match_quality: bool = False,
-        navigation_points: bool = False,
         error_info: bool = False,
     ) -> GeoDataFrame:
         """
@@ -127,7 +126,6 @@ class AddressResult(CasaGeoResult):
             address_details: Include additional address details in the result.
             coordinates: Include numeric coordinate columns in the result.
             match_quality: Include match quality scores in the result.
-            navigation_points: Include navigation points in the result.
             error_info: Include error information in the result.
 
         Returns:
@@ -248,7 +246,6 @@ class PoiResult(CasaGeoResult):
         address_details: bool = False,
         coordinates: bool = False,
         category_codes: bool = False,
-        navigation_points: bool = False,
         error_info: bool = False,
     ) -> GeoDataFrame:
         """
@@ -263,7 +260,6 @@ class PoiResult(CasaGeoResult):
             address_details: Include additional address details in the result.
             coordinates: Include numeric coordinate columns in the result.
             category_codes: Include category, chain and food type IDs in the result.
-            navigation_points: Include navigation points in the result.
             error_info: Include error information in the result.
 
         Returns:
@@ -400,7 +396,6 @@ def address(
     address_details: bool = False,
     coordinates: bool = False,
     match_quality: bool = False,
-    navigation_points: bool = False,
 ) -> GeoDataFrame:
     """
     Geocode addresses.
@@ -414,7 +409,6 @@ def address(
         address_details: Include additional address details in the result.
         coordinates: Include numeric coordinate columns in the result.
         match_quality: Include match quality scores in the result.
-        navigation_points: Include navigation points in the result.
 
     Returns:
         ~geopandas.GeoDataFrame: The list of results as an EPSG:4326
@@ -436,7 +430,6 @@ def address(
         address_details=address_details,
         coordinates=coordinates,
         match_quality=match_quality,
-        navigation_points=navigation_points,
     ).dataframe()
     return cast(GeoDataFrame, df)
 
@@ -449,7 +442,6 @@ def address_result(
     address_details: bool = False,
     coordinates: bool = False,
     match_quality: bool = False,
-    navigation_points: bool = False,
 ) -> MultiResult[AddressResult]:
     """:meta private:"""
 
@@ -465,7 +457,6 @@ def address_result(
         "address_details": address_details,
         "coordinates": coordinates,
         "match_quality": match_quality,
-        "navigation_points": navigation_points,
     }
 
     json = client.request(
@@ -505,7 +496,6 @@ def poi(
     address_details: bool = False,
     coordinates: bool = False,
     category_codes: bool = False,
-    navigation_points: bool = False,
 ) -> GeoDataFrame:
     """
     Search for points of interest (POI) around given positions.
@@ -519,7 +509,6 @@ def poi(
         address_details: Include additional address details in the result.
         coordinates: Include numeric coordinate columns in the result.
         category_codes: Include HERE category, chain and food type identifiers in the result.
-        navigation_points: Include navigation points in the result.
 
     Returns:
         ~geopandas.GeoDataFrame: The list of results as an EPSG:4326
@@ -541,7 +530,6 @@ def poi(
         address_details=address_details,
         coordinates=coordinates,
         category_codes=category_codes,
-        navigation_points=navigation_points,
     ).dataframe()
     return cast(GeoDataFrame, df)
 
@@ -554,7 +542,6 @@ def poi_result(
     address_details: bool = False,
     coordinates: bool = False,
     category_codes: bool = False,
-    navigation_points: bool = False,
 ) -> MultiResult[PoiResult]:
     """:meta private:"""
 
@@ -570,7 +557,6 @@ def poi_result(
         "address_details": address_details,
         "coordinates": coordinates,
         "category_codes": category_codes,
-        "navigation_points": navigation_points,
     }
 
     json = client.request(

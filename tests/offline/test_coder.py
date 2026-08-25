@@ -61,7 +61,6 @@ class TestAddressQuery(unittest.TestCase):
                     "address_details": False,
                     "coordinates": False,
                     "match_quality": False,
-                    "navigation_points": False,
                 },
                 "queries": [
                     {
@@ -184,7 +183,6 @@ class TestPOIQuery(unittest.TestCase):
                     "address_details": False,
                     "coordinates": False,
                     "category_codes": False,
-                    "navigation_points": False,
                 },
                 "queries": [
                     {
