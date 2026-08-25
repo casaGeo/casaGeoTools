@@ -15,6 +15,7 @@
 #  SPDX-License-Identifier: Apache-2.0
 
 import contextlib
+import logging
 import os
 from collections.abc import Generator
 from typing import Any
@@ -24,6 +25,9 @@ import httpx
 from . import _consts
 from ._errors import APIValueError, CasaGeoError, InsufficientCreditsError
 from ._util import and_then
+
+
+_logger = logging.getLogger(__name__)
 
 
 class TokenAuth(httpx.Auth):
@@ -82,6 +86,8 @@ class CasaGeoClient:
         self._httpxclient = httpx.Client(auth=TokenAuth(key), base_url=self.server)
 
     def request(self, method: str, url: str, *, json: Any | None = None) -> Any:
+        _logger.debug("Request: %s %s %r", method, url, json)
+
         response = self._httpxclient.request(method, url, json=json)
         if response.is_success:
             return response.json()
