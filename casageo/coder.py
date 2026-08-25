@@ -36,7 +36,6 @@ from casageo.tools._util import (
     and_then,
     dict_to_point,
     getpoint,
-    list_first,
     point_xy,
     split_if_str,
     to_records,
@@ -139,7 +138,7 @@ class AddressResult(CasaGeoResult):
         if id_ is None:
             id_ = 1
 
-        def item2row(item, subid: int, navid: int = -1) -> dict[str, Any]:
+        def item2row(item, subid: int, navid: int) -> dict[str, Any]:
             row = {}
 
             address = item.get("address", {})
@@ -217,18 +216,11 @@ class AddressResult(CasaGeoResult):
 
             return row
 
-        data: list[dict[str, Any]] = []
-        for subid, item in enumerate(self._data.get("items", [{}])):
-            accesspoints = item.get("access", [])
-            data.append(item2row(item | {"access": list_first(accesspoints)}, subid))
-
-            if navigation_points:
-                for navid, navpos in enumerate(accesspoints):
-                    navitem = item | {"position": navpos, "access": None}
-                    data.append(item2row(navitem, subid, navid))
-
-        if not data:
-            return GeoDataFrame()
+        data = [
+            item2row(item | {"access": access}, subid, navid)
+            for subid, item in enumerate(self._data.get("items") or [{}])
+            for navid, access in enumerate(item.get("access") or [None])
+        ]
 
         df = GeoDataFrame(data, geometry="position", crs="EPSG:4326")
 
@@ -282,7 +274,7 @@ class PoiResult(CasaGeoResult):
         if id_ is None:
             id_ = 1
 
-        def item2row(item, subid: int, navid: int = -1) -> dict[str, Any]:
+        def item2row(item, subid: int, navid: int) -> dict[str, Any]:
             row = {}
 
             address = item.get("address", {})
@@ -341,18 +333,11 @@ class PoiResult(CasaGeoResult):
 
             return row
 
-        data: list[dict[str, Any]] = []
-        for subid, item in enumerate(self._data.get("items", [{}])):
-            accesspoints = item.get("access", [])
-            data.append(item2row(item | {"access": list_first(accesspoints)}, subid))
-
-            if navigation_points:
-                for navid, navpos in enumerate(accesspoints):
-                    navitem = item | {"position": navpos, "access": None}
-                    data.append(item2row(navitem, subid, navid))
-
-        if not data:
-            return GeoDataFrame()
+        data = [
+            item2row(item | {"access": access}, subid, navid)
+            for subid, item in enumerate(self._data.get("items") or [{}])
+            for navid, access in enumerate(item.get("access") or [None])
+        ]
 
         df = GeoDataFrame(data, geometry="position", crs="EPSG:4326")
 
