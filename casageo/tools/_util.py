@@ -170,8 +170,10 @@ def replacena[K, V](d: Mapping[K, V]) -> dict[K, V | None]:
 
 
 def getpoint(q: Mapping[str, Any], key: str) -> Point | None:
+    # FIXME: Dataframes may return None instead of KeyError
     with contextlib.suppress(KeyError):
-        return Point(q[key])
+        if (p := q[key]) is not None:
+            return Point(p)
     with contextlib.suppress(KeyError):
         lng = q[f"{key}_longitude"]
         lat = q[f"{key}_latitude"]

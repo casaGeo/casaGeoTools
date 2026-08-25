@@ -15,6 +15,7 @@
 
 ### Fixed
 
+- Fix `TypeError` when `position` is `None`
 - Fix `KeyError` when no navigation points are returned
 
 
