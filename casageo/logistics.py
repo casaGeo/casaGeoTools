@@ -19,9 +19,10 @@ This module provides operations for logistical calculations.
 """
 
 import logging
-from collections.abc import Collection, Sequence
+from collections.abc import Collection
 from datetime import datetime, timedelta
-from typing import Any, Final, cast
+from enum import StrEnum
+from typing import Any, cast
 
 import pandas as pd
 from geopandas import GeoDataFrame
@@ -41,74 +42,84 @@ from casageo.tools._util import (
     to_records,
 )
 
-AVOIDABLE_FEATURES: Final[Sequence[str]] = [
-    "tollroad",
-    "motorway",
-    "boatFerry",
-    "railFerry",
-    "tunnel",
-    "dirtRoad",
-    "park",
-    "uTurns",
-]
-"""Features that can be avoided."""
 
-CLUSTERING_MODES: Final[Sequence[str]] = [
-    "drivingDistance",
-    "topologySegment",
-]
-"""Supported clustering modes."""
+class AvoidableFeature(StrEnum):
+    """Features that can be avoided."""
 
-OPTIMIZATION_TARGETS: Final[Sequence[str]] = [
-    "time",
-    "distance",
-]
-"""Supported optimization targets."""
+    TOLLROAD = "tollroad"
+    MOTORWAY = "motorway"
+    BOAT_FERRY = "boatFerry"
+    RAIL_FERRY = "railFerry"
+    TUNNEL = "tunnel"
+    DIRT_ROAD = "dirtRoad"
+    PARK = "park"
+    U_TURNS = "uTurns"
 
-ROUTING_MODES: Final[Sequence[str]] = [
-    "fast",
-    "short",
-]
-"""Supported routing modes."""
 
-ROUTING_PROFILES: Final[Sequence[str]] = [
-    "carFast",
-    "carShort",
-    "truckFast",
-    "pedestrian",
-    "bicycle",
-]
-"""Supported matrix routing profiles."""
+class ClusteringMode(StrEnum):
+    """Supported clustering modes."""
 
-TRANSPORT_MODES: Final[Sequence[str]] = [
-    "car",
-    "pedestrian",
-    "bicycle",
-    "truck",
-]
-"""Supported transport modes."""
+    DRIVING_DISTANCE = "drivingDistance"
+    TOPOLOGY_SEGMENT = "topologySegment"
 
-HAZARDOUS_CARGO_TYPES: Final[Sequence[str]] = [
-    "explosive",
-    "gas",
-    "flammable",
-    "combustible",
-    "organic",
-    "poison",
-    "radioActive",
-    "corrosive",
-    "poisonousInhalation",
-    "harmfulToWater",
-    "other",
-]
-"""Supported types of hazardous cargo."""
+
+class HazardousCargoType(StrEnum):
+    """Supported types of hazardous cargo."""
+
+    EXPLOSIVE = "explosive"
+    GAS = "gas"
+    FLAMMABLE = "flammable"
+    COMBUSTIBLE = "combustible"
+    ORGANIC = "organic"
+    POISON = "poison"
+    RADIO_ACTIVE = "radioActive"
+    CORROSIVE = "corrosive"
+    POISONOUS_INHALATION = "poisonousInhalation"
+    HARMFUL_TO_WATER = "harmfulToWater"
+    OTHER = "other"
+
+
+class OptimizationTarget(StrEnum):
+    """Supported optimization targets."""
+
+    TIME = "time"
+    DISTANCE = "distance"
+
+
+class RoutingMode(StrEnum):
+    """Supported routing modes."""
+
+    FAST = "fast"
+    SHORT = "short"
+
+
+class RoutingProfile(StrEnum):
+    """Supported matrix routing profiles."""
+
+    CAR_FAST = "carFast"
+    CAR_SHORT = "carShort"
+    TRUCK_FAST = "truckFast"
+    PEDESTRIAN = "pedestrian"
+    BICYCLE = "bicycle"
+
+
+class TransportMode(StrEnum):
+    """Supported transport modes."""
+
+    CAR = "car"
+    PEDESTRIAN = "pedestrian"
+    BICYCLE = "bicycle"
+    TRUCK = "truck"
 
 
 _logger = logging.getLogger(__name__)
 
 
 def _fcs_errmsg(fcs: list[dict[str, Any]]) -> str:
-    return ", ".join(f"FAILED {f.get('constraint')!r} ({f.get('reason')})" for f in fcs)
+    return ", ".join(
+        f"FAILED {f.get('constraint', '<unknown constraint>')!r} ({f.get('reason', '<unknown reason>')})"
+        for f in fcs
+    )
 
 
 class MatrixResult(CasaGeoResult):
@@ -253,7 +264,7 @@ def matrix(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    profile: str = ROUTING_PROFILES[0],
+    profile: str = RoutingProfile.CAR_FAST,
     with_id: Any = 1,
 ) -> DataFrame:
     mr = matrix_result(
@@ -273,7 +284,7 @@ def matrix_result(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    profile: str = ROUTING_PROFILES[0],
+    profile: str = RoutingProfile.CAR_FAST,
     with_id: Any = 1,
 ) -> MultiResult[MatrixResult]:
     """:meta private:"""
@@ -318,9 +329,9 @@ def tsp(
     clustering: str | None = None,
     break_times: Collection[tuple[datetime | str, timedelta | float | int]] = (),
     rest_schedule: str | None = None,
-    transport_mode: str = TRANSPORT_MODES[0],
-    routing_mode: str = ROUTING_MODES[0],
-    optimize: str = OPTIMIZATION_TARGETS[0],
+    transport_mode: str = TransportMode.CAR,
+    routing_mode: str = RoutingMode.FAST,
+    optimize: str = OptimizationTarget.TIME,
     departure_time: datetime | str | None = None,
     traffic: bool = False,
     avoid_features: Collection[str] = (),
@@ -452,9 +463,9 @@ def tsp_result(
     clustering: str | None = None,
     break_times: Collection[tuple[datetime | str, timedelta | float | int]] = (),
     rest_schedule: str | None = None,
-    transport_mode: str = TRANSPORT_MODES[0],
-    routing_mode: str = ROUTING_MODES[0],
-    optimize: str = OPTIMIZATION_TARGETS[0],
+    transport_mode: str = TransportMode.CAR,
+    routing_mode: str = RoutingMode.FAST,
+    optimize: str = OptimizationTarget.TIME,
     departure_time: datetime | str | None = None,
     traffic: bool = False,
     avoid_features: Collection[str] = (),
