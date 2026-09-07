@@ -211,6 +211,7 @@ def tsp(
     hazardous_cargo: Collection[str] = (),
     walking_speed: int | None = None,  # m/s
     with_coordinates: bool = False,
+    with_id: Any = 1,
 ) -> GeoDataFrame:
     """
     Calculate the shortest path among a set of waypoints.
@@ -273,6 +274,8 @@ def tsp(
             Specifies the pedestrian walking speed in meters per second.
         with_coordinates:
             Whether to include numeric coordinates in the output.
+        with_id:
+            Fixed identifier to be added to each result of this query.
 
     Returns:
         ~geopandas.GeoDataFrame: The sorted list of waypoints as an
@@ -312,6 +315,7 @@ def tsp(
         hazardous_cargo=hazardous_cargo,
         walking_speed=walking_speed,
         with_coordinates=with_coordinates,
+        with_id=with_id,
     ).dataframe()
     return cast(GeoDataFrame, df)
 
@@ -341,6 +345,7 @@ def tsp_result(
     hazardous_cargo: Collection[str] = (),
     walking_speed: int | None = None,  # m/s
     with_coordinates: bool = False,
+    with_id: Any = 1,
 ) -> MultiResult[TSPResult]:
     """:meta private:"""
 
@@ -397,7 +402,7 @@ def tsp_result(
 
     return MultiResult(
         json=json,
-        ids=[1],  # FIXME
+        ids=[with_id],
         options={"coordinates": with_coordinates},
         result_type=TSPResult,
     )
