@@ -4,6 +4,7 @@
 
 ### Added
 
+- Add a logistics module with support for matrix routing and TSP calculations.
 - Add `navid` column to enumerate sub-results for results with multiple navigation points
 - Ignore whitespace in comma-separated lists
 - Add support for library versions `geopandas>=1.0.0`, `numpy>=2.0.0`, `pandas>=2.2.0`
