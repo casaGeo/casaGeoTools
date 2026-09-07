@@ -23,6 +23,7 @@ from collections.abc import Collection, Sequence
 from datetime import datetime, timedelta
 from typing import Any, Final, cast
 
+import pandas as pd
 from geopandas import GeoDataFrame
 from pandas import DataFrame
 
@@ -70,6 +71,15 @@ ROUTING_MODES: Final[Sequence[str]] = [
 ]
 """Supported routing modes."""
 
+ROUTING_PROFILES: Final[Sequence[str]] = [
+    "carFast",
+    "carShort",
+    "truckFast",
+    "pedestrian",
+    "bicycle",
+]
+"""Supported matrix routing profiles."""
+
 TRANSPORT_MODES: Final[Sequence[str]] = [
     "car",
     "pedestrian",
@@ -99,6 +109,59 @@ _logger = logging.getLogger(__name__)
 
 def _fcs_errmsg(fcs: list[dict[str, Any]]) -> str:
     return ", ".join(f"FAILED {f.get('constraint')!r} ({f.get('reason')})" for f in fcs)
+
+
+class MatrixResult(CasaGeoResult):
+    """
+    Represents the result of a matrix routing calculation.
+
+    :meta private:
+    """
+
+    def dataframe(
+        self,
+        id_: Any | None,
+        *,
+        error_info: bool = False,
+        raise_exception: bool = False,
+    ) -> DataFrame:
+        if id_ is None:
+            id_ = 1
+
+        # We don’t really want to have to deal with error info output
+        # columns here, since the matrices can get pretty large and we
+        # don’t support batch requests for logistics calculations anyway.
+        # This way we can keep the dataframe purely numeric.
+        if raise_exception and isinstance(e := self.error(), Exception):
+            raise e
+
+        matrix = self._data.get("matrix", {})
+        num_origins = matrix.get("numOrigins", 0)
+        num_destinations = matrix.get("numDestinations", 0)
+
+        df = DataFrame(
+            index=pd.MultiIndex.from_product(
+                [[id_], range(num_origins), range(num_destinations)],
+                names=["id", "origin", "destination"],
+            )
+        ).reset_index()
+
+        if distances := matrix.get("distances"):
+            df["distance"] = pd.Series(distances)
+        else:
+            df["distance"] = pd.NA
+
+        if travel_times := matrix.get("travelTimes"):
+            df["traveltime"] = pd.Series(travel_times) / 60
+        else:
+            df["traveltime"] = pd.NA
+
+        if error_codes := matrix.get("errorCodes"):
+            df["statuscode"] = pd.Series(error_codes)
+        else:
+            df["statuscode"] = pd.NA
+
+        return df
 
 
 class TSPResult(CasaGeoResult):
@@ -184,6 +247,66 @@ class TSPResult(CasaGeoResult):
             return GeoDataFrame()
 
         return GeoDataFrame(data, geometry="position", crs="EPSG:4326")
+
+
+def matrix(
+    client: CasaGeoClient,
+    waypoints: DataFrame,
+    *,
+    profile: str = ROUTING_PROFILES[0],
+    with_id: Any = 1,
+) -> DataFrame:
+    mr = matrix_result(
+        client,
+        waypoints,
+        profile=profile,
+        with_id=with_id,
+    )
+    # Work around the code in MultiResult to avoid the error info output columns.
+    return cast(MatrixResult, mr[0]).dataframe(
+        id_=with_id,
+        raise_exception=True,
+    )
+
+
+def matrix_result(
+    client: CasaGeoClient,
+    waypoints: DataFrame,
+    *,
+    profile: str = ROUTING_PROFILES[0],
+    with_id: Any = 1,
+) -> MultiResult[MatrixResult]:
+    """:meta private:"""
+
+    options = delna({
+        "profile": profile,
+    })
+
+    points = [
+        delna({
+            "type": and_then(wp.get("type"), str),
+            "position": and_then(getpoint(wp, "position"), point_xy),
+            "streetposition": and_then(getpoint(wp, "streetposition"), point_xy),
+            "placename": and_then(wp.get("placename"), str),
+            "course": and_then(wp.get("course"), int),  # degrees (int)
+            "radius": and_then(wp.get("radius"), int),  # meters (int)
+            "snap": and_then(wp.get("snap"), bool),
+        })
+        for wp in to_records(waypoints)
+    ]
+
+    json = client.request(
+        "POST", "/api/v2/matrix", json={"options": options, "waypoints": points}
+    )
+
+    _logger.debug("Matrix Response: %r", json)
+
+    return MultiResult(
+        json=json,
+        ids=[with_id],
+        options={},
+        result_type=MatrixResult,
+    )
 
 
 def tsp(
