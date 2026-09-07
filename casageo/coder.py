@@ -217,7 +217,7 @@ class AddressResult(CasaGeoResult):
         data = [
             item2row(item | {"access": access}, subid, navid)
             for subid, item in enumerate(self._data.get("items") or [{}])
-            for navid, access in enumerate(item.get("access") or [None])
+            for navid, access in enumerate(item.get("access") or [{}])
         ]
 
         df = GeoDataFrame(data, geometry="position", crs="EPSG:4326")
@@ -332,7 +332,7 @@ class PoiResult(CasaGeoResult):
         data = [
             item2row(item | {"access": access}, subid, navid)
             for subid, item in enumerate(self._data.get("items") or [{}])
-            for navid, access in enumerate(item.get("access") or [None])
+            for navid, access in enumerate(item.get("access") or [{}])
         ]
 
         df = GeoDataFrame(data, geometry="position", crs="EPSG:4326")

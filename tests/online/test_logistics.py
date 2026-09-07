@@ -54,6 +54,6 @@ class TestLogistics(unittest.TestCase):
         self.assertListEqual(result["id"].to_list(), [1, 1, 1])
         self.assertListEqual(result["subid"].to_list(), [0, 1, 2])
         self.assertListEqual(result["name"].to_list(), ["Itzehoe", "Hamburg", "Kiel"])
-        self.assertIsNotNone(result["navigation"].iloc[0])
+        self.assertIsNotNone(result["position"].iloc[0])
         self.assertIsNotNone(result["travel_distance"].iloc[1])
         self.assertIsNotNone(result["travel_duration"].iloc[1])
