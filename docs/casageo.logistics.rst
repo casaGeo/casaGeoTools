@@ -20,6 +20,83 @@ casageo.logistics module
    The functions in this module are single-shot calculations, not batch
    calculations like in :ref:`coder-module` and :ref:`spatial-module`.
 
+   .. _logistics-matrix-queries:
+
+   Matrix Queries
+   ==============
+
+   Calculate a matrix of distance and travel time between waypoints.
+
+   .. _logistics-matrix-query-options:
+
+   Matrix Query Options
+   --------------------
+
+   profile : str
+      The parameter profile to use for route calculation, see
+      :class:`RoutingProfile`.
+
+   .. _logistics-matrix-input-columns:
+
+   Matrix Input Columns
+   --------------------
+
+   The following columns will be read from the input dataframe:
+
+   type : str
+      Either ``"origin"`` or ``"destination"``, the default is ``"origin"``. If
+      no destination waypoints are specified, routes are calculated between all
+      origin waypoints.
+
+   position : :class:`~shapely.Point`
+      Navigation coordinates corresponding to the waypoint. Instead of a
+      geometry object, you may also specify this as two separate fields
+      ``position_latitude`` and ``position_longitude`` of type :class:`float`.
+      **Required**.
+
+   streetposition : :class:`~shapely.Point`
+      Coordinates of the destination corresponding to the waypoint, if any. This
+      is used to select the the correct side of the street where necessary.
+      Instead of a geometry object, you may also specify this as two separate
+      fields ``streetposition_latitude`` and ``streetposition_longitude`` of
+      type :class:`float`.
+
+   placename : str
+      Name of the target destination to select between multiple destinations
+      near the same location.
+
+   course : int
+      Optional.
+
+   radius : int
+      Optional.
+
+   snap : bool
+      Optional.
+
+   .. _logistics-matrix-output-columns:
+
+   Matrix Output Columns
+   ---------------------
+
+   id : Any
+      Fixed identifier added to each result of a query.
+
+   origin : int
+      Index of the origin waypoint in the list of origins.
+
+   destination : int
+      Index of the destination waypoint in the list of destinations.
+
+   distance : int
+      Travel distance between origin and destination in meters.
+
+   traveltime : float
+      Travel time between origin and destination in minutes.
+
+   statuscode : int
+      Zero on success, nonzero if a route could not be calculated.
+
    .. _logistics-tsp-queries:
 
    TSP Queries

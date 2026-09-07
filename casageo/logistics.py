@@ -267,6 +267,35 @@ def matrix(
     profile: str = RoutingProfile.CAR_FAST,
     with_id: Any = 1,
 ) -> DataFrame:
+    """
+    Calculate a matrix of distance and travel time between waypoints.
+
+    See :ref:`logistics-matrix-queries` in the module documentation.
+
+    Args:
+        client (CasaGeoClient):
+            The client object authorizing these queries.
+        waypoints (~pandas.DataFrame):
+            The dataframe of waypoints
+            (see :ref:`logistics-matrix-input-columns`).
+        profile:
+            The parameter profile for route calculation.
+        with_id:
+            Fixed identifier to be added to each result of this query.
+
+    Returns:
+        ~pandas.DataFrame: The matrix of travel distances in meters and
+        travel times in minutes from each origin waypoint to each
+        destination waypoint.
+
+        The shape of the dataframe is described under
+        :ref:`logistics-matrix-output-columns` in the module
+        documentation.
+
+    Raises:
+        InsufficientCreditsError: If the account does not have enough credits.
+        CasaGeoError: If the request could not be executed for another reason.
+    """
     mr = matrix_result(
         client,
         waypoints,
