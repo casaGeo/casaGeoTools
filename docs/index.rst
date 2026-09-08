@@ -16,4 +16,3 @@ into their workflows with just a few lines of code.
    :caption: Contents:
 
    library
-   QGIS Plugin <qgis/index>

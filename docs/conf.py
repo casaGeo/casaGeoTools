@@ -35,7 +35,6 @@ html_static_path = ["_static"]
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#configuration
 
 autodoc_member_order = "bysource"
-autodoc_mock_imports = ["qgis"]
 autodoc_typehints = "description"
 
 # -- Intersphinx configuration ------------------------------------------------
@@ -45,7 +44,6 @@ intersphinx_mapping = {
     "geopandas": ("https://geopandas.org/en/stable/", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
     "pandas": ("https://pandas.pydata.org/docs/", None),
-    "qgis": ("https://qgis.org/pyqgis/master/", None),
     "shapely": ("https://shapely.readthedocs.io/en/stable/", None),
 }
 
