@@ -19,6 +19,7 @@ import logging
 import os
 from collections.abc import Generator
 from typing import Any
+import urllib.parse
 
 import httpx
 
@@ -63,27 +64,56 @@ class CasaGeoClient:
             ``"imperial"``.
 
     Parameters:
-        key: Your casaGeo API key.
+        apikey: Your casaGeo API key. If empty, the ``CASAGEOTOOLS_API_KEY``
+            environment variable will be used instead.
         preferred_language: The preferred language for responses.
         preferred_political_view: The preferred political view for responses.
         preferred_unit_system: The preferred unit system for responses.
+
     """
 
     def __init__(
         self,
-        key: str,
+        apikey: str = "",
         *,
         preferred_language: str | None = None,
         preferred_political_view: str | None = None,
         preferred_unit_system: str | None = None,
-    ):
-        self.server = os.getenv("CASAGEOTOOLS_PROXY_SERVER") or _consts.SERVER
+    ) -> None:
+        self._apikey = apikey or os.getenv("CASAGEOTOOLS_API_KEY", "")
+        if not self._apikey:
+            msg = "You must provide an API key, either directly or using the CASAGEOTOOLS_API_KEY environment variable"
+            raise CasaGeoError(msg)
+
+        self._server = os.getenv("CASAGEOTOOLS_PROXY_SERVER", "") or _consts.SERVER
+        sp = urllib.parse.urlsplit(self._server)
+        if not sp.scheme or not sp.netloc:
+            msg = f"Proxy server URL must have a scheme and netloc: {self._server!r}"
+            raise ValueError(msg)
+        if sp.path and sp.path[-1] != "/":
+            msg = f"Proxy server URL path must have a trailing slash: {self._server!r}"
+            raise ValueError(msg)
+        if sp.query or sp.fragment:
+            msg = f"Proxy server URL must not have query or fragment components: {self._server!r}"
+            raise ValueError(msg)
 
         self.preferred_language = preferred_language
         self.preferred_political_view = preferred_political_view
         self.preferred_unit_system = preferred_unit_system
 
-        self._httpxclient = httpx.Client(auth=TokenAuth(key), base_url=self.server)
+        self._httpxclient = httpx.Client(
+            auth=TokenAuth(self.apikey), base_url=self.server
+        )
+
+    @property
+    def apikey(self) -> str:
+        """Your casaGeo API key."""
+        return self._apikey
+
+    @property
+    def server(self) -> str:
+        """The URL of the casaGeo API server."""
+        return self._server
 
     def request(self, method: str, url: str, *, json: Any | None = None) -> Any:
         _logger.debug("Request: %s %s %r", method, url, json)
