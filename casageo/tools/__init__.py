@@ -31,6 +31,8 @@ __all__ = [  # noqa: RUF022
     "APIValueError",
     "InsufficientCreditsError",
     "SubqueryError",
+    #
+    "get_maptile_url",
 ]
 
 from ._client import CasaGeoClient
@@ -42,3 +44,4 @@ from ._errors import (
     InsufficientCreditsError,
     SubqueryError,
 )
+from ._maptiles import get_maptile_url
