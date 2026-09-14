@@ -22,6 +22,8 @@ from casageo.tools import CasaGeoClient
 def get_maptile_url(
     client: CasaGeoClient,
     *,
+    layer: str = "",
+    proj: str = "",
     style: str = "",
     language: str = "",
     second_language: str = "",
@@ -33,6 +35,8 @@ def get_maptile_url(
 
     Args:
         client: The casaGeo client instance used to retrieve the server URL and API key.
+        layer: Map layer, only ``"base"`` is supported for now.
+        proj: Map projection, only ``"mercator"`` is supported for now.
         style: Style of the map, one of ``"standard"``, ``"light"`` or ``"satellite"``.
         language: Language to use for map labels (BCP 47 language tag).
         second_language: Second language to use for bilingual map labels (BCP 47 language tag).
@@ -45,6 +49,10 @@ def get_maptile_url(
 
     query = {"apikey": client.apikey}
 
+    if layer:
+        query["layer"] = layer
+    if proj:
+        query["proj"] = proj
     if style:
         query["style"] = style
     if language:
