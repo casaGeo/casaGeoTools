@@ -33,6 +33,7 @@ from casageo.tools import CasaGeoClient, CasaGeoError, _util
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
+    delna,
     dict_to_point,
     duplicates,
     get_average,
@@ -79,17 +80,6 @@ DEFAULT_POSTAL_CODE_MODE: Final[PostalCodeMode] = PostalCodeMode.DEFAULT
 
 
 _logger = logging.getLogger(__name__)
-
-
-def _coder_params(q: Mapping[str, Any]) -> dict[str, Any]:
-    return {
-        "language": q.get("language", DEFAULT_LANGUAGE),
-        "political_view": q.get("political_view"),
-        "limit": q.get("limit", DEFAULT_LIMIT),
-        "countries": and_then(q.get("countries"), split_if_str(",")),
-        "address_names_mode": q.get("address_names_mode", DEFAULT_ADDRESS_NAMES_MODE),
-        "postal_code_mode": q.get("postal_code_mode", DEFAULT_POSTAL_CODE_MODE),
-    }
 
 
 class AddressResult(CasaGeoResult):
@@ -440,11 +430,6 @@ def address_result(
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []
-    fallbacks.append(prefs := {})
-    if (language := client.preferred_language) is not None:
-        prefs["language"] = language
-    if (political_view := client.preferred_political_view) is not None:
-        prefs["political_view"] = political_view
 
     ids = queries.get("id", queries.index).to_list()
     if any(dups := duplicates(ids)):
@@ -462,7 +447,7 @@ def address_result(
         json={
             "options": options,
             "queries": [
-                {
+                delna({
                     "address": q.get("address"),
                     "country": q.get("country"),
                     "state": q.get("state"),
@@ -473,8 +458,19 @@ def address_result(
                     "housenumber": q.get("housenumber"),
                     "postalcode": q.get("postalcode"),
                     "position": and_then(getpoint(q, "position"), point_xy),
-                    **_coder_params(q),
-                }
+                    "language": q.get("language", client.preferred_language),
+                    "political_view": q.get(
+                        "political_view", client.preferred_political_view
+                    ),
+                    "limit": q.get("limit", DEFAULT_LIMIT),
+                    "countries": and_then(q.get("countries"), split_if_str(",")),
+                    "address_names_mode": q.get(
+                        "address_names_mode", DEFAULT_ADDRESS_NAMES_MODE
+                    ),
+                    "postal_code_mode": q.get(
+                        "postal_code_mode", DEFAULT_POSTAL_CODE_MODE
+                    ),
+                })
                 for q in to_records(queries, *fallbacks)
             ],
         },
@@ -543,11 +539,6 @@ def poi_result(
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []
-    fallbacks.append(prefs := {})
-    if (language := client.preferred_language) is not None:
-        prefs["language"] = language
-    if (political_view := client.preferred_political_view) is not None:
-        prefs["political_view"] = political_view
 
     ids = queries.get("id", queries.index).to_list()
     if any(dups := duplicates(ids)):
@@ -565,10 +556,21 @@ def poi_result(
         json={
             "options": options,
             "queries": [
-                {
+                delna({
                     "position": and_then(getpoint(q, "position"), point_xy),
-                    **_coder_params(q),
-                }
+                    "language": q.get("language", client.preferred_language),
+                    "political_view": q.get(
+                        "political_view", client.preferred_political_view
+                    ),
+                    "limit": q.get("limit", DEFAULT_LIMIT),
+                    "countries": and_then(q.get("countries"), split_if_str(",")),
+                    "address_names_mode": q.get(
+                        "address_names_mode", DEFAULT_ADDRESS_NAMES_MODE
+                    ),
+                    "postal_code_mode": q.get(
+                        "postal_code_mode", DEFAULT_POSTAL_CODE_MODE
+                    ),
+                })
                 for q in to_records(queries, *fallbacks)
             ],
         },

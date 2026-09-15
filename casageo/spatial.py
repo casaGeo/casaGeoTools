@@ -150,22 +150,6 @@ DEFAULT_ALTERNATIVES: Final[int] = 0
 _logger = logging.getLogger(__name__)
 
 
-def _spatial_params(q: Mapping[str, Any]) -> dict[str, Any]:
-    return {
-        "language": q.get("language", DEFAULT_LANGUAGE),
-        "unit_system": q.get("unit_system", DEFAULT_UNIT_SYSTEM),
-        "transport_mode": q.get("transport_mode", DEFAULT_TRANSPORT_MODE),
-        "routing_mode": q.get("routing_mode", DEFAULT_ROUTING_MODE),
-        "departure_time": q.get("departure_time"),
-        "arrival_time": q.get("arrival_time"),
-        "traffic": q.get("traffic", False),
-        "avoid_features": and_then(q.get("avoid_features", ()), split_if_str(",")),
-        "exclude_countries": and_then(
-            q.get("exclude_countries", ()), split_if_str(",")
-        ),
-    }
-
-
 def _isolines_ranges_unit(
     q: Mapping[Hashable, Any], default: str | None = None
 ) -> str | None:
@@ -653,11 +637,6 @@ def isolines_result(
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []
-    fallbacks.append(prefs := {})
-    if (language := client.preferred_language) is not None:
-        prefs["language"] = language
-    if (unit_system := client.preferred_unit_system) is not None:
-        prefs["unit_system"] = unit_system
 
     ids = queries.get("id", queries.index).to_list()
     if any(dups := duplicates(ids)):
@@ -674,13 +653,25 @@ def isolines_result(
         json={
             "options": options,
             "queries": [
-                {
+                delna({
                     "position": and_then(getpoint(q, "position"), point_xy),
                     "ranges": and_then(q.get("ranges"), split_if_str(",")),
                     "ranges_unit": _isolines_ranges_unit(q, DEFAULT_RANGE_UNIT),
                     "direction": q.get("direction", DEFAULT_DIRECTION),
-                    **_spatial_params(q),
-                }
+                    "language": q.get("language", client.preferred_language),
+                    "unit_system": q.get("unit_system", client.preferred_unit_system),
+                    "transport_mode": q.get("transport_mode", DEFAULT_TRANSPORT_MODE),
+                    "routing_mode": q.get("routing_mode", DEFAULT_ROUTING_MODE),
+                    "departure_time": q.get("departure_time"),
+                    "arrival_time": q.get("arrival_time"),
+                    "traffic": q.get("traffic"),
+                    "avoid_features": and_then(
+                        q.get("avoid_features"), split_if_str(",")
+                    ),
+                    "exclude_countries": and_then(
+                        q.get("exclude_countries"), split_if_str(",")
+                    ),
+                })
                 for q in to_records(queries, *fallbacks)
             ],
         },
@@ -744,11 +735,6 @@ def routes_result(
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []
-    fallbacks.append(prefs := {})
-    if (language := client.preferred_language) is not None:
-        prefs["language"] = language
-    if (unit_system := client.preferred_unit_system) is not None:
-        prefs["unit_system"] = unit_system
 
     ids = queries.get("id", queries.index).to_list()
     if any(dups := duplicates(ids)):
@@ -765,12 +751,24 @@ def routes_result(
         json={
             "options": options,
             "queries": [
-                {
+                delna({
                     "origin": and_then(getpoint(q, "origin"), point_xy),
                     "destination": and_then(getpoint(q, "destination"), point_xy),
                     "alternatives": q.get("alternatives", DEFAULT_ALTERNATIVES),
-                    **_spatial_params(q),
-                }
+                    "language": q.get("language", client.preferred_language),
+                    "unit_system": q.get("unit_system", client.preferred_unit_system),
+                    "transport_mode": q.get("transport_mode", DEFAULT_TRANSPORT_MODE),
+                    "routing_mode": q.get("routing_mode", DEFAULT_ROUTING_MODE),
+                    "departure_time": q.get("departure_time"),
+                    "arrival_time": q.get("arrival_time"),
+                    "traffic": q.get("traffic"),
+                    "avoid_features": and_then(
+                        q.get("avoid_features"), split_if_str(",")
+                    ),
+                    "exclude_countries": and_then(
+                        q.get("exclude_countries"), split_if_str(",")
+                    ),
+                })
                 for q in to_records(queries, *fallbacks)
             ],
         },
