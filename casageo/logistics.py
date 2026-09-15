@@ -22,7 +22,7 @@ import logging
 from collections.abc import Collection
 from datetime import datetime, timedelta
 from enum import StrEnum
-from typing import Any, cast
+from typing import Any, Final, cast
 
 import pandas as pd
 from geopandas import GeoDataFrame
@@ -112,6 +112,10 @@ class TransportMode(StrEnum):
     TRUCK = "truck"
 
 
+DEFAULT_REQUEST_ID: Final[int] = 1
+"""The default ID value for single-shot requests."""
+
+
 _logger = logging.getLogger(__name__)
 
 
@@ -137,7 +141,7 @@ class MatrixResult(CasaGeoResult):
         raise_exception: bool = False,
     ) -> DataFrame:
         if id_ is None:
-            id_ = 1
+            id_ = DEFAULT_REQUEST_ID
 
         # We don’t really want to have to deal with error info output
         # columns here, since the matrices can get pretty large and we
@@ -190,7 +194,7 @@ class TSPResult(CasaGeoResult):
         error_info: bool = False,
     ) -> GeoDataFrame:
         if id_ is None:
-            id_ = 1
+            id_ = DEFAULT_REQUEST_ID
 
         if x := self._data.get("results"):
             result = x[0]
@@ -265,7 +269,7 @@ def matrix(
     waypoints: DataFrame,
     *,
     profile: str = RoutingProfile.CAR_FAST,
-    with_id: Any = 1,
+    with_id: Any = DEFAULT_REQUEST_ID,
 ) -> DataFrame:
     """
     Calculate a matrix of distance and travel time between waypoints.
@@ -314,7 +318,7 @@ def matrix_result(
     waypoints: DataFrame,
     *,
     profile: str = RoutingProfile.CAR_FAST,
-    with_id: Any = 1,
+    with_id: Any = DEFAULT_REQUEST_ID,
 ) -> MultiResult[MatrixResult]:
     """:meta private:"""
 
@@ -374,7 +378,7 @@ def tsp(
     hazardous_cargo: Collection[str] = (),
     walking_speed: int | None = None,  # m/s
     with_coordinates: bool = False,
-    with_id: Any = 1,
+    with_id: Any = DEFAULT_REQUEST_ID,
 ) -> GeoDataFrame:
     """
     Calculate the shortest path among a set of waypoints.
@@ -508,7 +512,7 @@ def tsp_result(
     hazardous_cargo: Collection[str] = (),
     walking_speed: int | None = None,  # m/s
     with_coordinates: bool = False,
-    with_id: Any = 1,
+    with_id: Any = DEFAULT_REQUEST_ID,
 ) -> MultiResult[TSPResult]:
     """:meta private:"""
 

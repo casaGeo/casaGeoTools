@@ -112,6 +112,9 @@ MAX_ALTERNATIVES: Final = 6
 
 # Spatial
 
+DEFAULT_REQUEST_ID: Final[int] = 1
+"""The default ID value for single-shot requests."""
+
 DEFAULT_LANGUAGE: str = "en-US"
 """The default language used in the results."""
 
@@ -290,7 +293,7 @@ class IsolinesResult(CasaGeoResult):
         """
 
         if id_ is None:
-            id_ = 1
+            id_ = DEFAULT_REQUEST_ID
 
         data: list[dict[str, Any]] = []
         for index, isoline in enumerate(self._data.get("isolines", [{}])):
@@ -489,7 +492,7 @@ class RoutesResult(CasaGeoResult):
         """
 
         if id_ is None:
-            id_ = 1
+            id_ = DEFAULT_REQUEST_ID
 
         data: list[dict[str, Any]] = []
         for index, route in enumerate(self._data.get("routes", [{}])):
@@ -824,7 +827,7 @@ def routesvia(
     exclude_countries: Collection[str] = (),
     with_departure_info: bool = False,
     with_arrival_info: bool = False,
-    with_id: Any = 1,
+    with_id: Any = DEFAULT_REQUEST_ID,
 ) -> GeoDataFrame:
     df = routesvia_result(
         client,
@@ -856,7 +859,7 @@ def routesvia_result(
     exclude_countries: Collection[str] = (),
     with_departure_info: bool = False,
     with_arrival_info: bool = False,
-    with_id: Any = 1,
+    with_id: Any = DEFAULT_REQUEST_ID,
 ) -> MultiResult[RoutesResult]:
     """:meta private:"""
 

@@ -62,6 +62,9 @@ MAX_LIMIT: Final = 100
 
 # Coder
 
+DEFAULT_REQUEST_ID: Final[int] = 1
+"""The default ID value for single-shot requests."""
+
 DEFAULT_LANGUAGE: str = "en-US"
 """The default language used in the results."""
 
@@ -135,7 +138,7 @@ class AddressResult(CasaGeoResult):
         """
 
         if id_ is None:
-            id_ = 1
+            id_ = DEFAULT_REQUEST_ID
 
         def item2row(item, subid: int, navid: int) -> dict[str, Any]:
             row = {}
@@ -269,7 +272,7 @@ class PoiResult(CasaGeoResult):
         """
 
         if id_ is None:
-            id_ = 1
+            id_ = DEFAULT_REQUEST_ID
 
         def item2row(item, subid: int, navid: int) -> dict[str, Any]:
             row = {}
