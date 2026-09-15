@@ -36,6 +36,7 @@ from casageo.tools._util import (
     and_then,
     dict_to_point,
     getpoint,
+    duplicates,
     point_xy,
     split_if_str,
     to_records,
@@ -453,6 +454,9 @@ def address_result(
         prefs["political_view"] = political_view
 
     ids = queries.get("id", queries.index).to_list()
+    if any(dups := duplicates(ids)):
+        raise ValueError(f"Duplicate ID values: {dups}")
+
     options = {
         "address_details": address_details,
         "coordinates": coordinates,
@@ -553,6 +557,9 @@ def poi_result(
         prefs["political_view"] = political_view
 
     ids = queries.get("id", queries.index).to_list()
+    if any(dups := duplicates(ids)):
+        raise ValueError(f"Duplicate ID values: {dups}")
+
     options = {
         "address_details": address_details,
         "coordinates": coordinates,

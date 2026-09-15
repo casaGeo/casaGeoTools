@@ -35,12 +35,18 @@ from shapely import (
     MultiPolygon,
 )
 
-from casageo.tools import CasaGeoClient, CasaGeoError, UnitSystem, _util
+from casageo.tools import (
+    CasaGeoClient,
+    CasaGeoError,
+    UnitSystem,
+    _util,
+)
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
     delna,
     dict_to_point,
+    duplicates,
     getpoint,
     iso_datetime,
     point_xy,
@@ -684,6 +690,9 @@ def isolines_result(
         prefs["unit_system"] = unit_system
 
     ids = queries.get("id", queries.index).to_list()
+    if any(dups := duplicates(ids)):
+        raise ValueError(f"Duplicate ID values: {dups}")
+
     options = {
         "departure_info": departure_info,
         "arrival_info": arrival_info,
@@ -772,6 +781,9 @@ def routes_result(
         prefs["unit_system"] = unit_system
 
     ids = queries.get("id", queries.index).to_list()
+    if any(dups := duplicates(ids)):
+        raise ValueError(f"Duplicate ID values: {dups}")
+
     options = {
         "departure_info": departure_info,
         "arrival_info": arrival_info,

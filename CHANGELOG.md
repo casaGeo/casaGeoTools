@@ -2,6 +2,10 @@
 
 ## Next Release
 
+### Changed
+
+- Duplicate IDs now raise `ValueError`
+
 ### Added
 
 - Add a logistics module with support for matrix routing and TSP calculations.

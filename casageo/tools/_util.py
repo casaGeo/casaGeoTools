@@ -18,8 +18,16 @@
 
 import contextlib
 import re
-from collections import ChainMap
-from collections.abc import Callable, Generator, Mapping, MutableMapping, Sequence
+from collections import ChainMap, Counter
+from collections.abc import (
+    Callable,
+    Generator,
+    Hashable,
+    Iterable,
+    Mapping,
+    MutableMapping,
+    Sequence,
+)
 from datetime import datetime, timedelta
 from typing import Any, cast, overload
 
@@ -93,6 +101,10 @@ def dict_to_point(pos: Mapping[str, Any], /) -> Point | None:
     with contextlib.suppress(KeyError):
         return Point(pos["lng"], pos["lat"])
     return None
+
+
+def duplicates[T: Hashable](iterable: Iterable[T], /) -> list[T]:
+    return [elem for elem, cnt in Counter(iterable).items() if cnt > 1]
 
 
 def list_first[T, D](lst: Sequence[T], /, default: D = None) -> T | D:
