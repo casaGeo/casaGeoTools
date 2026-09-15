@@ -812,6 +812,7 @@ def routesvia(
     exclude_countries: Collection[str] = (),
     with_departure_info: bool = False,
     with_arrival_info: bool = False,
+    with_id: Any = 1,
 ) -> GeoDataFrame:
     df = routesvia_result(
         client,
@@ -825,6 +826,7 @@ def routesvia(
         exclude_countries=exclude_countries,
         with_departure_info=with_departure_info,
         with_arrival_info=with_arrival_info,
+        with_id=with_id,
     ).dataframe()
     return cast(GeoDataFrame, df)
 
@@ -842,6 +844,7 @@ def routesvia_result(
     exclude_countries: Collection[str] = (),
     with_departure_info: bool = False,
     with_arrival_info: bool = False,
+    with_id: Any = 1,
 ) -> MultiResult[RoutesResult]:
     """:meta private:"""
 
@@ -883,7 +886,7 @@ def routesvia_result(
 
     return MultiResult(
         json=json,
-        ids=[1],  # FIXME
+        ids=[with_id],
         options={
             "departure_info": with_departure_info,
             "arrival_info": with_arrival_info,
