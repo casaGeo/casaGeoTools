@@ -385,7 +385,7 @@ class PoiResult(CasaGeoResult):
 def address(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict[str, Any] | None = None,
+    defaults: Mapping[str, Any] | None = None,
     *,
     address_details: bool = False,
     coordinates: bool = False,
@@ -399,7 +399,7 @@ def address(
     Args:
         client (CasaGeoClient): The client object authorizing these queries.
         queries (~pandas.DataFrame): The dataframe of queries.
-        defaults: An optional dict of default values for missing input columns.
+        defaults: An optional mapping of default values for missing input columns.
         address_details: Include additional address details in the result.
         coordinates: Include numeric coordinate columns in the result.
         match_quality: Include match quality scores in the result.
@@ -431,7 +431,7 @@ def address(
 def address_result(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict[str, Any] | None = None,
+    defaults: Mapping[str, Any] | None = None,
     *,
     address_details: bool = False,
     coordinates: bool = False,
@@ -488,7 +488,7 @@ def address_result(
 def poi(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict[str, Any] | None = None,
+    defaults: Mapping[str, Any] | None = None,
     *,
     address_details: bool = False,
     coordinates: bool = False,
@@ -502,7 +502,7 @@ def poi(
     Args:
         client (CasaGeoClient): The client object authorizing these queries.
         queries (~pandas.DataFrame): The dataframe of queries.
-        defaults: An optional dict of default values for missing input columns.
+        defaults: An optional mapping of default values for missing input columns.
         address_details: Include additional address details in the result.
         coordinates: Include numeric coordinate columns in the result.
         category_codes: Include HERE category, chain and food type identifiers in the result.
@@ -534,7 +534,7 @@ def poi(
 def poi_result(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict[str, Any] | None = None,
+    defaults: Mapping[str, Any] | None = None,
     *,
     address_details: bool = False,
     coordinates: bool = False,

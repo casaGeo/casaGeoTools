@@ -23,7 +23,7 @@ import logging
 import math
 import os
 import sys
-from collections.abc import Collection, Mapping, Sequence
+from collections.abc import Collection, Hashable, Mapping, Sequence
 from datetime import datetime
 from enum import StrEnum
 from typing import Any, Final, cast
@@ -167,7 +167,7 @@ def _spatial_params(q: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def _isolines_ranges_unit(
-    q: Mapping[str, Any], default: str | None = None
+    q: Mapping[Hashable, Any], default: str | None = None
 ) -> str | None:
     if (ru := and_then(q.get("ranges_unit"), str)) is not None:
         return ru
@@ -603,7 +603,7 @@ class RoutesResult(CasaGeoResult):
 def isolines(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict[str, Any] | None = None,
+    defaults: Mapping[str, Any] | None = None,
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
@@ -616,7 +616,7 @@ def isolines(
     Args:
         client (CasaGeoClient): The client object authorizing these queries.
         queries (~pandas.DataFrame): The dataframe of queries.
-        defaults: An optional dict of default values for missing input columns.
+        defaults: An optional mapping of default values for missing input columns.
         departure_info: Include additional information about the departure time and location.
         arrival_info: Include additional information about the arrival time and location.
 
@@ -645,7 +645,7 @@ def isolines(
 def isolines_result(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict[str, Any] | None = None,
+    defaults: Mapping[str, Any] | None = None,
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
@@ -694,7 +694,7 @@ def isolines_result(
 def routes(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict[str, Any] | None = None,
+    defaults: Mapping[str, Any] | None = None,
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
@@ -707,7 +707,7 @@ def routes(
     Args:
         client (CasaGeoClient): The client object authorizing these queries.
         queries (~pandas.DataFrame): The dataframe of queries.
-        defaults: An optional dict of default values for missing input columns.
+        defaults: An optional mapping of default values for missing input columns.
         departure_info: Include additional information about the departure time and location.
         arrival_info: Include additional information about the arrival time and location.
 
@@ -736,7 +736,7 @@ def routes(
 def routes_result(
     client: CasaGeoClient,
     queries: DataFrame,
-    defaults: dict[str, Any] | None = None,
+    defaults: Mapping[str, Any] | None = None,
     *,
     departure_info: bool = False,
     arrival_info: bool = False,

@@ -190,7 +190,7 @@ def replacena[K, V](d: Mapping[K, V]) -> dict[K, V | None]:
     return {k: (None if isscalarna(v) else v) for k, v in d.items()}
 
 
-def getpoint(q: Mapping[str, Any], key: str) -> Point | None:
+def getpoint(q: Mapping[Hashable, Any], key: str) -> Point | None:
     # FIXME: Dataframes may return None instead of KeyError
     with contextlib.suppress(KeyError):
         if (p := q[key]) is not None:
@@ -239,10 +239,10 @@ def minutes_to_seconds(minutes: timedelta | float | int | Any) -> int:
 
 
 def to_records(
-    df: pd.DataFrame, *fallbacks: MutableMapping
-) -> Generator[MutableMapping]:
-    records = df.to_dict(orient="records")
-    return (ChainMap(replacena(r), *fallbacks) for r in records)
+    df: pd.DataFrame, *fallbacks: Mapping[str, Any]
+) -> Generator[Mapping[Hashable, Any]]:
+    chainmap = ChainMap(*cast(tuple[MutableMapping[Hashable, Any], ...], fallbacks))
+    return (chainmap.new_child(replacena(r)) for r in df.to_dict(orient="records"))
 
 
 @rename("IETF BCP47 language tag")
