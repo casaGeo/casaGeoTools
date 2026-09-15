@@ -23,7 +23,7 @@ import logging
 import os
 import statistics
 import sys
-from collections.abc import Collection, Mapping, Sequence
+from collections.abc import Mapping, Sequence
 from enum import StrEnum
 from typing import Any, Final, cast
 
@@ -68,14 +68,8 @@ DEFAULT_REQUEST_ID: Final[int] = 1
 DEFAULT_LANGUAGE: Final[str] = "en-US"
 """The default language used in the results."""
 
-DEFAULT_POLITICAL_VIEW: Final[str | None] = None
-"""The default political view used in the results."""
-
 DEFAULT_LIMIT: Final[int] = 20
 """The default limit on the number of computed results."""
-
-DEFAULT_COUNTRIES: Final[Collection[str] | None] = None
-"""The default list of countries to restrict the search to."""
 
 DEFAULT_ADDRESS_NAMES_MODE: Final[AddressNamesMode] = AddressNamesMode.DEFAULT
 """The default address names mode."""
@@ -94,9 +88,9 @@ def _average(nums):
 def _coder_params(q: Mapping[str, Any]) -> dict[str, Any]:
     return {
         "language": q.get("language", DEFAULT_LANGUAGE),
-        "political_view": q.get("political_view", DEFAULT_POLITICAL_VIEW),
+        "political_view": q.get("political_view"),
         "limit": q.get("limit", DEFAULT_LIMIT),
-        "countries": and_then(q.get("countries", DEFAULT_COUNTRIES), split_if_str(",")),
+        "countries": and_then(q.get("countries"), split_if_str(",")),
         "address_names_mode": q.get("address_names_mode", DEFAULT_ADDRESS_NAMES_MODE),
         "postal_code_mode": q.get("postal_code_mode", DEFAULT_POSTAL_CODE_MODE),
     }

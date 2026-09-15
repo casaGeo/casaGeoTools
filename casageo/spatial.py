@@ -130,21 +130,6 @@ DEFAULT_ROUTING_MODE: Final[RoutingMode] = RoutingMode.FAST
 DEFAULT_DIRECTION: Final[DirectionType] = DirectionType.OUTGOING
 """The default routing direction."""
 
-DEFAULT_DEPARTURE_TIME: Final[datetime | None] = None
-"""The default departure time."""
-
-DEFAULT_ARRIVAL_TIME: Final[datetime | None] = None
-"""The default arrival time."""
-
-DEFAULT_TRAFFIC: Final[bool] = False
-"""The default setting of the traffic option."""
-
-DEFAULT_AVOID_FEATURES: Final[Collection[str]] = ()
-"""The default list of route features to avoid."""
-
-DEFAULT_EXCLUDE_COUNTRIES: Final[Collection[str]] = ()
-"""The default list of countries to exclude from the search."""
-
 # Isolines
 
 DEFAULT_RANGE_UNIT: Final[RangeUnit] = RangeUnit.MINUTES
@@ -171,16 +156,12 @@ def _spatial_params(q: Mapping[str, Any]) -> dict[str, Any]:
         "unit_system": q.get("unit_system", DEFAULT_UNIT_SYSTEM),
         "transport_mode": q.get("transport_mode", DEFAULT_TRANSPORT_MODE),
         "routing_mode": q.get("routing_mode", DEFAULT_ROUTING_MODE),
-        "departure_time": q.get("departure_time", DEFAULT_DEPARTURE_TIME),
-        "arrival_time": q.get("arrival_time", DEFAULT_ARRIVAL_TIME),
-        "traffic": q.get("traffic", DEFAULT_TRAFFIC),
-        "avoid_features": and_then(
-            q.get("avoid_features", DEFAULT_AVOID_FEATURES),
-            split_if_str(","),
-        ),
+        "departure_time": q.get("departure_time"),
+        "arrival_time": q.get("arrival_time"),
+        "traffic": q.get("traffic", False),
+        "avoid_features": and_then(q.get("avoid_features", ()), split_if_str(",")),
         "exclude_countries": and_then(
-            q.get("exclude_countries", DEFAULT_EXCLUDE_COUNTRIES),
-            split_if_str(","),
+            q.get("exclude_countries", ()), split_if_str(",")
         ),
     }
 
@@ -821,10 +802,10 @@ def routesvia(
     alternatives: int = DEFAULT_ALTERNATIVES,
     transport_mode: str = DEFAULT_TRANSPORT_MODE,
     routing_mode: str = DEFAULT_ROUTING_MODE,
-    departure_time: datetime | str | None = DEFAULT_DEPARTURE_TIME,
-    arrival_time: datetime | str | None = DEFAULT_ARRIVAL_TIME,
-    avoid_features: Collection[str] = DEFAULT_AVOID_FEATURES,
-    exclude_countries: Collection[str] = DEFAULT_EXCLUDE_COUNTRIES,
+    departure_time: datetime | str | None = None,
+    arrival_time: datetime | str | None = None,
+    avoid_features: Collection[str] = (),
+    exclude_countries: Collection[str] = (),
     with_departure_info: bool = False,
     with_arrival_info: bool = False,
     with_id: Any = DEFAULT_REQUEST_ID,
@@ -853,10 +834,10 @@ def routesvia_result(
     alternatives: int = DEFAULT_ALTERNATIVES,
     transport_mode: str = DEFAULT_TRANSPORT_MODE,
     routing_mode: str = DEFAULT_ROUTING_MODE,
-    departure_time: datetime | str | None = DEFAULT_DEPARTURE_TIME,
-    arrival_time: datetime | str | None = DEFAULT_ARRIVAL_TIME,
-    avoid_features: Collection[str] = DEFAULT_AVOID_FEATURES,
-    exclude_countries: Collection[str] = DEFAULT_EXCLUDE_COUNTRIES,
+    departure_time: datetime | str | None = None,
+    arrival_time: datetime | str | None = None,
+    avoid_features: Collection[str] = (),
+    exclude_countries: Collection[str] = (),
     with_departure_info: bool = False,
     with_arrival_info: bool = False,
     with_id: Any = DEFAULT_REQUEST_ID,
@@ -965,13 +946,11 @@ def _main(args: Sequence[str] | None = None) -> None:
     )
     common_params.add_argument(
         "--avoid-features",
-        default=DEFAULT_AVOID_FEATURES,
         type=_util.cli_avoidable_feature_list,
         help="route features to avoid during routing",
     )
     common_params.add_argument(
         "--exclude-countries",
-        default=DEFAULT_EXCLUDE_COUNTRIES,
         type=_util.cli_iso3166_alpha3_country_code_list,
         help="countries to exclude from routing",
     )
