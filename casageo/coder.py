@@ -21,7 +21,6 @@ This module provides geocoding and search operations.
 import argparse
 import logging
 import os
-import statistics
 import sys
 from collections.abc import Mapping, Sequence
 from enum import StrEnum
@@ -35,8 +34,9 @@ from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
     dict_to_point,
-    getpoint,
     duplicates,
+    get_average,
+    getpoint,
     point_xy,
     split_if_str,
     to_records,
@@ -79,10 +79,6 @@ DEFAULT_POSTAL_CODE_MODE: Final[PostalCodeMode] = PostalCodeMode.DEFAULT
 
 
 _logger = logging.getLogger(__name__)
-
-
-def _average(nums):
-    return statistics.mean(nums) if nums else None
 
 
 def _coder_params(q: Mapping[str, Any]) -> dict[str, Any]:
@@ -198,7 +194,7 @@ class AddressResult(CasaGeoResult):
                 row["mq_city"]          = score.get("city")
                 row["mq_district"]      = score.get("district")
                 row["mq_subdistrict"]   = score.get("subdistrict")
-                row["mq_street"]        = _average(score.get("streets"))
+                row["mq_street"]        = and_then(score.get("streets"), get_average)
                 # row["mq_streets"]       = score.get("streets")
                 row["mq_block"]         = score.get("block")
                 row["mq_subblock"]      = score.get("subblock")

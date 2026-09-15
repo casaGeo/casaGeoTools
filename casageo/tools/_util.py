@@ -107,6 +107,15 @@ def duplicates[T: Hashable](iterable: Iterable[T], /) -> list[T]:
     return [elem for elem, cnt in Counter(iterable).items() if cnt > 1]
 
 
+def get_average[T](data: Iterable[float], /, default: T = None) -> float | T:
+    import statistics
+
+    try:
+        return statistics.mean(data)
+    except statistics.StatisticsError:
+        return default
+
+
 def list_first[T, D](lst: Sequence[T], /, default: D = None) -> T | D:
     return lst[0] if lst else default
 

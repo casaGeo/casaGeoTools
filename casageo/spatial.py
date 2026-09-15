@@ -169,25 +169,11 @@ def _spatial_params(q: Mapping[str, Any]) -> dict[str, Any]:
 def _isolines_ranges_unit(
     q: Mapping[str, Any], default: str | None = None
 ) -> str | None:
-    match q.get("ranges_unit"):
-        case None:
-            pass
-        case str(u):
-            return u
-        case x:
-            raise TypeError(f"ranges_unit must be a string, not {type(x).__name__}")
+    if (ru := and_then(q.get("ranges_unit"), str)) is not None:
+        return ru
 
-    match q.get("range_type"):
-        case None:
-            pass
-        case "time":
-            return "minutes"
-        case "distance":
-            return "meters"
-        case str(t):
-            return t
-        case x:
-            raise TypeError(f"range_type must be a string, not {type(x).__name__}")
+    if (rt := and_then(q.get("range_type"), str)) is not None:
+        return RESULT_RANGE_UNIT_BY_TYPE.get(rt, rt)
 
     return default
 
