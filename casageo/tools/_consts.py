@@ -17,7 +17,7 @@
 from enum import StrEnum
 from typing import Final
 
-SERVER: Final = "https://cg-license.casageo.eu/"
+SERVER: Final[str] = "https://cg-license.casageo.eu/"
 
 
 class UnitSystem(StrEnum):

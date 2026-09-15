@@ -107,50 +107,50 @@ RANGE_COEFFICIENT_BY_UNIT: Final[Mapping[str, int]] = {
 }
 
 
-MIN_ALTERNATIVES: Final = 0
-MAX_ALTERNATIVES: Final = 6
+MIN_ALTERNATIVES: Final[int] = 0
+MAX_ALTERNATIVES: Final[int] = 6
 
 # Spatial
 
 DEFAULT_REQUEST_ID: Final[int] = 1
 """The default ID value for single-shot requests."""
 
-DEFAULT_LANGUAGE: str = "en-US"
+DEFAULT_LANGUAGE: Final[str] = "en-US"
 """The default language used in the results."""
 
-DEFAULT_UNIT_SYSTEM: UnitSystem = UnitSystem.METRIC
+DEFAULT_UNIT_SYSTEM: Final[UnitSystem] = UnitSystem.METRIC
 """The default unit system used in the results."""
 
-DEFAULT_TRANSPORT_MODE: TransportMode = TransportMode.CAR
+DEFAULT_TRANSPORT_MODE: Final[TransportMode] = TransportMode.CAR
 """The default transport mode."""
 
-DEFAULT_ROUTING_MODE: RoutingMode = RoutingMode.FAST
+DEFAULT_ROUTING_MODE: Final[RoutingMode] = RoutingMode.FAST
 """The default routing mode."""
 
-DEFAULT_DIRECTION: DirectionType = DirectionType.OUTGOING
+DEFAULT_DIRECTION: Final[DirectionType] = DirectionType.OUTGOING
 """The default routing direction."""
 
-DEFAULT_DEPARTURE_TIME: datetime | None = None
+DEFAULT_DEPARTURE_TIME: Final[datetime | None] = None
 """The default departure time."""
 
-DEFAULT_ARRIVAL_TIME: datetime | None = None
+DEFAULT_ARRIVAL_TIME: Final[datetime | None] = None
 """The default arrival time."""
 
-DEFAULT_TRAFFIC: bool = False
+DEFAULT_TRAFFIC: Final[bool] = False
 """The default setting of the traffic option."""
 
-DEFAULT_AVOID_FEATURES: Collection[str] = ()
+DEFAULT_AVOID_FEATURES: Final[Collection[str]] = ()
 """The default list of route features to avoid."""
 
-DEFAULT_EXCLUDE_COUNTRIES: Collection[str] = ()
+DEFAULT_EXCLUDE_COUNTRIES: Final[Collection[str]] = ()
 """The default list of countries to exclude from the search."""
 
 # Isolines
 
-DEFAULT_RANGE_UNIT: RangeUnit = RangeUnit.MINUTES
+DEFAULT_RANGE_UNIT: Final[RangeUnit] = RangeUnit.MINUTES
 """The default unit for range values."""
 
-RESULT_RANGE_UNIT_BY_TYPE: dict[str, RangeUnit] = {
+RESULT_RANGE_UNIT_BY_TYPE: Final[Mapping[str, RangeUnit]] = {
     RangeType.TIME: RangeUnit.MINUTES,
     RangeType.DISTANCE: RangeUnit.METERS,
 }
@@ -158,7 +158,7 @@ RESULT_RANGE_UNIT_BY_TYPE: dict[str, RangeUnit] = {
 
 # Routes
 
-DEFAULT_ALTERNATIVES: int = 0
+DEFAULT_ALTERNATIVES: Final[int] = 0
 """The default number of alternative routes to compute."""
 
 

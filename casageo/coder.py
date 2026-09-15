@@ -57,30 +57,30 @@ class PostalCodeMode(StrEnum):
     DISTRICT_LOOKUP = "districtLookup"
 
 
-MIN_LIMIT: Final = 1
-MAX_LIMIT: Final = 100
+MIN_LIMIT: Final[int] = 1
+MAX_LIMIT: Final[int] = 100
 
 # Coder
 
 DEFAULT_REQUEST_ID: Final[int] = 1
 """The default ID value for single-shot requests."""
 
-DEFAULT_LANGUAGE: str = "en-US"
+DEFAULT_LANGUAGE: Final[str] = "en-US"
 """The default language used in the results."""
 
-DEFAULT_POLITICAL_VIEW: str | None = None
+DEFAULT_POLITICAL_VIEW: Final[str | None] = None
 """The default political view used in the results."""
 
-DEFAULT_LIMIT: int = 20
+DEFAULT_LIMIT: Final[int] = 20
 """The default limit on the number of computed results."""
 
-DEFAULT_COUNTRIES: Collection[str] | None = None
+DEFAULT_COUNTRIES: Final[Collection[str] | None] = None
 """The default list of countries to restrict the search to."""
 
-DEFAULT_ADDRESS_NAMES_MODE: AddressNamesMode = AddressNamesMode.DEFAULT
+DEFAULT_ADDRESS_NAMES_MODE: Final[AddressNamesMode] = AddressNamesMode.DEFAULT
 """The default address names mode."""
 
-DEFAULT_POSTAL_CODE_MODE: PostalCodeMode = PostalCodeMode.DEFAULT
+DEFAULT_POSTAL_CODE_MODE: Final[PostalCodeMode] = PostalCodeMode.DEFAULT
 """The default postal code mode."""
 
 

@@ -5,6 +5,7 @@
 ### Changed
 
 - Duplicate IDs now raise `ValueError`
+- Module constants are now marked as `Final`
 
 ### Added
 
