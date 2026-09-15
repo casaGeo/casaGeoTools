@@ -415,7 +415,7 @@ def tsp(
             Name of the destination waypoint, if any.
         clustering:
             Enables clustering of waypoints
-            (see :py:const:`CLUSTERING_MODES`).
+            (see :py:class:`ClusteringMode`).
         break_times:
             Sets up to five break time slots. Each time slot consists
             of a starting datetime and a duration in minutes.
@@ -424,13 +424,13 @@ def tsp(
             ``"default"`` to activate simplified European rules.
         transport_mode:
             The mode of transport to use for routing
-            (see :py:const:`TRANSPORT_MODES`).
+            (see :py:class:`TransportMode`).
         routing_mode:
             Whether to prefer ``"fast"`` or ``"short"`` routes
-            (see :py:const:`ROUTING_MODES`).
+            (see :py:class:`RoutingMode`).
         optimize:
             Whether to optimize the waypoint sequence for ``"time"`` or
-            for ``"distance"`` (see :py:const:`OPTIMIZATION_TARGETS`).
+            for ``"distance"`` (see :py:class:`OptimizationTarget`).
         departure_time:
             The date and time of departure for time-dependent routing.
         traffic:
@@ -454,7 +454,7 @@ def tsp(
             Specifies the number of trailers attached to the vehicle.
         hazardous_cargo:
             Specifies the types of hazardous cargo carried by the
-            vehicle (see :py:const:`HAZARDOUS_CARGO_TYPES`).
+            vehicle (see :py:class:`HazardousCargoType`).
         walking_speed:
             Specifies the pedestrian walking speed in meters per second.
         with_coordinates:
