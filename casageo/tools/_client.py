@@ -23,7 +23,7 @@ import urllib.parse
 
 import httpx
 
-from . import _consts
+from ._consts import CASAGEOTOOLS_SERVER_URL, DEFAULT_UNIT_SYSTEM
 from ._errors import APIValueError, CasaGeoError, InsufficientCreditsError
 from ._util import and_then
 
@@ -78,14 +78,16 @@ class CasaGeoClient:
         *,
         preferred_language: str | None = None,
         preferred_political_view: str | None = None,
-        preferred_unit_system: str | None = None,
+        preferred_unit_system: str = DEFAULT_UNIT_SYSTEM,
     ) -> None:
         self._apikey = apikey or os.getenv("CASAGEOTOOLS_API_KEY", "")
         if not self._apikey:
             msg = "You must provide an API key, either directly or using the CASAGEOTOOLS_API_KEY environment variable"
             raise CasaGeoError(msg)
 
-        self._server = os.getenv("CASAGEOTOOLS_PROXY_SERVER", "") or _consts.SERVER
+        self._server = (
+            os.getenv("CASAGEOTOOLS_PROXY_SERVER", "") or CASAGEOTOOLS_SERVER_URL
+        )
         sp = urllib.parse.urlsplit(self._server)
         if not sp.scheme or not sp.netloc:
             msg = f"Proxy server URL must have a scheme and netloc: {self._server!r}"

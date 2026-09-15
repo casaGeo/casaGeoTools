@@ -35,18 +35,14 @@ from shapely import (
     MultiPolygon,
 )
 
-from casageo.tools import (
-    CasaGeoClient,
-    CasaGeoError,
-    UnitSystem,
-    _util,
-)
+from casageo.tools import CasaGeoClient, CasaGeoError
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
     delna,
     dict_to_point,
     duplicates,
+    flexpolyline_points,
     getpoint,
     iso_datetime,
     point_xy,
@@ -115,12 +111,6 @@ MAX_ALTERNATIVES: Final[int] = 6
 DEFAULT_REQUEST_ID: Final[int] = 1
 """The default ID value for single-shot requests."""
 
-DEFAULT_LANGUAGE: Final[str] = "en-US"
-"""The default language used in the results."""
-
-DEFAULT_UNIT_SYSTEM: Final[UnitSystem] = UnitSystem.METRIC
-"""The default unit system used in the results."""
-
 DEFAULT_TRANSPORT_MODE: Final[TransportMode] = TransportMode.CAR
 """The default transport mode."""
 
@@ -178,11 +168,8 @@ class IsolinesResult(CasaGeoResult):
 
         return MultiPolygon([
             (
-                _util.flexpolyline_points(outer),
-                [
-                    _util.flexpolyline_points(inner)
-                    for inner in polygon.get("inner", ())
-                ],
+                flexpolyline_points(outer),
+                [flexpolyline_points(inner) for inner in polygon.get("inner", ())],
             )
             for polygon in polygons
             if (outer := polygon.get("outer")) is not None
@@ -393,7 +380,7 @@ class RoutesResult(CasaGeoResult):
     def _geometry(route: dict[str, Any]) -> MultiLineString | None:
         try:
             return MultiLineString([
-                _util.flexpolyline_points(section["polyline"])
+                flexpolyline_points(section["polyline"])
                 for section in route["sections"]
             ])
         except KeyError:
@@ -876,6 +863,8 @@ def routesvia_result(
 
 
 def _main(args: Sequence[str] | None = None) -> None:
+    from casageo.tools import DEFAULT_UNIT_SYSTEM, UnitSystem, _util
+
     parser = argparse.ArgumentParser(
         description="Provides spatial calculations such as routing and isolines.",
         allow_abbrev=False,

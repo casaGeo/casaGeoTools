@@ -66,9 +66,6 @@ MAX_LIMIT: Final[int] = 100
 DEFAULT_REQUEST_ID: Final[int] = 1
 """The default ID value for single-shot requests."""
 
-DEFAULT_LANGUAGE: Final[str] = "en-US"
-"""The default language used in the results."""
-
 DEFAULT_LIMIT: Final[int] = 20
 """The default limit on the number of computed results."""
 
