@@ -112,8 +112,26 @@ class TransportMode(StrEnum):
     TRUCK = "truck"
 
 
+# Logistics
+
 DEFAULT_REQUEST_ID: Final[int] = 1
 """The default ID value for single-shot requests."""
+
+# Matrix
+
+DEFAULT_ROUTING_PROFILE: Final[RoutingProfile] = RoutingProfile.CAR_FAST
+"""The default routing profile for matrix calculations."""
+
+# TSP
+
+DEFAULT_TRANSPORT_MODE: Final[TransportMode] = TransportMode.CAR
+"""The default transport mode."""
+
+DEFAULT_ROUTING_MODE: Final[RoutingMode] = RoutingMode.FAST
+"""The default routing mode."""
+
+DEFAULT_OPTIMIZATION_TARGET: Final[OptimizationTarget] = OptimizationTarget.TIME
+"""The default optimization target."""
 
 
 _logger = logging.getLogger(__name__)
@@ -268,7 +286,7 @@ def matrix(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    profile: str = RoutingProfile.CAR_FAST,
+    profile: str = DEFAULT_ROUTING_PROFILE,
     with_id: Any = DEFAULT_REQUEST_ID,
 ) -> DataFrame:
     """
@@ -317,7 +335,7 @@ def matrix_result(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    profile: str = RoutingProfile.CAR_FAST,
+    profile: str = DEFAULT_ROUTING_PROFILE,
     with_id: Any = DEFAULT_REQUEST_ID,
 ) -> MultiResult[MatrixResult]:
     """:meta private:"""
@@ -362,9 +380,9 @@ def tsp(
     clustering: str | None = None,
     break_times: Collection[tuple[datetime | str, timedelta | float | int]] = (),
     rest_schedule: str | None = None,
-    transport_mode: str = TransportMode.CAR,
-    routing_mode: str = RoutingMode.FAST,
-    optimize: str = OptimizationTarget.TIME,
+    transport_mode: str = DEFAULT_TRANSPORT_MODE,
+    routing_mode: str = DEFAULT_ROUTING_MODE,
+    optimize: str = DEFAULT_OPTIMIZATION_TARGET,
     departure_time: datetime | str | None = None,
     traffic: bool = False,
     avoid_features: Collection[str] = (),
@@ -496,9 +514,9 @@ def tsp_result(
     clustering: str | None = None,
     break_times: Collection[tuple[datetime | str, timedelta | float | int]] = (),
     rest_schedule: str | None = None,
-    transport_mode: str = TransportMode.CAR,
-    routing_mode: str = RoutingMode.FAST,
-    optimize: str = OptimizationTarget.TIME,
+    transport_mode: str = DEFAULT_TRANSPORT_MODE,
+    routing_mode: str = DEFAULT_ROUTING_MODE,
+    optimize: str = DEFAULT_OPTIMIZATION_TARGET,
     departure_time: datetime | str | None = None,
     traffic: bool = False,
     avoid_features: Collection[str] = (),
