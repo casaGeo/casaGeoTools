@@ -287,8 +287,7 @@ casageo.spatial module
       Timestamp of when this result was created.
 
    When ``departure_info`` is ``True``, the dataframe also contains the columns
-   below. If the direction of the query was not ``"outgoing"``, all these values
-   will be null.
+   below.
 
    departure_time : datetime
       Timestamp representing the expected departure time.
@@ -306,8 +305,7 @@ casageo.spatial module
       The original position provided in the request.
 
    When ``arrival_info`` is ``True``, the dataframe also contains the columns
-   below. If the direction of the query was not ``"incoming"``, all these values
-   will be null.
+   below.
 
    arrival_time : datetime
       Timestamp representing the expected arrival time.
