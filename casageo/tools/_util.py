@@ -36,6 +36,7 @@ import numpy as np
 import pandas as pd
 import shapely
 from shapely import Point
+from shapely.errors import DimensionError
 
 ietf_bcp47_language_tag_pattern = re.compile(r"[A-Za-z0-9]+(-[A-Za-z0-9]+)*")
 iso3166_alpha3_country_code_pattern = re.compile(r"[A-Z]{3}")
@@ -206,6 +207,28 @@ def getpoint(q: Mapping[Hashable, Any], key: str) -> Point | None:
 
 def point_xy(p: Point) -> tuple[float, float]:
     return (p.x, p.y)
+
+
+def point_longitude(p: Point, /) -> float:
+    return p.x
+
+
+def point_latitude(p: Point, /) -> float:
+    return p.y
+
+
+def point_elevation(p: Point, /) -> float | None:
+    try:
+        return p.z
+    except DimensionError:
+        return None
+
+
+def point_mvalue(p: Point, /) -> float | None:
+    try:
+        return p.m
+    except DimensionError:
+        return None
 
 
 def enlist_if_str[T](s: str | T) -> list[str] | T:

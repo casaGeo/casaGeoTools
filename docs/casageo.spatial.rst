@@ -39,6 +39,9 @@ casageo.spatial module
    arrival_info : bool
       Include additional information about the arrival time and location.
 
+   coordinates : bool
+      Include numeric coordinate columns in the result.
+
    .. _spatial-isoline-input-columns:
 
    Isolines Input Columns
@@ -157,6 +160,32 @@ casageo.spatial module
    departure_queryposition : :class:`~shapely.Point`
       The original position provided in the request.
 
+   When ``departure_info`` is ``True`` and ``coordinates`` is ``True``, the
+   dataframe also contains the columns below. If the direction of the query was
+   not ``"outgoing"``, all these values will be null.
+
+   departure_longitude : float
+      Longitude of the departure location in WGS84 decimal degrees.
+
+   departure_latitude : float
+      Latitude of the departure location in WGS84 decimal degrees.
+
+   departure_displaylongitude : float
+      Longitude of a map marker referring to the departure location in WGS84
+      decimal degrees.
+
+   departure_displaylatitude : float
+      Latitude of a map marker referring to the departure location in WGS84
+      decimal degrees.
+
+   departure_querylongitude : float
+      Longitude of the original position provided in the request in WGS84
+      decimal degrees.
+
+   departure_querylatitude : float
+      Latitude of the original position provided in the request in WGS84 decimal
+      degrees.
+
    When ``arrival_info`` is ``True``, the dataframe also contains the columns
    below. If the direction of the query was not ``"incoming"``, all these values
    will be null.
@@ -175,6 +204,32 @@ casageo.spatial module
 
    arrival_queryposition : :class:`~shapely.Point`
       The original position provided in the request.
+
+   When ``arrival_info`` is ``True`` and ``coordinates`` is ``True``, the
+   dataframe also contains the columns below. If the direction of the query was
+   not ``"incoming"``, all these values will be null.
+
+   arrival_longitude : float
+      Longitude of the arrival location in WGS84 decimal degrees.
+
+   arrival_latitude : float
+      Latitude of the arrival location in WGS84 decimal degrees.
+
+   arrival_displaylongitude : float
+      Longitude of a map marker referring to the arrival location in WGS84
+      decimal degrees.
+
+   arrival_displaylatitude : float
+      Latitude of a map marker referring to the arrival location in WGS84
+      decimal degrees.
+
+   arrival_querylongitude : float
+      Longitude of the original position provided in the request in WGS84
+      decimal degrees.
+
+   arrival_querylatitude : float
+      Latitude of the original position provided in the request in WGS84 decimal
+      degrees.
 
    Finally, the dataframe always contains the following error information
    columns. These contain values only if the corresponding query could not be
@@ -203,6 +258,9 @@ casageo.spatial module
 
    arrival_info : bool
       Include additional information about the arrival time and location.
+
+   coordinates : bool
+      Include numeric coordinate columns in the result.
 
    .. _spatial-routing-input-columns:
 
@@ -308,6 +366,31 @@ casageo.spatial module
    departure_queryposition : :class:`~shapely.Point`
       The original position provided in the request.
 
+   When ``departure_info`` is ``True`` and ``coordinates`` is ``True``, the
+   dataframe also contains the columns below.
+
+   departure_longitude : float
+      Longitude of the departure location in WGS84 decimal degrees.
+
+   departure_latitude : float
+      Latitude of the departure location in WGS84 decimal degrees.
+
+   departure_displaylongitude : float
+      Longitude of a map marker referring to the departure location in WGS84
+      decimal degrees.
+
+   departure_displaylatitude : float
+      Latitude of a map marker referring to the departure location in WGS84
+      decimal degrees.
+
+   departure_querylongitude : float
+      Longitude of the original position provided in the request in WGS84
+      decimal degrees.
+
+   departure_querylatitude : float
+      Latitude of the original position provided in the request in WGS84 decimal
+      degrees.
+
    When ``arrival_info`` is ``True``, the dataframe also contains the columns
    below.
 
@@ -325,6 +408,31 @@ casageo.spatial module
 
    arrival_queryposition : :class:`~shapely.Point`
       The original position provided in the request.
+
+   When ``arrival_info`` is ``True`` and ``coordinates`` is ``True``, the
+   dataframe also contains the columns below.
+
+   arrival_longitude : float
+      Longitude of the arrival location in WGS84 decimal degrees.
+
+   arrival_latitude : float
+      Latitude of the arrival location in WGS84 decimal degrees.
+
+   arrival_displaylongitude : float
+      Longitude of a map marker referring to the arrival location in WGS84
+      decimal degrees.
+
+   arrival_displaylatitude : float
+      Latitude of a map marker referring to the arrival location in WGS84
+      decimal degrees.
+
+   arrival_querylongitude : float
+      Longitude of the original position provided in the request in WGS84
+      decimal degrees.
+
+   arrival_querylatitude : float
+      Latitude of the original position provided in the request in WGS84 decimal
+      degrees.
 
    Finally, the dataframe always contains the following error information
    columns. These contain values only if the corresponding query could not be

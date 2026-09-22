@@ -45,6 +45,8 @@ from casageo.tools._util import (
     flexpolyline_points,
     getpoint,
     iso_datetime,
+    point_latitude,
+    point_longitude,
     point_xy,
     split_if_str,
     to_records,
@@ -208,6 +210,7 @@ class IsolinesResult(CasaGeoResult):
         *,
         departure_info: bool = False,
         arrival_info: bool = False,
+        coordinates: bool = False,
         error_info: bool = False,
     ) -> GeoDataFrame:
         """
@@ -223,6 +226,7 @@ class IsolinesResult(CasaGeoResult):
                 time and location.
             arrival_info: Include additional info about the arrival
                 time and location.
+            coordinates: Include numeric coordinate columns in the result.
             error_info: Include error information in the result.
 
         Returns:
@@ -266,6 +270,19 @@ class IsolinesResult(CasaGeoResult):
             df["departure_queryposition"]   = departure.get("queryposition")
             # fmt: on
 
+            if coordinates:
+                position = departure.get("position")
+                displayposition = departure.get("displayposition")
+                queryposition = departure.get("queryposition")
+                # fmt: off
+                df["departure_longitude"]           = and_then(position, point_longitude)
+                df["departure_latitude"]            = and_then(position, point_latitude)
+                df["departure_displaylongitude"]    = and_then(displayposition, point_longitude)
+                df["departure_displaylatitude"]     = and_then(displayposition, point_latitude)
+                df["departure_querylongitude"]      = and_then(queryposition, point_longitude)
+                df["departure_querylatitude"]       = and_then(queryposition, point_latitude)
+                # fmt: on
+
         if arrival_info:
             arrival = self.arrival_info() or {}
             # fmt: off
@@ -275,6 +292,19 @@ class IsolinesResult(CasaGeoResult):
             df["arrival_displayposition"]   = arrival.get("displayposition")
             df["arrival_queryposition"]     = arrival.get("queryposition")
             # fmt: on
+
+            if coordinates:
+                position = arrival.get("position")
+                displayposition = arrival.get("displayposition")
+                queryposition = arrival.get("queryposition")
+                # fmt: off
+                df["arrival_longitude"]             = and_then(position, point_longitude)
+                df["arrival_latitude"]              = and_then(position, point_latitude)
+                df["arrival_displaylongitude"]      = and_then(displayposition, point_longitude)
+                df["arrival_displaylatitude"]       = and_then(displayposition, point_latitude)
+                df["arrival_querylongitude"]        = and_then(queryposition, point_longitude)
+                df["arrival_querylatitude"]         = and_then(queryposition, point_latitude)
+                # fmt: on
 
         if error_info:
             err = self.error()
@@ -416,6 +446,7 @@ class RoutesResult(CasaGeoResult):
         *,
         departure_info: bool = False,
         arrival_info: bool = False,
+        coordinates: bool = False,
         error_info: bool = False,
     ) -> GeoDataFrame:
         """
@@ -431,6 +462,7 @@ class RoutesResult(CasaGeoResult):
                 time and location of each route.
             arrival_info: Include additional info about the arrival
                 time and location of each route.
+            coordinates: Include numeric coordinate columns in the result.
             error_info: Include error information in the result.
 
         Returns:
@@ -465,6 +497,19 @@ class RoutesResult(CasaGeoResult):
                 row["departure_queryposition"]      = departure.get("queryposition")
                 # fmt: on
 
+                if coordinates:
+                    position = departure.get("position")
+                    displayposition = departure.get("displayposition")
+                    queryposition = departure.get("queryposition")
+                    # fmt: off
+                    row["departure_longitude"]          = and_then(position, point_longitude)
+                    row["departure_latitude"]           = and_then(position, point_latitude)
+                    row["departure_displaylongitude"]   = and_then(displayposition, point_longitude)
+                    row["departure_displaylatitude"]    = and_then(displayposition, point_latitude)
+                    row["departure_querylongitude"]     = and_then(queryposition, point_longitude)
+                    row["departure_querylatitude"]      = and_then(queryposition, point_latitude)
+                    # fmt: on
+
             if arrival_info:
                 arrival = self.arrival_info(index) or {}
                 # fmt: off
@@ -474,6 +519,19 @@ class RoutesResult(CasaGeoResult):
                 row["arrival_displayposition"]      = arrival.get("displayposition")
                 row["arrival_queryposition"]        = arrival.get("queryposition")
                 # fmt: on
+
+                if coordinates:
+                    position = arrival.get("position")
+                    displayposition = arrival.get("displayposition")
+                    queryposition = arrival.get("queryposition")
+                    # fmt: off
+                    row["arrival_longitude"]            = and_then(position, point_longitude)
+                    row["arrival_latitude"]             = and_then(position, point_latitude)
+                    row["arrival_displaylongitude"]     = and_then(displayposition, point_longitude)
+                    row["arrival_displaylatitude"]      = and_then(displayposition, point_latitude)
+                    row["arrival_querylongitude"]       = and_then(queryposition, point_longitude)
+                    row["arrival_querylatitude"]        = and_then(queryposition, point_latitude)
+                    # fmt: on
 
         if not data:
             return GeoDataFrame()
@@ -587,6 +645,7 @@ def isolines(
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
+    coordinates: bool = False,
 ) -> GeoDataFrame:
     """
     Calculate isolines around locations.
@@ -599,6 +658,7 @@ def isolines(
         defaults: An optional mapping of default values for missing input columns.
         departure_info: Include additional information about the departure time and location.
         arrival_info: Include additional information about the arrival time and location.
+        coordinates: Include numeric coordinate columns in the result.
 
     Returns:
         ~geopandas.GeoDataFrame: The list of results as an EPSG:4326
@@ -618,6 +678,7 @@ def isolines(
         defaults,
         departure_info=departure_info,
         arrival_info=arrival_info,
+        coordinates=coordinates,
     ).dataframe()
     return cast(GeoDataFrame, df)
 
@@ -629,6 +690,7 @@ def isolines_result(
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
+    coordinates: bool = False,
 ) -> MultiResult[IsolinesResult]:
     """:meta private:"""
 
@@ -641,6 +703,7 @@ def isolines_result(
     options = {
         "departure_info": departure_info,
         "arrival_info": arrival_info,
+        "coordinates": coordinates,
     }
 
     json = client.request(
@@ -685,6 +748,7 @@ def routes(
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
+    coordinates: bool = False,
 ) -> GeoDataFrame:
     """
     Calculate routes between two locations.
@@ -697,6 +761,7 @@ def routes(
         defaults: An optional mapping of default values for missing input columns.
         departure_info: Include additional information about the departure time and location.
         arrival_info: Include additional information about the arrival time and location.
+        coordinates: Include numeric coordinate columns in the result.
 
     Returns:
         ~geopandas.GeoDataFrame: The list of results as an EPSG:4326
@@ -716,6 +781,7 @@ def routes(
         defaults,
         departure_info=departure_info,
         arrival_info=arrival_info,
+        coordinates=coordinates,
     ).dataframe()
     return cast(GeoDataFrame, df)
 
@@ -727,6 +793,7 @@ def routes_result(
     *,
     departure_info: bool = False,
     arrival_info: bool = False,
+    coordinates: bool = False,
 ) -> MultiResult[RoutesResult]:
     """:meta private:"""
 
@@ -739,6 +806,7 @@ def routes_result(
     options = {
         "departure_info": departure_info,
         "arrival_info": arrival_info,
+        "coordinates": coordinates,
     }
 
     json = client.request(
@@ -820,6 +888,7 @@ def routesvia_result(
     exclude_countries: Collection[str] = (),
     with_departure_info: bool = False,
     with_arrival_info: bool = False,
+    with_coordinates: bool = False,
     with_id: Any = DEFAULT_REQUEST_ID,
 ) -> MultiResult[RoutesResult]:
     """:meta private:"""
@@ -866,6 +935,7 @@ def routesvia_result(
         options={
             "departure_info": with_departure_info,
             "arrival_info": with_arrival_info,
+            "coordinates": with_coordinates,
         },
         result_type=RoutesResult,
     )

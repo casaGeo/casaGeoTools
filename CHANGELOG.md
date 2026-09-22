@@ -11,6 +11,7 @@
 
 - Add a logistics module with support for matrix routing and TSP calculations.
 - Add a URL template builder for the casaGeo map tile API.
+- Add `coordinates` options for routing and isolines. 
 - Add `navid` column to enumerate sub-results for results with multiple navigation points
 - Add `direction` output column for isolines. 
 - Ignore whitespace in comma-separated lists
