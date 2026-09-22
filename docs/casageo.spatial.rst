@@ -131,6 +131,10 @@ casageo.spatial module
    rangevalue : float
       The distance value represented by this range.
 
+   direction : str
+      The direction of travel relative to the center point, either
+      ``"outgoing"`` or ``"incoming"``.
+
    timestamp : datetime
       Timestamp of when this result was created.
 

@@ -245,7 +245,6 @@ class IsolinesResult(CasaGeoResult):
                 row["rangetype"]        = self._range_type(isoline)
                 row["rangeunit"]        = self._range_unit(isoline)
                 row["rangevalue"]       = self._range_value(isoline)
-                row["timestamp"]        = self._timestamp
                 # fmt: on
 
         if not data:
@@ -253,6 +252,9 @@ class IsolinesResult(CasaGeoResult):
 
         # TODO: When elevation is returned, the CRS should be different (EPSG:4979 ?).
         df = GeoDataFrame(data, geometry="geometry", crs="EPSG:4326")
+
+        df["direction"] = and_then(self.direction(), str)
+        df["timestamp"] = self._timestamp
 
         if departure_info:
             departure = self.departure_info() or {}
@@ -282,6 +284,13 @@ class IsolinesResult(CasaGeoResult):
             # fmt: on
 
         return df
+
+    def direction(self) -> DirectionType | None:
+        if self.has_departure_info():
+            return DirectionType.OUTGOING
+        if self.has_arrival_info():
+            return DirectionType.INCOMING
+        return None
 
     def has_departure_info(self) -> bool:
         """Return ``True`` if the API response includes departure information."""

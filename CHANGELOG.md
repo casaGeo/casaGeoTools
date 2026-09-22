@@ -12,6 +12,7 @@
 - Add a logistics module with support for matrix routing and TSP calculations.
 - Add a URL template builder for the casaGeo map tile API.
 - Add `navid` column to enumerate sub-results for results with multiple navigation points
+- Add `direction` output column for isolines. 
 - Ignore whitespace in comma-separated lists
 - Add support for library versions `geopandas>=1.0.0`, `numpy>=2.0.0`, `pandas>=2.2.0`
 - Add support for truck routing
