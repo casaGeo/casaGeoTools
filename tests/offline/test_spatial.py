@@ -82,6 +82,7 @@ class TestIsolinesQuery(unittest.TestCase):
                 "options": {
                     "departure_info": False,
                     "arrival_info": False,
+                    "coordinates": False,
                 },
                 "queries": [
                     {
@@ -179,6 +180,7 @@ class TestRoutesQuery(unittest.TestCase):
                 "options": {
                     "departure_info": False,
                     "arrival_info": False,
+                    "coordinates": False,
                 },
                 "queries": [
                     {
