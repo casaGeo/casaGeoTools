@@ -22,6 +22,7 @@
 
 - Fix `TypeError` when `position` is `None`
 - Fix `KeyError` when no navigation points are returned
+- Fix `ValueError` on missing input coordinates
 
 
 ## [1.0.2] - 2026-05-04

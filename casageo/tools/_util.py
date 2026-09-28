@@ -192,16 +192,19 @@ def replacena[K, V](d: Mapping[K, V]) -> dict[K, V | None]:
 
 
 def getpoint(q: Mapping[Hashable, Any], key: str) -> Point | None:
-    # FIXME: Dataframes may return None instead of KeyError
-    with contextlib.suppress(KeyError):
-        if (p := q[key]) is not None:
-            return Point(p)
-    with contextlib.suppress(KeyError):
-        lng = q[f"{key}_longitude"]
-        lat = q[f"{key}_latitude"]
-        with contextlib.suppress(KeyError):
-            return Point(lng, lat, q[f"{key}_elevation"])
+    # Dataframes may return None instead of KeyError so we have to check for both.
+
+    if (p := cast(Any, q.get(key))) is not None:
+        return Point(p)
+
+    if (
+        (lng := cast(Any, q.get(f"{key}_longitude"))) is not None  #
+        and (lat := cast(Any, q.get(f"{key}_latitude"))) is not None
+    ):
+        if (elv := cast(Any, q.get(f"{key}_elevation"))) is not None:
+            return Point(lng, lat, elv)
         return Point(lng, lat)
+
     return None
 
 
