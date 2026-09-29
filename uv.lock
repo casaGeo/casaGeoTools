@@ -77,7 +77,6 @@ dependencies = [
     { name = "flexpolyline" },
     { name = "geopandas" },
     { name = "httpx" },
-    { name = "numpy" },
     { name = "pandas" },
     { name = "shapely" },
 ]
@@ -107,7 +106,6 @@ requires-dist = [
     { name = "flexpolyline", specifier = ">=0.1.0" },
     { name = "geopandas", specifier = ">=1.0.0" },
     { name = "httpx", specifier = ">=0.28.1" },
-    { name = "numpy", specifier = ">=2.0.0" },
     { name = "pandas", specifier = ">=2.2.0" },
     { name = "shapely", specifier = ">=2.1.0" },
 ]

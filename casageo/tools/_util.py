@@ -29,14 +29,17 @@ from collections.abc import (
     Sequence,
 )
 from datetime import datetime, timedelta
-from typing import Any, cast, overload
+from typing import TYPE_CHECKING, Any, cast, overload
 
 import flexpolyline.decoding
-import numpy as np
 import pandas as pd
 import shapely
 from shapely import Point
 from shapely.errors import DimensionError
+
+if TYPE_CHECKING:
+    import numpy as np
+
 
 ietf_bcp47_language_tag_pattern = re.compile(r"[A-Za-z0-9]+(-[A-Za-z0-9]+)*")
 iso3166_alpha3_country_code_pattern = re.compile(r"[A-Z]{3}")
@@ -73,7 +76,7 @@ def validate_here_api_food_type_code(string: str) -> None:
         raise ValueError(f"Invalid HERE API food type code: {string!r}")
 
 
-def flexpolyline_points(encoded: str) -> np.ndarray:
+def flexpolyline_points(encoded: str) -> "np.ndarray":
     """
     Decode a flexpolyline into an array of points.
 
