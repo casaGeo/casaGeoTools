@@ -58,6 +58,18 @@ build() {
 	uv build
 }
 
+build-devrelease() {
+	local oldversion releasedate
+	oldversion=$(uv version --short)
+	releasedate=$(date +%Y%m%d%H%M%S)
+
+	# shellcheck disable=SC2064
+	trap "uv version -- ${oldversion@Q}" EXIT
+	uv version --bump "dev=$releasedate"
+
+	build
+}
+
 build-docs() {
 	sphinx-make html
 }
