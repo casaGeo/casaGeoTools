@@ -43,7 +43,7 @@ from casageo.tools._util import (
 )
 
 
-class AvoidableFeature(StrEnum):
+class TspAvoidableFeature(StrEnum):
     """Features that can be avoided."""
 
     TOLLROAD = "tollroad"
@@ -56,14 +56,14 @@ class AvoidableFeature(StrEnum):
     U_TURNS = "uTurns"
 
 
-class ClusteringMode(StrEnum):
+class TspClusteringMode(StrEnum):
     """Supported clustering modes."""
 
     DRIVING_DISTANCE = "drivingDistance"
     TOPOLOGY_SEGMENT = "topologySegment"
 
 
-class HazardousCargoType(StrEnum):
+class TspHazardousCargoType(StrEnum):
     """Supported types of hazardous cargo."""
 
     EXPLOSIVE = "explosive"
@@ -72,14 +72,14 @@ class HazardousCargoType(StrEnum):
     COMBUSTIBLE = "combustible"
     ORGANIC = "organic"
     POISON = "poison"
-    RADIO_ACTIVE = "radioActive"
+    RADIOACTIVE = "radioActive"
     CORROSIVE = "corrosive"
     POISONOUS_INHALATION = "poisonousInhalation"
     HARMFUL_TO_WATER = "harmfulToWater"
     OTHER = "other"
 
 
-class OptimizationTarget(StrEnum):
+class TspOptimizationTarget(StrEnum):
     """Supported optimization targets."""
 
     TIME = "time"
@@ -93,7 +93,7 @@ class RoutingMode(StrEnum):
     SHORT = "short"
 
 
-class RoutingProfile(StrEnum):
+class MatrixRoutingProfile(StrEnum):
     """Supported matrix routing profiles."""
 
     CAR_FAST = "carFast"
@@ -119,19 +119,23 @@ DEFAULT_REQUEST_ID: Final[int] = 1
 
 # Matrix
 
-DEFAULT_ROUTING_PROFILE: Final[RoutingProfile] = RoutingProfile.CAR_FAST
-"""The default routing profile for matrix calculations."""
+DEFAULT_MATRIX_ROUTING_PROFILE: Final[MatrixRoutingProfile] = (
+    MatrixRoutingProfile.CAR_FAST
+)
+"""The default routing profile for matrix routing."""
 
 # TSP
 
-DEFAULT_TRANSPORT_MODE: Final[TransportMode] = TransportMode.CAR
-"""The default transport mode."""
+DEFAULT_TSP_TRANSPORT_MODE: Final[TransportMode] = TransportMode.CAR
+"""The default transport mode for TSP."""
 
-DEFAULT_ROUTING_MODE: Final[RoutingMode] = RoutingMode.FAST
-"""The default routing mode."""
+DEFAULT_TSP_ROUTING_MODE: Final[RoutingMode] = RoutingMode.FAST
+"""The default routing mode for TSP."""
 
-DEFAULT_OPTIMIZATION_TARGET: Final[OptimizationTarget] = OptimizationTarget.TIME
-"""The default optimization target."""
+DEFAULT_TSP_OPTIMIZATION_TARGET: Final[TspOptimizationTarget] = (
+    TspOptimizationTarget.TIME
+)
+"""The default optimization target for TSP."""
 
 
 _logger = logging.getLogger(__name__)
@@ -286,7 +290,7 @@ def matrix(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    profile: str = DEFAULT_ROUTING_PROFILE,
+    profile: MatrixRoutingProfile | str = DEFAULT_MATRIX_ROUTING_PROFILE,
     with_id: Any = DEFAULT_REQUEST_ID,
 ) -> DataFrame:
     """
@@ -335,7 +339,7 @@ def matrix_result(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    profile: str = DEFAULT_ROUTING_PROFILE,
+    profile: MatrixRoutingProfile | str = DEFAULT_MATRIX_ROUTING_PROFILE,
     with_id: Any = DEFAULT_REQUEST_ID,
 ) -> MultiResult[MatrixResult]:
     """:meta private:"""
@@ -377,15 +381,15 @@ def tsp(
     *,
     origin: str | None = None,
     destination: str | None = None,
-    clustering: str | None = None,
+    clustering: TspClusteringMode | str | None = None,
     break_times: Collection[tuple[datetime | str, timedelta | float | int]] = (),
     rest_schedule: str | None = None,
-    transport_mode: str = DEFAULT_TRANSPORT_MODE,
-    routing_mode: str = DEFAULT_ROUTING_MODE,
-    optimize: str = DEFAULT_OPTIMIZATION_TARGET,
+    transport_mode: TransportMode | str = DEFAULT_TSP_TRANSPORT_MODE,
+    routing_mode: RoutingMode | str = DEFAULT_TSP_ROUTING_MODE,
+    optimize: TspOptimizationTarget | str = DEFAULT_TSP_OPTIMIZATION_TARGET,
     departure_time: datetime | str | None = None,
     traffic: bool = False,
-    avoid_features: Collection[str] = (),
+    avoid_features: Collection[TspAvoidableFeature | str] = (),
     exclude_countries: Collection[str] = (),
     vehicle_length: int | None = None,  # cm
     vehicle_width: int | None = None,  # cm
@@ -393,7 +397,7 @@ def tsp(
     vehicle_axle_weight: int | None = None,  # kg
     vehicle_total_weight: int | None = None,  # kg
     vehicle_trailers: int | None = None,
-    hazardous_cargo: Collection[str] = (),
+    hazardous_cargo: Collection[TspHazardousCargoType | str] = (),
     walking_speed: int | None = None,  # m/s
     with_coordinates: bool = False,
     with_id: Any = DEFAULT_REQUEST_ID,
@@ -415,7 +419,7 @@ def tsp(
             Name of the destination waypoint, if any.
         clustering:
             Enables clustering of waypoints
-            (see :py:class:`ClusteringMode`).
+            (see :py:class:`TspClusteringMode`).
         break_times:
             Sets up to five break time slots. Each time slot consists
             of a starting datetime and a duration in minutes.
@@ -430,7 +434,7 @@ def tsp(
             (see :py:class:`RoutingMode`).
         optimize:
             Whether to optimize the waypoint sequence for ``"time"`` or
-            for ``"distance"`` (see :py:class:`OptimizationTarget`).
+            for ``"distance"`` (see :py:class:`TspOptimizationTarget`).
         departure_time:
             The date and time of departure for time-dependent routing.
         traffic:
@@ -454,7 +458,7 @@ def tsp(
             Specifies the number of trailers attached to the vehicle.
         hazardous_cargo:
             Specifies the types of hazardous cargo carried by the
-            vehicle (see :py:class:`HazardousCargoType`).
+            vehicle (see :py:class:`TspHazardousCargoType`).
         walking_speed:
             Specifies the pedestrian walking speed in meters per second.
         with_coordinates:
@@ -511,15 +515,15 @@ def tsp_result(
     *,
     origin: str | None = None,
     destination: str | None = None,
-    clustering: str | None = None,
+    clustering: TspClusteringMode | str | None = None,
     break_times: Collection[tuple[datetime | str, timedelta | float | int]] = (),
     rest_schedule: str | None = None,
-    transport_mode: str = DEFAULT_TRANSPORT_MODE,
-    routing_mode: str = DEFAULT_ROUTING_MODE,
-    optimize: str = DEFAULT_OPTIMIZATION_TARGET,
+    transport_mode: TransportMode | str = DEFAULT_TSP_TRANSPORT_MODE,
+    routing_mode: RoutingMode | str = DEFAULT_TSP_ROUTING_MODE,
+    optimize: TspOptimizationTarget | str = DEFAULT_TSP_OPTIMIZATION_TARGET,
     departure_time: datetime | str | None = None,
     traffic: bool = False,
-    avoid_features: Collection[str] = (),
+    avoid_features: Collection[TspAvoidableFeature | str] = (),
     exclude_countries: Collection[str] = (),
     vehicle_length: int | None = None,  # cm
     vehicle_width: int | None = None,  # cm
@@ -527,7 +531,7 @@ def tsp_result(
     vehicle_axle_weight: int | None = None,  # kg
     vehicle_total_weight: int | None = None,  # kg
     vehicle_trailers: int | None = None,
-    hazardous_cargo: Collection[str] = (),
+    hazardous_cargo: Collection[TspHazardousCargoType | str] = (),
     walking_speed: int | None = None,  # m/s
     with_coordinates: bool = False,
     with_id: Any = DEFAULT_REQUEST_ID,
