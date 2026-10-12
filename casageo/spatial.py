@@ -57,16 +57,22 @@ from casageo.tools._util import (
 
 
 class RangeType(StrEnum):
+    """Range type values."""
+
     TIME = "time"
     DISTANCE = "distance"
 
 
 class RangeUnit(StrEnum):
+    """Range unit values."""
+
     MINUTES = "minutes"
     METERS = "meters"
 
 
 class TransportMode(StrEnum):
+    """Modes of transport."""
+
     CAR = "car"
     PEDESTRIAN = "pedestrian"
     BICYCLE = "bicycle"
@@ -74,16 +80,22 @@ class TransportMode(StrEnum):
 
 
 class RoutingMode(StrEnum):
+    """Routing modes."""
+
     FAST = "fast"
     SHORT = "short"
 
 
 class DirectionType(StrEnum):
+    """Direction types."""
+
     OUTGOING = "outgoing"
     INCOMING = "incoming"
 
 
 class AvoidableFeature(StrEnum):
+    """Avoidable features."""
+
     SEASONAL_CLOSURE = "seasonalClosure"
     TOLL_ROAD = "tollRoad"
     CONTROLLED_ACCESS_HIGHWAY = "controlledAccessHighway"
@@ -99,15 +111,13 @@ RANGE_TYPE_BY_UNIT: Final[Mapping[str, RangeType]] = {
     RangeUnit.MINUTES: RangeType.TIME,
     RangeUnit.METERS: RangeType.DISTANCE,
 }
+"""Mapping of range units to corresponding range types."""
 
 RANGE_COEFFICIENT_BY_UNIT: Final[Mapping[str, int]] = {
     RangeUnit.MINUTES: 60,
     RangeUnit.METERS: 1,
 }
-
-
-MIN_ALTERNATIVES: Final[int] = 0
-MAX_ALTERNATIVES: Final[int] = 6
+"""Mapping of range units to to SI base unit multiplication factors."""
 
 # Spatial
 
@@ -136,7 +146,13 @@ RESULT_RANGE_UNIT_BY_TYPE: Final[Mapping[str, RangeUnit]] = {
 
 # Routes
 
-DEFAULT_ALTERNATIVES: Final[int] = 0
+MINIMUM_ALTERNATIVE_ROUTES: Final[int] = 0
+"""The minimum number of alternative routes to compute."""
+
+MAXIMUM_ALTERNATIVE_ROUTES: Final[int] = 6
+"""The maximum number of alternative routes to compute."""
+
+DEFAULT_ALTERNATIVE_ROUTES: Final[int] = 0
 """The default number of alternative routes to compute."""
 
 
@@ -829,7 +845,7 @@ def routes_result(
                 delna({
                     "origin": and_then(getpoint(q, "origin"), point_xy),
                     "destination": and_then(getpoint(q, "destination"), point_xy),
-                    "alternatives": q.get("alternatives", DEFAULT_ALTERNATIVES),
+                    "alternatives": q.get("alternatives", DEFAULT_ALTERNATIVE_ROUTES),
                     "language": q.get("language", client.preferred_language),
                     "unit_system": q.get("unit_system", client.preferred_unit_system),
                     "transport_mode": q.get("transport_mode", DEFAULT_TRANSPORT_MODE),
@@ -858,7 +874,7 @@ def routesvia(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    alternatives: int = DEFAULT_ALTERNATIVES,
+    alternatives: int = DEFAULT_ALTERNATIVE_ROUTES,
     transport_mode: TransportMode | str = DEFAULT_TRANSPORT_MODE,
     routing_mode: RoutingMode | str = DEFAULT_ROUTING_MODE,
     departure_time: datetime | str | None = None,
@@ -890,7 +906,7 @@ def routesvia_result(
     client: CasaGeoClient,
     waypoints: DataFrame,
     *,
-    alternatives: int = DEFAULT_ALTERNATIVES,
+    alternatives: int = DEFAULT_ALTERNATIVE_ROUTES,
     transport_mode: str = DEFAULT_TRANSPORT_MODE,
     routing_mode: str = DEFAULT_ROUTING_MODE,
     departure_time: datetime | str | None = None,
@@ -1151,7 +1167,7 @@ def _main(args: Sequence[str] | None = None) -> None:
     )
     routes_params.add_argument(
         "--alternatives",
-        default=DEFAULT_ALTERNATIVES,
+        default=DEFAULT_ALTERNATIVE_ROUTES,
         type=_util.cli_non_negative_int,
         help="number of alternate routes to calculate",
     )

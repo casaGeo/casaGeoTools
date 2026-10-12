@@ -48,33 +48,53 @@ from casageo.tools._util import (
 
 
 class AddressNamesMode(StrEnum):
+    """Address name selection modes."""
+
     DEFAULT = "default"
     MATCHED = "matched"
     NORMALIZED = "normalized"
 
 
 class PostalCodeMode(StrEnum):
+    """Postal code processing modes."""
+
     DEFAULT = "default"
     CITY_LOOKUP = "cityLookup"
     DISTRICT_LOOKUP = "districtLookup"
 
-
-MIN_LIMIT: Final[int] = 1
-MAX_LIMIT: Final[int] = 100
 
 # Coder
 
 DEFAULT_REQUEST_ID: Final[int] = 1
 """The default ID value for single-shot requests."""
 
-DEFAULT_LIMIT: Final[int] = 20
-"""The default limit on the number of computed results."""
-
 DEFAULT_ADDRESS_NAMES_MODE: Final[AddressNamesMode] = AddressNamesMode.DEFAULT
 """The default address names mode."""
 
 DEFAULT_POSTAL_CODE_MODE: Final[PostalCodeMode] = PostalCodeMode.DEFAULT
 """The default postal code mode."""
+
+# Geocode
+
+MINIMUM_GEOCODE_LIMIT: Final[int] = 1
+"""The minimum limit on the number of computed results for :func:`geocode` queries."""
+
+MAXIMUM_GEOCODE_LIMIT: Final[int] = 100
+"""The maximum limit on the number of computed results for :func:`geocode` queries."""
+
+DEFAULT_GEOCODE_LIMIT: Final[int] = 20
+"""The default limit on the number of computed results for :func:`geocode` queries."""
+
+# POI
+
+MINIMUM_POI_LIMIT: Final[int] = 1
+"""The minimum limit on the number of computed results for :func:`poi` queries."""
+
+MAXIMUM_POI_LIMIT: Final[int] = 100
+"""The maximum limit on the number of computed results for :func:`poi` queries."""
+
+DEFAULT_POI_LIMIT: Final[int] = 20
+"""The default limit on the number of computed results for :func:`poi` queries."""
 
 
 _logger = logging.getLogger(__name__)
@@ -472,7 +492,7 @@ def geocode_result(
                     "political_view": q.get(
                         "political_view", client.preferred_political_view
                     ),
-                    "limit": q.get("limit", DEFAULT_LIMIT),
+                    "limit": q.get("limit", DEFAULT_GEOCODE_LIMIT),
                     "countries": and_then(q.get("countries"), split_if_str(",")),
                     "address_names_mode": q.get(
                         "address_names_mode", DEFAULT_ADDRESS_NAMES_MODE
@@ -572,7 +592,7 @@ def poi_result(
                     "political_view": q.get(
                         "political_view", client.preferred_political_view
                     ),
-                    "limit": q.get("limit", DEFAULT_LIMIT),
+                    "limit": q.get("limit", DEFAULT_POI_LIMIT),
                     "countries": and_then(q.get("countries"), split_if_str(",")),
                     "address_names_mode": q.get(
                         "address_names_mode", DEFAULT_ADDRESS_NAMES_MODE
