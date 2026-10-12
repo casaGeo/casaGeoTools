@@ -49,5 +49,6 @@ routes_map.html
 
 # IDE configuration
 .idea/
+.junie/
 .qtcreator/
 .vscode/
