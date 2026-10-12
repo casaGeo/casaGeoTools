@@ -39,7 +39,7 @@ def load_fixture(name: str):
 
 def main(args: Sequence[str] | None = None) -> None:
     client = ct.CasaGeoClient("XXXXX-XXXXX-XXXXX-XXXXX")
-    address_queries = DataFrame([
+    geocode_queries = DataFrame([
         {"id": 1, "address": "Fraunhoferstr. 3, 25524 Itzehoe DEU"},
         {"id": 2, "address": "Hachmannplatz 16, 20099 Hamburg DEU"},
         {"id": 3, "address": "Sophienblatt 25, 24114 Kiel DEU"},
@@ -51,7 +51,7 @@ def main(args: Sequence[str] | None = None) -> None:
             "limit": 2,
         },
     ])
-    isolines_queries = DataFrame([
+    isoline_queries = DataFrame([
         {
             "id": 1,
             "position": Point(10.008223, 53.553089),
@@ -105,9 +105,9 @@ def main(args: Sequence[str] | None = None) -> None:
     ])
 
     with patch("casageo.tools._client.CasaGeoClient.request") as mock:
-        fixture = load_fixture("coder_address_simple_query")
+        fixture = load_fixture("coder_geocode_simple_query")
         mock.return_value = fixture["result"]
-        cc.address(client, address_queries)
+        cc.geocode(client, geocode_queries)
         assert mock.called
 
     with patch("casageo.tools._client.CasaGeoClient.request") as mock:
@@ -117,9 +117,9 @@ def main(args: Sequence[str] | None = None) -> None:
         assert mock.called
 
     with patch("casageo.tools._client.CasaGeoClient.request") as mock:
-        fixture = load_fixture("spatial_isolines_simple_query")
+        fixture = load_fixture("spatial_isoline_simple_query")
         mock.return_value = fixture["result"]
-        cs.isolines(client, isolines_queries)
+        cs.isoline(client, isoline_queries)
         assert mock.called
 
     with patch("casageo.tools._client.CasaGeoClient.request") as mock:

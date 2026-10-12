@@ -38,7 +38,7 @@ def load_fixture(name: str):
         return json.load(f)
 
 
-class TestIsolinesQuery(unittest.TestCase):
+class TestIsolineQuery(unittest.TestCase):
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
         self.queries = DataFrame([
@@ -70,9 +70,9 @@ class TestIsolinesQuery(unittest.TestCase):
 
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
-        fixture = load_fixture("spatial_isolines_simple_query")
+        fixture = load_fixture("spatial_isoline_simple_query")
         mock.return_value = fixture["result"]
-        results = cs.isolines(self.client, self.queries)
+        results = cs.isoline(self.client, self.queries)
 
         mock.assert_called_once_with(
             self.client,

@@ -14,7 +14,9 @@ casageo.coder module
 
    .. _coder-address-queries:
 
-   Address Queries
+   .. _coder-geocode-queries:
+
+   Geocode Queries
    ===============
 
    Geocode addresses.
@@ -36,9 +38,12 @@ casageo.coder module
    ``countries`` list *is* a hard filter, limiting the search to only the
    specified countries.
 
+
    .. _coder-address-query-options:
 
-   Address Query Options
+   .. _coder-geocode-query-options:
+
+   Geocode Query Options
    ---------------------
 
    address_details : bool
@@ -50,9 +55,12 @@ casageo.coder module
    match_quality : bool
       Include match quality scores in the result.
 
+
    .. _coder-address-input-columns:
 
-   Address Input Columns
+   .. _coder-geocode-input-columns:
+
+   Geocode Input Columns
    ---------------------
 
    The following columns will be read from the input dataframe:
@@ -130,9 +138,12 @@ casageo.coder module
          return all possible combinations of the postal code with the
          corresponding city and district names.
 
+
    .. _coder-address-output-columns:
 
-   Address Output Columns
+   .. _coder-geocode-output-columns:
+
+   Geocode Output Columns
    ----------------------
 
    The resulting dataframe contains the following columns:
@@ -310,12 +321,14 @@ casageo.coder module
    error_message : str
       Human-readable error message.
 
+
    .. _coder-poi-queries:
 
    POI Queries
    ===========
 
    Search for points of interest (POI) around given positions.
+
 
    .. _coder-poi-query-options:
 
@@ -330,6 +343,7 @@ casageo.coder module
 
    category_codes : bool
       Include HERE category, chain and food type identifiers in the result.
+
 
    .. _coder-poi-input-columns:
 
@@ -383,6 +397,7 @@ casageo.coder module
       -  ``"districtLookup"`` -- When a postal code spans multiple districts,
          return all possible combinations of the postal code with the
          corresponding city and district names.
+
 
    .. _coder-poi-output-columns:
 

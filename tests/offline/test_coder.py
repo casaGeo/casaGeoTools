@@ -38,10 +38,10 @@ def load_fixture(name: str):
         return json.load(f)
 
 
-class TestAddressQuery(unittest.TestCase):
+class TestGeocodeQuery(unittest.TestCase):
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
-        self.address_queries = DataFrame([
+        self.geocode_queries = DataFrame([
             {"id": 1, "address": "Fraunhoferstr. 3, 25524 Itzehoe DEU"},
             {"id": 2, "address": "Hachmannplatz 16, 20099 Hamburg DEU"},
             {"id": 3, "address": "Sophienblatt 25, 24114 Kiel DEU"},
@@ -49,9 +49,9 @@ class TestAddressQuery(unittest.TestCase):
 
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
-        fixture = load_fixture("coder_address_simple_query")
+        fixture = load_fixture("coder_geocode_simple_query")
         mock.return_value = fixture["result"]
-        results = cc.address(self.client, self.address_queries)
+        results = cc.geocode(self.client, self.geocode_queries)
         mock.assert_called_once_with(
             self.client,
             "POST",

@@ -28,6 +28,7 @@ from typing import Any, Final, cast
 
 from geopandas import GeoDataFrame
 from pandas import DataFrame
+from typing_extensions import deprecated
 
 from casageo.tools import CasaGeoClient, CasaGeoError, _util
 from casageo.tools._types import CasaGeoResult, MultiResult
@@ -79,9 +80,9 @@ DEFAULT_POSTAL_CODE_MODE: Final[PostalCodeMode] = PostalCodeMode.DEFAULT
 _logger = logging.getLogger(__name__)
 
 
-class AddressResult(CasaGeoResult):
+class GeocodeResult(CasaGeoResult):
     """
-    Represents the result of a singular ``address()`` query.
+    Represents the result of a singular :func:`geocode` query.
 
     :meta private:
     """
@@ -99,7 +100,7 @@ class AddressResult(CasaGeoResult):
         Return the result as a GeoDataFrame.
 
         The shape of the resulting dataframe matches the result of the
-        ``address()`` function, except that error information is only
+        :func:`geocode` function, except that error information is only
         included when ``error_info`` is set to ``True``.
 
         Args:
@@ -215,7 +216,7 @@ class AddressResult(CasaGeoResult):
 
 class PoiResult(CasaGeoResult):
     """
-    Represents the result of a singular ``poi()`` query.
+    Represents the result of a singular :func:`poi` query.
 
     :meta private:
     """
@@ -233,7 +234,7 @@ class PoiResult(CasaGeoResult):
         Return the result as a GeoDataFrame.
 
         The shape of the resulting dataframe matches the result of the
-        ``poi()`` function, except that error information is only
+        :func:`poi` function, except that error information is only
         included when ``error_info`` is set to ``True``.
 
         Args:
@@ -369,7 +370,19 @@ class PoiResult(CasaGeoResult):
     # TODO: Opening hours information dataframe method.
 
 
-def address(
+@deprecated("Class AddressResult is a deprecated alias for GeocodeResult")
+class AddressResult(GeocodeResult):
+    """
+    Deprecated alias for :class:`GeocodeResult`.
+
+    .. version-deprecated:: 1.1.0
+        The class was renamed to :class:`GeocodeResult`.
+
+    :meta private:
+    """
+
+
+def geocode(
     client: CasaGeoClient,
     queries: DataFrame,
     defaults: Mapping[str, Any] | None = None,
@@ -381,7 +394,7 @@ def address(
     """
     Geocode addresses.
 
-    See :ref:`coder-address-queries` in the module documentation.
+    See :ref:`coder-geocode-queries` in the module documentation.
 
     Args:
         client (CasaGeoClient): The client object authorizing these queries.
@@ -394,7 +407,7 @@ def address(
     Returns:
         ~geopandas.GeoDataFrame: The list of results as an EPSG:4326
         GeoDataFrame. The shape is described under
-        :ref:`coder-address-output-columns` in the module documentation.
+        :ref:`coder-geocode-output-columns` in the module documentation.
 
         The geometry column of the dataframe is the ``position`` column.
         If you want to work with navigation points instead, change it to
@@ -404,7 +417,7 @@ def address(
         InsufficientCreditsError: If the account does not have enough credits.
         CasaGeoError: If the request could not be executed for another reason.
     """
-    df = address_result(
+    df = geocode_result(
         client,
         queries,
         defaults,
@@ -415,7 +428,7 @@ def address(
     return cast(GeoDataFrame, df)
 
 
-def address_result(
+def geocode_result(
     client: CasaGeoClient,
     queries: DataFrame,
     defaults: Mapping[str, Any] | None = None,
@@ -423,7 +436,7 @@ def address_result(
     address_details: bool = False,
     coordinates: bool = False,
     match_quality: bool = False,
-) -> MultiResult[AddressResult]:
+) -> MultiResult[GeocodeResult]:
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []
@@ -475,7 +488,7 @@ def address_result(
 
     _logger.debug("Address Response: %r", json)
 
-    return MultiResult(json=json, ids=ids, options=options, result_type=AddressResult)
+    return MultiResult(json=json, ids=ids, options=options, result_type=GeocodeResult)
 
 
 def poi(
@@ -576,6 +589,62 @@ def poi_result(
     _logger.debug("POI Response: %r", json)
 
     return MultiResult(json=json, ids=ids, options=options, result_type=PoiResult)
+
+
+@deprecated("Function coder.address() is a deprecated alias for coder.geocode()")
+def address(
+    client: CasaGeoClient,
+    queries: DataFrame,
+    defaults: Mapping[str, Any] | None = None,
+    *,
+    address_details: bool = False,
+    coordinates: bool = False,
+    match_quality: bool = False,
+) -> GeoDataFrame:
+    """
+    Deprecated alias for :func:`geocode`.
+
+    .. version-deprecated:: 1.1.0
+        The function was renamed to :func:`geocode`.
+    """
+    return geocode(
+        client,
+        queries,
+        defaults,
+        address_details=address_details,
+        coordinates=coordinates,
+        match_quality=match_quality,
+    )
+
+
+@deprecated(
+    "Function coder.address_result() is a deprecated alias for coder.geocode_result()"
+)
+def address_result(
+    client: CasaGeoClient,
+    queries: DataFrame,
+    defaults: Mapping[str, Any] | None = None,
+    *,
+    address_details: bool = False,
+    coordinates: bool = False,
+    match_quality: bool = False,
+) -> MultiResult[GeocodeResult]:
+    """
+    Deprecated alias for :func:`geocode_result`.
+
+    .. version-deprecated:: 1.1.0
+        The function was renamed to :func:`geocode_result`.
+
+    :meta private:
+    """
+    return geocode_result(
+        client,
+        queries,
+        defaults,
+        address_details=address_details,
+        coordinates=coordinates,
+        match_quality=match_quality,
+    )
 
 
 def _main(args: Sequence[str] | None = None) -> None:

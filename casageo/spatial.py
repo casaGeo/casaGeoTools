@@ -34,6 +34,7 @@ from shapely import (
     MultiLineString,
     MultiPolygon,
 )
+from typing_extensions import deprecated
 
 from casageo.tools import CasaGeoClient, CasaGeoError
 from casageo.tools._types import CasaGeoResult, MultiResult
@@ -122,7 +123,7 @@ DEFAULT_ROUTING_MODE: Final[RoutingMode] = RoutingMode.FAST
 DEFAULT_DIRECTION: Final[DirectionType] = DirectionType.OUTGOING
 """The default routing direction."""
 
-# Isolines
+# Isoline
 
 DEFAULT_RANGE_UNIT: Final[RangeUnit] = RangeUnit.MINUTES
 """The default unit for range values."""
@@ -142,7 +143,7 @@ DEFAULT_ALTERNATIVES: Final[int] = 0
 _logger = logging.getLogger(__name__)
 
 
-def _isolines_ranges_unit(
+def _isoline_ranges_unit(
     q: Mapping[Hashable, Any], default: str | None = None
 ) -> str | None:
     if (ru := and_then(q.get("ranges_unit"), str)) is not None:
@@ -154,9 +155,9 @@ def _isolines_ranges_unit(
     return default
 
 
-class IsolinesResult(CasaGeoResult):
+class IsolineResult(CasaGeoResult):
     """
-    Represents the result of a singular ``isolines()`` query.
+    Represents the result of a singular :func:`isoline` query.
 
     :meta private:
     """
@@ -199,7 +200,7 @@ class IsolinesResult(CasaGeoResult):
             return None
 
         # We interpret range_values as minutes, while HERE interprets them as seconds.
-        if (unit := IsolinesResult._range_unit(isoline)) is not None:
+        if (unit := IsolineResult._range_unit(isoline)) is not None:
             value /= RANGE_COEFFICIENT_BY_UNIT.get(unit, 1)
 
         return value
@@ -217,7 +218,7 @@ class IsolinesResult(CasaGeoResult):
         Return the result as a GeoDataFrame.
 
         The shape of the resulting dataframe matches the result of the
-        ``isolines()`` function, except that error information is only
+        :func:`isoline` function, except that error information is only
         included when ``error_info`` is set to ``True``.
 
         Args:
@@ -410,7 +411,7 @@ class IsolinesResult(CasaGeoResult):
 
 class RoutesResult(CasaGeoResult):
     """
-    Represents the result of a singular ``routes()`` query.
+    Represents the result of a singular :func:`routes` query.
 
     :meta private:
     """
@@ -453,7 +454,7 @@ class RoutesResult(CasaGeoResult):
         Return the result as a GeoDataFrame.
 
         The shape of the resulting dataframe matches the result of the
-        ``routes()`` function, except that error information is only
+        :func:`routes` function, except that error information is only
         included when ``error_info`` is set to ``True``.
 
         Args:
@@ -638,7 +639,17 @@ class RoutesResult(CasaGeoResult):
         }
 
 
-def isolines(
+@deprecated("Class IsolinesResult is a deprecated alias for IsolineResult")
+class IsolinesResult(IsolineResult):
+    """
+    Deprecated alias for :class:`IsolineResult`.
+
+    .. version-deprecated:: 1.1.0
+        The class was renamed to :class:`IsolineResult`.
+    """
+
+
+def isoline(
     client: CasaGeoClient,
     queries: DataFrame,
     defaults: Mapping[str, Any] | None = None,
@@ -672,7 +683,7 @@ def isolines(
         InsufficientCreditsError: If the account does not have enough credits.
         CasaGeoError: If the request could not be executed for another reason.
     """
-    df = isolines_result(
+    df = isoline_result(
         client,
         queries,
         defaults,
@@ -683,7 +694,7 @@ def isolines(
     return cast(GeoDataFrame, df)
 
 
-def isolines_result(
+def isoline_result(
     client: CasaGeoClient,
     queries: DataFrame,
     defaults: Mapping[str, Any] | None = None,
@@ -691,7 +702,7 @@ def isolines_result(
     departure_info: bool = False,
     arrival_info: bool = False,
     coordinates: bool = False,
-) -> MultiResult[IsolinesResult]:
+) -> MultiResult[IsolineResult]:
     """:meta private:"""
 
     fallbacks = [defaults] if defaults else []
@@ -715,7 +726,7 @@ def isolines_result(
                 delna({
                     "position": and_then(getpoint(q, "position"), point_xy),
                     "ranges": and_then(q.get("ranges"), split_if_str(",")),
-                    "ranges_unit": _isolines_ranges_unit(q, DEFAULT_RANGE_UNIT),
+                    "ranges_unit": _isoline_ranges_unit(q, DEFAULT_RANGE_UNIT),
                     "direction": q.get("direction", DEFAULT_DIRECTION),
                     "language": q.get("language", client.preferred_language),
                     "unit_system": q.get("unit_system", client.preferred_unit_system),
@@ -738,7 +749,7 @@ def isolines_result(
 
     _logger.debug("Isolines Response: %r", json)
 
-    return MultiResult(json=json, ids=ids, options=options, result_type=IsolinesResult)
+    return MultiResult(json=json, ids=ids, options=options, result_type=IsolineResult)
 
 
 def routes(
@@ -941,6 +952,60 @@ def routesvia_result(
     )
 
 
+@deprecated("Function spatial.isolines() is a deprecated alias for spatial.isoline()")
+def isolines(
+    client: CasaGeoClient,
+    queries: DataFrame,
+    defaults: Mapping[str, Any] | None = None,
+    *,
+    departure_info: bool = False,
+    arrival_info: bool = False,
+    coordinates: bool = False,
+) -> GeoDataFrame:
+    """
+    Deprecated alias for :func:`isoline`.
+
+    .. version-deprecated:: 1.1.0
+        The function was renamed to :func:`isoline`.
+    """
+    return isoline(
+        client,
+        queries,
+        defaults,
+        departure_info=departure_info,
+        arrival_info=arrival_info,
+        coordinates=coordinates,
+    )
+
+
+@deprecated(
+    "Function spatial.isolines_result() is a deprecated alias for spatial.isoline_result()"
+)
+def isolines_result(
+    client: CasaGeoClient,
+    queries: DataFrame,
+    defaults: Mapping[str, Any] | None = None,
+    *,
+    departure_info: bool = False,
+    arrival_info: bool = False,
+    coordinates: bool = False,
+) -> MultiResult[IsolineResult]:
+    """
+    Deprecated alias for :func:`isoline_result`.
+
+    .. version-deprecated:: 1.1.0
+        The function was renamed to :func:`isoline_result`.
+    """
+    return isoline_result(
+        client,
+        queries,
+        defaults,
+        departure_info=departure_info,
+        arrival_info=arrival_info,
+        coordinates=coordinates,
+    )
+
+
 def _main(args: Sequence[str] | None = None) -> None:
     from casageo.tools import DEFAULT_UNIT_SYSTEM, UnitSystem, _util
 
@@ -1022,7 +1087,7 @@ def _main(args: Sequence[str] | None = None) -> None:
         parents=[parent_parser],
         allow_abbrev=False,
     )
-    isolines_parser.set_defaults(command=isolines)
+    isolines_parser.set_defaults(command=isoline)
 
     isolines_params = isolines_parser.add_argument_group(title="isolines parameters")
     isolines_params.add_argument(

@@ -4,6 +4,8 @@
 
 ### Changed
 
+- The function `address()` was renamed to `geocode()`, the old name is deprecated
+- The function `isolines()` was renamed to `isoline()`, the old name is deprecated
 - Duplicate IDs now raise `ValueError`
 - Module constants are now marked as `Final`
 

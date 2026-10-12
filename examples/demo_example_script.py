@@ -54,7 +54,7 @@ address_queries = pd.DataFrame([
     },
 ])
 
-address_results = casageo.coder.address(
+geocode_results = casageo.coder.geocode(
     client,
     address_queries,
     address_details=True,
@@ -63,8 +63,8 @@ address_results = casageo.coder.address(
 )
 
 print()
-print("Address Results:")
-print(address_results)
+print("Geocoding Results:")
+print(geocode_results)
 
 
 ##############
@@ -128,14 +128,14 @@ isolines_queries = pd.DataFrame([
     },
 ])
 
-isolines_results = casageo.spatial.isolines(
+isoline_results = casageo.spatial.isoline(
     client,
     isolines_queries,
 )
 
 print()
-print("Isolines Results:")
-print(isolines_results)
+print("Isoline Results:")
+print(isoline_results)
 
 
 ###########

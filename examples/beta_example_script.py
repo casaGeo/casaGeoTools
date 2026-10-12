@@ -179,7 +179,7 @@ list_isolines = pd.DataFrame([
 print("\n🌍 --- Batch Geocoding ---")
 
 try:
-    geocoded_df = cc.address(
+    geocoded_df = cc.geocode(
         cga,
         address_list,
         {"limit": 1},
@@ -242,7 +242,7 @@ except Exception as e:
 print("\n🌀 --- Batch Isolines ---")
 
 try:
-    isolines_gdf = cs.isolines(
+    isolines_gdf = cs.isoline(
         cga,
         list_isolines,
         departure_info=True,
