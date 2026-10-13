@@ -51,32 +51,45 @@ here_api_chain_code_pattern = re.compile(r"!?\d+", re.ASCII)
 here_api_food_type_code_pattern = re.compile(r"!?\d{3}-\d{3}", re.ASCII)
 
 
-def validate_ietf_bcp47_language_tag(string: str) -> None:
+def validate_ietf_bcp47_language_tag(string: str, /) -> str:
     if not ietf_bcp47_language_tag_pattern.fullmatch(string):
         raise ValueError(f"Invalid IETF BCP 47 language tag: {string!r}")
+    return string
 
 
-def validate_iso3166_alpha3_country_code(string: str) -> None:
+def validate_ietf_bcp47_language_tag_list(string: str, /, sep: str = ",") -> str:
+    return sep.join(
+        validate_ietf_bcp47_language_tag(tag)
+        for part in string.split(sep)
+        if (tag := part.strip())
+    )
+
+
+def validate_iso3166_alpha3_country_code(string: str, /) -> str:
     if not iso3166_alpha3_country_code_pattern.fullmatch(string):
         raise ValueError(f"Invalid ISO 3166-1 alpha-3 country code: {string!r}")
+    return string
 
 
-def validate_here_api_category_code(string: str) -> None:
+def validate_here_api_category_code(string: str, /) -> str:
     if not here_api_category_code_pattern.fullmatch(string):
         raise ValueError(f"Invalid HERE API category code: {string!r}")
+    return string
 
 
-def validate_here_api_chain_code(string: str) -> None:
+def validate_here_api_chain_code(string: str, /) -> str:
     if not here_api_chain_code_pattern.fullmatch(string):
         raise ValueError(f"Invalid HERE API chain code: {string!r}")
+    return string
 
 
-def validate_here_api_food_type_code(string: str) -> None:
+def validate_here_api_food_type_code(string: str, /) -> str:
     if not here_api_food_type_code_pattern.fullmatch(string):
         raise ValueError(f"Invalid HERE API food type code: {string!r}")
+    return string
 
 
-def flexpolyline_points(encoded: str) -> "np.ndarray":
+def flexpolyline_points(encoded: str, /) -> "np.ndarray":
     """
     Decode a flexpolyline into an array of points.
 
@@ -124,7 +137,7 @@ def list_first[T, D](lst: Sequence[T], /, default: D = None) -> T | D:
     return lst[0] if lst else default
 
 
-def rename(newname: str):
+def rename(newname: str, /):
     def decorator(func):
         func.__name__ = newname
         return func
@@ -276,22 +289,17 @@ def to_records(
 
 @rename("IETF BCP47 language tag")
 def cli_ietf_bcp47_language_tag(value: str) -> str:
-    validate_ietf_bcp47_language_tag(value)
-    return value
+    return validate_ietf_bcp47_language_tag(value)
 
 
 @rename("ISO 3166-1 alpha-3 country code")
 def cli_iso3166_alpha3_country_code(value: str) -> str:
-    validate_iso3166_alpha3_country_code(value)
-    return value
+    return validate_iso3166_alpha3_country_code(value)
 
 
 @rename("comma-separated ISO 3166-1 alpha-3 country code list")
 def cli_iso3166_alpha3_country_code_list(value: str) -> list[str]:
-    codes = value.split(",")
-    for code in codes:
-        validate_iso3166_alpha3_country_code(code)
-    return codes
+    return [validate_iso3166_alpha3_country_code(code) for code in value.split(",")]
 
 
 @rename("Latitude,Longitude point")
@@ -333,23 +341,14 @@ def cli_avoidable_feature_list(value: str) -> list[str]:
 
 @rename("comma-separated HERE API category code list")
 def cli_here_api_category_code_list(value: str) -> list[str]:
-    codes = value.split(",")
-    for code in codes:
-        validate_here_api_category_code(code)
-    return codes
+    return [validate_here_api_category_code(code) for code in value.split(",")]
 
 
 @rename("comma-separated HERE API chain code list")
 def cli_here_api_chain_code_list(value: str) -> list[str]:
-    codes = value.split(",")
-    for code in codes:
-        validate_here_api_chain_code(code)
-    return codes
+    return [validate_here_api_chain_code(code) for code in value.split(",")]
 
 
 @rename("comma-separated HERE API food type code list")
 def cli_here_api_food_type_code_list(value: str) -> list[str]:
-    codes = value.split(",")
-    for code in codes:
-        validate_here_api_food_type_code(code)
-    return codes
+    return [validate_here_api_food_type_code(code) for code in value.split(",")]
