@@ -14,40 +14,36 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-import contextlib
 import logging
 import os
-from collections.abc import Generator
-from typing import Any
 import urllib.parse
+from typing import Any, Protocol, Self
 
-import httpx
-
-from ._consts import CASAGEOTOOLS_SERVER_URL, DEFAULT_UNIT_SYSTEM
-from ._errors import APIValueError, CasaGeoError, InsufficientCreditsError
-from ._util import and_then
-
+from ._consts import CASAGEOTOOLS_SERVER_URL, DEFAULT_UNIT_SYSTEM, UnitSystem
+from ._errors import CasaGeoError
 
 _logger = logging.getLogger(__name__)
 
 
-class TokenAuth(httpx.Auth):
-    def __init__(self, token: str) -> None:
-        self.token = token
+class NetworkRequestBackend(Protocol):
+    def request(
+        self, method: str, url: str, *, json: Any | None = None, **kwargs
+    ) -> Any: ...
+    def close(self) -> None: ...
 
-    def auth_flow(
-        self, request: httpx.Request
-    ) -> Generator[httpx.Request, httpx.Response]:
-        request.headers["Authorization"] = self.token
-        yield request
+
 
 
 class CasaGeoClient:
     """
     The casaGeo API client.
 
-    The ``preferred_*`` attributes are used as default values when making API
-    requests and override the module defaults if not ``None``.
+    The ``preferred_*`` attributes are used as default values when
+    making API requests and override the module defaults if not
+    ``None``.
+
+    This class can be used as a context manager, in which case the
+    :meth:`close` method will be called automatically on scope exit.
 
     Attributes:
         preferred_language:
@@ -78,7 +74,7 @@ class CasaGeoClient:
         *,
         preferred_language: str | None = None,
         preferred_political_view: str | None = None,
-        preferred_unit_system: str = DEFAULT_UNIT_SYSTEM,
+        preferred_unit_system: UnitSystem | str = DEFAULT_UNIT_SYSTEM,
     ) -> None:
         self._apikey = apikey or os.getenv("CASAGEOTOOLS_API_KEY", "")
         if not self._apikey:
@@ -103,9 +99,13 @@ class CasaGeoClient:
         self.preferred_political_view = preferred_political_view
         self.preferred_unit_system = preferred_unit_system
 
-        self._httpxclient = httpx.Client(
-            auth=TokenAuth(self.apikey), base_url=self.server
-        )
+        self._backend = self.setup_network_request_backend()
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, *_) -> None:
+        self.close()
 
     @property
     def apikey(self) -> str:
@@ -118,25 +118,15 @@ class CasaGeoClient:
         return self._server
 
     def request(self, method: str, url: str, *, json: Any | None = None) -> Any:
+        """Send a network request to the casaGeo API server and return a JSON object."""
         _logger.debug("Request: %s %s %r", method, url, json)
+        return self._backend.request(method, url, json=json)
 
-        response = self._httpxclient.request(method, url, json=json)
-        if response.is_success:
-            return response.json()
+    def close(self) -> None:
+        """Close the network request backend and release any associated resources."""
+        self._backend.close()
 
-        if response.status_code == httpx.codes.BAD_REQUEST:
-            raise APIValueError(response.text)
+    def setup_network_request_backend(self) -> NetworkRequestBackend:
+        from ._httpxbackend import HttpxBackend
 
-        if response.status_code == httpx.codes.PAYMENT_REQUIRED:
-            with contextlib.suppress(TypeError, ValueError):
-                json = dict(response.json())
-                raise InsufficientCreditsError(
-                    message=and_then(json.get("detail"), str),
-                    required=and_then(json.get("required"), int),
-                    available=and_then(json.get("available"), int),
-                )
-            raise InsufficientCreditsError(response.text)
-
-        response.raise_for_status()
-
-        raise CasaGeoError(f"Unexpected status code {response.status_code}")
+        return HttpxBackend(self)
