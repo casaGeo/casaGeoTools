@@ -19,7 +19,7 @@ import os
 import urllib.parse
 from typing import Any, Protocol, Self
 
-from ._consts import CASAGEOTOOLS_SERVER_URL, DEFAULT_UNIT_SYSTEM, UnitSystem
+from ._consts import CASAGEOTOOLS_SERVER_URL, UnitSystem
 from ._errors import CasaGeoError
 
 _logger = logging.getLogger(__name__)
@@ -89,9 +89,10 @@ class CasaGeoClient:
         preferred_political_view (str | None):
             The preferred political view for responses. If set, this
             must be a valid ISO 3166-1 alpha-3 country code.
-        preferred_unit_system (UnitSystem | str):
-            The preferred unit system for responses, either ``"metric"``
-            or ``"imperial"`` (see :class:`UnitSystem`).
+        preferred_unit_system (UnitSystem | str | None):
+            The preferred unit system for responses. If set, this must
+            be a valid :class:`UnitSystem` or a string representation
+            thereof (e.g. ``"metric"`` or ``"imperial"``).
     """
 
     def __init__(
@@ -100,7 +101,7 @@ class CasaGeoClient:
         *,
         preferred_language: str | None = None,
         preferred_political_view: str | None = None,
-        preferred_unit_system: UnitSystem | str = DEFAULT_UNIT_SYSTEM,
+        preferred_unit_system: UnitSystem | str | None = None,
     ) -> None:
         self._apikey = validate_apikey(apikey or os.getenv("CASAGEOTOOLS_API_KEY", ""))
         self._server = validate_server_url(
