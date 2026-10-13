@@ -24,6 +24,7 @@ __all__ = [  # noqa: RUF022
     "UnitSystem",
     #
     "CasaGeoClient",
+    "NetworkRequestBackend",
     #
     "CasaGeoError",
     #
@@ -35,7 +36,7 @@ __all__ = [  # noqa: RUF022
     "get_maptile_url",
 ]
 
-from ._client import CasaGeoClient
+from ._client import CasaGeoClient, NetworkRequestBackend
 from ._consts import CASAGEOTOOLS_SERVER_URL, UnitSystem
 from ._errors import (
     APIReturnTypeError,

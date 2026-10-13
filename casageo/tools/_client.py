@@ -26,6 +26,8 @@ _logger = logging.getLogger(__name__)
 
 
 class NetworkRequestBackend(Protocol):
+    """:meta private:"""
+
     def request(
         self, method: str, url: str, *, json: Any | None = None, **kwargs
     ) -> Any: ...
