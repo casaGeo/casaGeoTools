@@ -128,7 +128,7 @@ class CasaGeoClient:
         return self._apikey
 
     @property
-    def server(self) -> str:
+    def server_url(self) -> str:
         """The URL of the casaGeo API server."""
         return self._server
 

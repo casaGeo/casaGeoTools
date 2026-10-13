@@ -41,7 +41,7 @@ class HttpxBackend(NetworkRequestBackend):
         self.casageoclient = client
         self.httpxclient = httpx.Client(
             auth=TokenAuth(client.apikey),
-            base_url=client.server,
+            base_url=client.server_url,
         )
 
     def request(

@@ -64,4 +64,4 @@ def get_maptile_url(
     if ppi != "":
         query["ppi"] = str(ppi)
 
-    return urljoin(client.server, "api/maps/v1/tiles/{z}/{x}/{y}?" + urlencode(query))
+    return urljoin(client.server_url, "api/maps/v1/tiles/{z}/{x}/{y}?" + urlencode(query))
