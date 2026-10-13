@@ -25,7 +25,3 @@ class UnitSystem(StrEnum):
 
 CASAGEOTOOLS_SERVER_URL: Final[str] = "https://cg-license.casageo.eu/"
 """The URL of the casaGeoTools API server."""
-
-
-DEFAULT_UNIT_SYSTEM: Final[UnitSystem] = UnitSystem.METRIC
-"""The default unit system used in the results."""

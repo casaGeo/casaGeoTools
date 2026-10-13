@@ -1023,7 +1023,7 @@ def isolines_result(
 
 
 def _main(args: Sequence[str] | None = None) -> None:
-    from casageo.tools import DEFAULT_UNIT_SYSTEM, UnitSystem, _util
+    from casageo.tools import UnitSystem, _util
 
     parser = argparse.ArgumentParser(
         description="Provides spatial calculations such as routing and isolines.",
@@ -1046,7 +1046,6 @@ def _main(args: Sequence[str] | None = None) -> None:
     )
     common_params.add_argument(
         "--unit-system",
-        default=DEFAULT_UNIT_SYSTEM,
         choices=list(UnitSystem),
         help="the system of units to use for localized quantities",
     )
