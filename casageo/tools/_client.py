@@ -106,12 +106,15 @@ class CasaGeoClient:
         self._server = validate_server_url(
             os.getenv("CASAGEOTOOLS_PROXY_SERVER", "") or CASAGEOTOOLS_SERVER_URL
         )
+        self._backend = self.setup_network_request_backend()
+
+        # The backend should not read the preferred_* values during
+        # initialization, since the user might only configure them
+        # afterward.
 
         self.preferred_language = preferred_language
         self.preferred_political_view = preferred_political_view
         self.preferred_unit_system = preferred_unit_system
-
-        self._backend = self.setup_network_request_backend()
 
     def __enter__(self) -> Self:
         return self
