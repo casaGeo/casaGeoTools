@@ -32,6 +32,25 @@ class NetworkRequestBackend(Protocol):
     def close(self) -> None: ...
 
 
+def validate_apikey(apikey: str, /) -> str:
+    if not apikey:
+        msg = "You must provide an API key, either directly or using the CASAGEOTOOLS_API_KEY environment variable"
+        raise CasaGeoError(msg)
+    return apikey
+
+
+def validate_server_url(server_url: str, /) -> str:
+    sp = urllib.parse.urlsplit(server_url)
+    if not sp.scheme or not sp.netloc:
+        msg = f"Proxy server URL must have a scheme and netloc: {server_url!r}"
+        raise ValueError(msg)
+    if sp.path and sp.path[-1] != "/":
+        msg = f"Proxy server URL path must have a trailing slash: {server_url!r}"
+        raise ValueError(msg)
+    if sp.query or sp.fragment:
+        msg = f"Proxy server URL must not have query or fragment components: {server_url!r}"
+        raise ValueError(msg)
+    return server_url
 
 
 class CasaGeoClient:
@@ -76,24 +95,10 @@ class CasaGeoClient:
         preferred_political_view: str | None = None,
         preferred_unit_system: UnitSystem | str = DEFAULT_UNIT_SYSTEM,
     ) -> None:
-        self._apikey = apikey or os.getenv("CASAGEOTOOLS_API_KEY", "")
-        if not self._apikey:
-            msg = "You must provide an API key, either directly or using the CASAGEOTOOLS_API_KEY environment variable"
-            raise CasaGeoError(msg)
-
-        self._server = (
+        self._apikey = validate_apikey(apikey or os.getenv("CASAGEOTOOLS_API_KEY", ""))
+        self._server = validate_server_url(
             os.getenv("CASAGEOTOOLS_PROXY_SERVER", "") or CASAGEOTOOLS_SERVER_URL
         )
-        sp = urllib.parse.urlsplit(self._server)
-        if not sp.scheme or not sp.netloc:
-            msg = f"Proxy server URL must have a scheme and netloc: {self._server!r}"
-            raise ValueError(msg)
-        if sp.path and sp.path[-1] != "/":
-            msg = f"Proxy server URL path must have a trailing slash: {self._server!r}"
-            raise ValueError(msg)
-        if sp.query or sp.fragment:
-            msg = f"Proxy server URL must not have query or fragment components: {self._server!r}"
-            raise ValueError(msg)
 
         self.preferred_language = preferred_language
         self.preferred_political_view = preferred_political_view
