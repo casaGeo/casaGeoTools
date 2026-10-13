@@ -40,6 +40,9 @@ def validate_apikey(apikey: str, /) -> str:
 
 
 def validate_server_url(server_url: str, /) -> str:
+    # These properties are important for urljoin() in get_maptile_url()
+    # to function correctly. If we make get_maptile_url() a bit more
+    # robust, we might be able to relax these restrictions.
     sp = urllib.parse.urlsplit(server_url)
     if not sp.scheme or not sp.netloc:
         msg = f"Proxy server URL must have a scheme and netloc: {server_url!r}"
@@ -64,27 +67,31 @@ class CasaGeoClient:
     This class can be used as a context manager, in which case the
     :meth:`close` method will be called automatically on scope exit.
 
-    Attributes:
-        preferred_language:
-            The preferred language for responses. This must be a valid IETF
-            BCP47 language tag, such as ``"en-US"``, or a comma-separated list
-            of such tags in order of preference.
-
-        preferred_political_view:
-            The preferred political view for responses. This must be a valid ISO
-            3166-1 alpha-3 country code.
-
-        preferred_unit_system:
-            The preferred unit system for responses, either ``"metric"`` or
-            ``"imperial"``.
-
     Parameters:
-        apikey: Your casaGeo API key. If empty, the ``CASAGEOTOOLS_API_KEY``
+        apikey:
+            Your casaGeo API key. If empty, the ``CASAGEOTOOLS_API_KEY``
             environment variable will be used instead.
-        preferred_language: The preferred language for responses.
-        preferred_political_view: The preferred political view for responses.
-        preferred_unit_system: The preferred unit system for responses.
+        preferred_language:
+            The preferred language for responses, sets the
+            :attr:`preferred_language` attribute.
+        preferred_political_view:
+            The preferred political view for responses, sets the
+            :attr:`preferred_political_view` attribute.
+        preferred_unit_system:
+            The preferred unit system for responses, sets the
+            :attr:`preferred_unit_system` attribute.
 
+    Attributes:
+        preferred_language (str | None):
+            The preferred language for responses. If set, this must be a
+            valid IETF BCP47 language tag (e.g. ``"en-US"``) or a
+            comma-separated list of such tags in order of preference.
+        preferred_political_view (str | None):
+            The preferred political view for responses. If set, this
+            must be a valid ISO 3166-1 alpha-3 country code.
+        preferred_unit_system (UnitSystem | str):
+            The preferred unit system for responses, either ``"metric"``
+            or ``"imperial"`` (see :class:`UnitSystem`).
     """
 
     def __init__(
@@ -132,6 +139,7 @@ class CasaGeoClient:
         self._backend.close()
 
     def setup_network_request_backend(self) -> NetworkRequestBackend:
+        """:meta private:"""
         from ._httpxbackend import HttpxBackend
 
         return HttpxBackend(self)
