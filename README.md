@@ -35,15 +35,13 @@ GeoPandas-friendly interface.
 
 ---
 
-## 💰 Credit System (Beta Program)
+## 💰 Credit System
 
 casaGeoTools uses a **credit-based API model**.
 
 Each API key includes a balance of credits that are **valid for 1 year**. Unused
 credits **expire after 12 months**.
 
-During the **public Beta phase**, every registered user receives **3,000 free
-credits**.
 
 ### 🔢 Credit usage per API call
 
