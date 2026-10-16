@@ -1,0 +1,30 @@
+{
+  "result": {
+    "request_id": "5ed88f04-bae9-4d29-b7ab-ca596c1ec33f",
+    "results": [
+      {
+        "value": {
+          "matrixId": "ad86aebc-b2bc-459c-91ee-9f7604e67bde",
+          "matrix": {
+            "numOrigins": 3,
+            "numDestinations": 3,
+            "travelTimes": [
+              0,
+              2789,
+              3352,
+              2771,
+              0,
+              3850,
+              3294,
+              3867,
+              0
+            ]
+          },
+          "regionDefinition": {
+            "type": "world"
+          }
+        }
+      }
+    ]
+  }
+}

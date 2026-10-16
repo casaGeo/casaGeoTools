@@ -1,17 +1,17 @@
 {
   "result": {
-    "request_id": "84897f1e-f3a7-4b71-9f93-9c87d6051755",
+    "request_id": "acc6d8e0-e8c6-4d4f-b138-f9797c6460bd",
     "results": [
       {
         "value": {
           "items": [
             {
-              "title": "Plietsch und Lecker",
-              "id": "here:pds:place:276u1wfb-d84cd3a3cb6b2bea0ca97ac6c55fefc5",
+              "title": "Reinholz Software & Technology",
+              "id": "here:pds:place:276u1wdz-e343991af3024077a3fe9731d8355f3a",
               "language": "de",
               "resultType": "place",
               "address": {
-                "label": "Plietsch und Lecker, Emmy-Noether-Straße 2, 25524 Itzehoe, Deutschland",
+                "label": "Reinholz Software & Technology, Fraunhoferstraße 3, 25524 Itzehoe, Deutschland",
                 "countryCode": "DEU",
                 "countryName": "Deutschland",
                 "stateCode": "SH",
@@ -19,52 +19,102 @@
                 "countyCode": "IZ",
                 "county": "Steinburg",
                 "city": "Itzehoe",
-                "district": "Itzehoe",
-                "street": "Emmy-Noether-Straße",
+                "street": "Fraunhoferstraße",
                 "postalCode": "25524",
-                "houseNumber": "2"
+                "houseNumber": "3"
               },
               "position": {
-                "lat": 53.95869,
-                "lng": 9.49558
+                "lat": 53.95815,
+                "lng": 9.48572
               },
               "access": [
                 {
-                  "lat": 53.9588,
-                  "lng": 9.49557
+                  "lat": 53.95811,
+                  "lng": 9.48588
                 }
               ],
-              "distance": 667,
+              "distance": 24,
               "categories": [
                 {
-                  "id": "100-1000-0009",
-                  "name": "Fastfood",
+                  "id": "700-7200-0261",
+                  "name": "IT- und Bürobedarf",
                   "primary": true
                 },
                 {
-                  "id": "100-1000-0000",
-                  "name": "Restaurant"
+                  "id": "700-7200-0265",
+                  "name": "Fabrik"
                 },
                 {
-                  "id": "200-2000-0011",
-                  "name": "Bar oder Pub"
+                  "id": "700-7400-0141",
+                  "name": "Geschäftliche Dienstleistungen"
                 }
               ],
-              "foodTypes": [
+              "contacts": [
                 {
-                  "id": "800-058",
-                  "name": "Snacks und Getränke",
-                  "primary": true
+                  "phone": [
+                    {
+                      "value": "+4948219497900"
+                    }
+                  ],
+                  "fax": [
+                    {
+                      "value": "+49482194979049",
+                      "categories": [
+                        {
+                          "id": "700-7200-0261"
+                        }
+                      ]
+                    }
+                  ],
+                  "www": [
+                    {
+                      "value": "http://www.reinholz-sat.de",
+                      "categories": [
+                        {
+                          "id": "700-7200-0261"
+                        },
+                        {
+                          "id": "700-7200-0265"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "https://www.reinholz-sat.de",
+                      "categories": [
+                        {
+                          "id": "700-7200-0261"
+                        }
+                      ]
+                    }
+                  ],
+                  "email": [
+                    {
+                      "value": "automation@reinholz-sat.de",
+                      "categories": [
+                        {
+                          "id": "700-7200-0261"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "info@reinholz-sat.de",
+                      "categories": [
+                        {
+                          "id": "700-7200-0261"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
             {
-              "title": "Kalle Bäcker",
-              "id": "here:pds:place:276u1wfb-508b9e15a4134f04b816df9d08c338b4",
+              "title": "Point Informationsverarbeitung und Consulting",
+              "id": "here:pds:place:276b6469-d2c56a377ad50101bc922cbbfecb363d",
               "language": "de",
               "resultType": "place",
               "address": {
-                "label": "Kalle Bäcker, Lise-Meitner-Straße 2, 25524 Itzehoe, Deutschland",
+                "label": "Point Informationsverarbeitung und Consulting, Fraunhoferstraße 3, 25524 Itzehoe, Deutschland",
                 "countryCode": "DEU",
                 "countryName": "Deutschland",
                 "stateCode": "SH",
@@ -72,31 +122,43 @@
                 "countyCode": "IZ",
                 "county": "Steinburg",
                 "city": "Itzehoe",
-                "district": "Itzehoe",
-                "street": "Lise-Meitner-Straße",
+                "street": "Fraunhoferstraße",
                 "postalCode": "25524",
-                "houseNumber": "2"
+                "houseNumber": "3"
               },
               "position": {
-                "lat": 53.95202,
-                "lng": 9.49377
+                "lat": 53.95815,
+                "lng": 9.48572
               },
               "access": [
                 {
-                  "lat": 53.95192,
-                  "lng": 9.49378
+                  "lat": 53.95811,
+                  "lng": 9.48588
                 }
               ],
-              "distance": 860,
+              "distance": 24,
               "categories": [
                 {
-                  "id": "600-6300-0244",
-                  "name": "Bäckerei",
+                  "id": "700-7200-0264",
+                  "name": "Verwaltungs- und Beratungsdienstleistungen",
                   "primary": true
-                },
+                }
+              ],
+              "contacts": [
                 {
-                  "id": "100-1000-0001",
-                  "name": "Speiselokal"
+                  "phone": [
+                    {
+                      "value": "+4915253028051"
+                    },
+                    {
+                      "value": "+494821778141"
+                    }
+                  ],
+                  "www": [
+                    {
+                      "value": "http://www.point-software.de"
+                    }
+                  ]
                 }
               ]
             }

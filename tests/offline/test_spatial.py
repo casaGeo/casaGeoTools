@@ -214,10 +214,10 @@ class TestRoutesQuery(unittest.TestCase):
             self.assertIsInstance(g, MultiLineString)
             self.assertTrue(g.is_valid)
             self.assertFalse(g.is_empty)
-        self.assertListEqual(results["length"].to_list(), [62603, 76977, 93361])
+        self.assertListEqual(results["length"].to_list(), [62615, 77014, 93366])
         self.assertListEqual(
             results["duration"].to_list(),
-            [45.18333333333333, 54.983333333333334, 80.28333333333333],
+            [46.483333333333334, 55.86666666666667, 81.93333333333334],
         )
         for t in results["timestamp"]:
             self.assertIsInstance(t, datetime)

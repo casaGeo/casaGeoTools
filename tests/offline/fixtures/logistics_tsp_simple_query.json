@@ -1,0 +1,77 @@
+{
+  "result": {
+    "request_id": "11ff720c-08bd-48a1-94e3-132db6b321db",
+    "results": [
+      {
+        "value": {
+          "results": [
+            {
+              "waypoints": [
+                {
+                  "id": "Itzehoe",
+                  "lat": 53.95801,
+                  "lng": 9.48545,
+                  "sequence": 0,
+                  "estimatedArrival": null,
+                  "estimatedDeparture": null,
+                  "fulfilledConstraints": []
+                },
+                {
+                  "id": "Hamburg",
+                  "lat": 53.553089,
+                  "lng": 10.008223,
+                  "sequence": 1,
+                  "estimatedArrival": null,
+                  "estimatedDeparture": null,
+                  "fulfilledConstraints": []
+                },
+                {
+                  "id": "Kiel",
+                  "lat": 54.31367,
+                  "lng": 10.13008,
+                  "sequence": 2,
+                  "estimatedArrival": null,
+                  "estimatedDeparture": null,
+                  "fulfilledConstraints": []
+                }
+              ],
+              "distance": "159898",
+              "time": "6639",
+              "interconnections": [
+                {
+                  "fromWaypoint": "Itzehoe",
+                  "toWaypoint": "Hamburg",
+                  "distance": 62615.0,
+                  "time": 2789.0,
+                  "rest": 0.0,
+                  "waiting": 0.0
+                },
+                {
+                  "fromWaypoint": "Hamburg",
+                  "toWaypoint": "Kiel",
+                  "distance": 97283.0,
+                  "time": 3850.0,
+                  "rest": 0.0,
+                  "waiting": 0.0
+                }
+              ],
+              "description": "Targeted best time; without traffic",
+              "timeBreakdown": {
+                "driving": 6639,
+                "service": 0,
+                "rest": 0,
+                "waiting": 0,
+                "break": 0
+              }
+            }
+          ],
+          "errors": [],
+          "processingTimeDesc": "129ms",
+          "responseCode": "200",
+          "warnings": null,
+          "requestId": "50b9ac64-5968-4786-9db6-cea282b5106f"
+        }
+      }
+    ]
+  }
+}

@@ -1,56 +1,56 @@
 {
   "result": {
-    "request_id": "0cf8ea83-74f8-4b03-b3e5-22aa470ce88d",
+    "request_id": "142fff50-fa41-4e57-865b-6bafe2fffb73",
     "results": [
       {
         "value": {
           "items": [
             {
-              "access": [
-                {
-                  "lat": 53.95801,
-                  "lng": 9.48615
-                }
-              ],
+              "title": "Fraunhoferstraße 3, 25524 Itzehoe, Germany",
+              "id": "here:af:streetsection:yAWnrGA8opcWEbXQsPE1SB:CgcIBCD9ycBdEAEaATM",
+              "resultType": "houseNumber",
+              "houseNumberType": "PA",
               "address": {
-                "city": "Itzehoe",
+                "label": "Fraunhoferstraße 3, 25524 Itzehoe, Germany",
                 "countryCode": "DEU",
                 "countryName": "Germany",
-                "county": "Steinburg",
-                "countyCode": "IZ",
-                "houseNumber": "3",
-                "label": "Fraunhoferstraße 3, 25524 Itzehoe, Germany",
-                "postalCode": "25524",
-                "state": "Schleswig-Holstein",
                 "stateCode": "SH",
-                "street": "Fraunhoferstraße"
-              },
-              "houseNumberType": "PA",
-              "id": "here:af:streetsection:yAWnrGA8opcWEbXQsPE1SB:CgcIBCD9ycBdEAEaATM",
-              "mapView": {
-                "east": 9.48725,
-                "north": 53.95905,
-                "south": 53.95725,
-                "west": 9.48419
+                "state": "Schleswig-Holstein",
+                "countyCode": "IZ",
+                "county": "Steinburg",
+                "city": "Itzehoe",
+                "street": "Fraunhoferstraße",
+                "postalCode": "25524",
+                "houseNumber": "3"
               },
               "position": {
                 "lat": 53.95815,
                 "lng": 9.48572
               },
-              "resultType": "houseNumber",
+              "access": [
+                {
+                  "lat": 53.95811,
+                  "lng": 9.48588
+                }
+              ],
+              "mapView": {
+                "west": 9.48419,
+                "south": 53.95725,
+                "east": 9.48725,
+                "north": 53.95905
+              },
               "scoring": {
+                "queryScore": 1.0,
                 "fieldScore": {
-                  "city": 1.0,
                   "country": 1.0,
-                  "houseNumber": 1.0,
-                  "postalCode": 1.0,
+                  "city": 1.0,
                   "streets": [
                     1.0
-                  ]
-                },
-                "queryScore": 1.0
-              },
-              "title": "Fraunhoferstraße 3, 25524 Itzehoe, Germany"
+                  ],
+                  "houseNumber": 1.0,
+                  "postalCode": 1.0
+                }
+              }
             }
           ]
         }
@@ -59,52 +59,52 @@
         "value": {
           "items": [
             {
-              "access": [
-                {
-                  "lat": 53.55291,
-                  "lng": 10.00805
-                }
-              ],
+              "title": "Hachmannplatz 16, 20099 Hamburg, Germany",
+              "id": "here:af:streetsection:CujTdW93Ssdj8Km-sciO7A:CggIBCDHk4aSAxABGgIxNg",
+              "resultType": "houseNumber",
+              "houseNumberType": "PA",
               "address": {
-                "city": "Hamburg",
+                "label": "Hachmannplatz 16, 20099 Hamburg, Germany",
                 "countryCode": "DEU",
                 "countryName": "Germany",
-                "county": "Hamburg",
-                "countyCode": "HH",
-                "district": "Sankt Georg",
-                "houseNumber": "16",
-                "label": "Hachmannplatz 16, 20099 Hamburg, Germany",
-                "postalCode": "20099",
-                "state": "Hamburg",
                 "stateCode": "HH",
-                "street": "Hachmannplatz"
-              },
-              "houseNumberType": "PA",
-              "id": "here:af:streetsection:CujTdW93Ssdj8Km-sciO7A:CggIBCDHk4aSAxABGgIxNg",
-              "mapView": {
-                "east": 10.00851,
-                "north": 53.55371,
-                "south": 53.55191,
-                "west": 10.00549
+                "state": "Hamburg",
+                "countyCode": "HH",
+                "county": "Hamburg",
+                "city": "Hamburg",
+                "district": "Sankt Georg",
+                "street": "Hachmannplatz",
+                "postalCode": "20099",
+                "houseNumber": "16"
               },
               "position": {
                 "lat": 53.55281,
                 "lng": 10.007
               },
-              "resultType": "houseNumber",
+              "access": [
+                {
+                  "lat": 53.5529,
+                  "lng": 10.00807
+                }
+              ],
+              "mapView": {
+                "west": 10.00549,
+                "south": 53.55191,
+                "east": 10.00851,
+                "north": 53.55371
+              },
               "scoring": {
+                "queryScore": 1.0,
                 "fieldScore": {
-                  "city": 1.0,
                   "country": 1.0,
-                  "houseNumber": 1.0,
-                  "postalCode": 1.0,
+                  "city": 1.0,
                   "streets": [
                     1.0
-                  ]
-                },
-                "queryScore": 1.0
-              },
-              "title": "Hachmannplatz 16, 20099 Hamburg, Germany"
+                  ],
+                  "houseNumber": 1.0,
+                  "postalCode": 1.0
+                }
+              }
             }
           ]
         }
@@ -113,52 +113,52 @@
         "value": {
           "items": [
             {
+              "title": "Sophienblatt 25, 24114 Kiel, Germany",
+              "id": "here:af:streetsection:jz0PtjsIU22UKieM.3QYZD:CgcIBCCM8JNREAEaAjI1",
+              "resultType": "houseNumber",
+              "houseNumberType": "PA",
+              "address": {
+                "label": "Sophienblatt 25, 24114 Kiel, Germany",
+                "countryCode": "DEU",
+                "countryName": "Germany",
+                "stateCode": "SH",
+                "state": "Schleswig-Holstein",
+                "countyCode": "KI",
+                "county": "Kiel",
+                "city": "Kiel",
+                "district": "Südfriedhof",
+                "street": "Sophienblatt",
+                "postalCode": "24114",
+                "houseNumber": "25"
+              },
+              "position": {
+                "lat": 54.31544,
+                "lng": 10.13147
+              },
               "access": [
                 {
                   "lat": 54.31543,
                   "lng": 10.13124
                 }
               ],
-              "address": {
-                "city": "Kiel",
-                "countryCode": "DEU",
-                "countryName": "Germany",
-                "county": "Kiel",
-                "countyCode": "KI",
-                "district": "Südfriedhof",
-                "houseNumber": "25",
-                "label": "Sophienblatt 25, 24114 Kiel, Germany",
-                "postalCode": "24114",
-                "state": "Schleswig-Holstein",
-                "stateCode": "SH",
-                "street": "Sophienblatt"
-              },
-              "houseNumberType": "PA",
-              "id": "here:af:streetsection:jz0PtjsIU22UKieM.3QYZD:CgcIBCCM8JNREAEaAjI1",
               "mapView": {
-                "east": 10.13301,
-                "north": 54.31634,
+                "west": 10.12993,
                 "south": 54.31454,
-                "west": 10.12993
+                "east": 10.13301,
+                "north": 54.31634
               },
-              "position": {
-                "lat": 54.31544,
-                "lng": 10.13147
-              },
-              "resultType": "houseNumber",
               "scoring": {
+                "queryScore": 1.0,
                 "fieldScore": {
-                  "city": 1.0,
                   "country": 1.0,
-                  "houseNumber": 1.0,
-                  "postalCode": 1.0,
+                  "city": 1.0,
                   "streets": [
                     1.0
-                  ]
-                },
-                "queryScore": 1.0
-              },
-              "title": "Sophienblatt 25, 24114 Kiel, Germany"
+                  ],
+                  "houseNumber": 1.0,
+                  "postalCode": 1.0
+                }
+              }
             }
           ]
         }

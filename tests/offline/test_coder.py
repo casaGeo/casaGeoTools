@@ -110,8 +110,8 @@ class TestGeocodeQuery(unittest.TestCase):
         self.assertListEqual(
             results["navigation"].to_list(),
             [
-                Point(9.48615, 53.95801),
-                Point(10.00805, 53.55291),
+                Point(9.48588, 53.95811),
+                Point(10.00807, 53.5529),
                 Point(10.13124, 54.31543),
             ],
         )
@@ -167,24 +167,27 @@ class TestPOIQuery(unittest.TestCase):
         self.assertListEqual(results["subid"].to_list(), [0, 1])
         self.assertListEqual(
             results["title"].to_list(),
-            ["Plietsch und Lecker", "Kalle Bäcker"],
+            [
+                "Reinholz Software & Technology",
+                "Point Informationsverarbeitung und Consulting",
+            ],
         )
         self.assertListEqual(results["resulttype"].to_list(), ["place"] * 2)
         self.assertListEqual(
             results["position"].to_list(),
             [
-                Point(9.49558, 53.95869),
-                Point(9.49377, 53.95202),
+                Point(9.48572, 53.95815),
+                Point(9.48572, 53.95815),
             ],
         )
         self.assertListEqual(
             results["navigation"].to_list(),
             [
-                Point(9.49557, 53.9588),
-                Point(9.49378, 53.95192),
+                Point(9.48588, 53.95811),
+                Point(9.48588, 53.95811),
             ],
         )
-        self.assertListEqual(results["distance"].to_list(), [667, 860])
+        self.assertListEqual(results["distance"].to_list(), [24, 24])
         for t in results["timestamp"]:
             self.assertIsInstance(t, datetime)
 
