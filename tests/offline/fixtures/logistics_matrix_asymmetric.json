@@ -1,10 +1,10 @@
 {
   "result": {
-    "request_id": "5ed88f04-bae9-4d29-b7ab-ca596c1ec33f",
+    "request_id": "25b62acf-b265-4fcf-8869-22da0b0aabd1",
     "results": [
       {
         "value": {
-          "matrixId": "ad86aebc-b2bc-459c-91ee-9f7604e67bde",
+          "matrixId": "c0e3b8c3-fef3-4637-aec5-0a4f475a85fd",
           "matrix": {
             "numOrigins": 3,
             "numDestinations": 3,
@@ -17,6 +17,17 @@
               3850,
               3294,
               3867,
+              0
+            ],
+            "distances": [
+              0,
+              62615,
+              77014,
+              62693,
+              0,
+              97283,
+              76438,
+              97689,
               0
             ]
           },

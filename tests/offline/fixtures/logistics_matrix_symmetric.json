@@ -1,0 +1,41 @@
+{
+  "result": {
+    "request_id": "45f469bd-785b-4f91-9763-9227826f42df",
+    "results": [
+      {
+        "value": {
+          "matrixId": "99516a36-5ded-493a-8d36-764310526a06",
+          "matrix": {
+            "numOrigins": 3,
+            "numDestinations": 3,
+            "travelTimes": [
+              0,
+              2789,
+              3352,
+              2771,
+              0,
+              3850,
+              3294,
+              3867,
+              0
+            ],
+            "distances": [
+              0,
+              62615,
+              77014,
+              62693,
+              0,
+              97283,
+              76438,
+              97689,
+              0
+            ]
+          },
+          "regionDefinition": {
+            "type": "world"
+          }
+        }
+      }
+    ]
+  }
+}
