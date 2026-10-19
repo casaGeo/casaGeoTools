@@ -14,18 +14,15 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 
-
 import json
+from collections.abc import Sequence
 from pathlib import Path
+from typing import Any
 
-from pandas import DataFrame
 from shapely import Point
 
-import casageo.coder as cg
-import casageo.logistics as cl
-import casageo.spatial as cs
 import casageo.tools as ct
-from casageo.tools._types import CasaGeoResult, MultiResult
+from casageo.tools._types import MultiResult
 
 FIXTURE_DIR = Path(__file__).parent / "fixtures"
 POINT_IZET = Point(9.4854461, 53.9580118)
@@ -34,7 +31,7 @@ POINT_KIEL = Point(10.13008, 54.31367)
 POINT_LUEBECK = Point(10.66865, 53.86621)
 
 
-def save_fixture[T: CasaGeoResult](result: MultiResult[T], name: str) -> None:
+def save_fixture(result: MultiResult[Any], name: str) -> None:
     # Do not replace a successful fixture with an API error response.
     for item in result:
         if (error := item.error()) is not None:
@@ -43,99 +40,48 @@ def save_fixture[T: CasaGeoResult](result: MultiResult[T], name: str) -> None:
         raise ValueError(f"No results returned for {name}")
 
     FIXTURE_DIR.mkdir(parents=True, exist_ok=True)
-    path = FIXTURE_DIR / f"{name}.json"
-    contents = json.dumps({"result": result.json()}, ensure_ascii=False, indent=2)
-    path.write_text(contents + "\n", encoding="utf-8")
+
+    with open(
+        FIXTURE_DIR / f"{name}.json",
+        mode="w",
+        encoding="utf-8",
+        newline="\n",
+    ) as fp:
+        json.dump({"result": result.json()}, fp, ensure_ascii=False, indent=2)
+        fp.write("\n")
+
     print(f"Saved fixture {name}")
 
 
-def main() -> None:
+def main(argv: Sequence[str] | None = None) -> None:
+    import sys
+
+    import dotenv
+    from test_coder import TestGeocodeQuery, TestPOIQuery
+    from test_logistics import TestMatrixQuery, TestTSPQuery
+    from test_spatial import TestIsolineQuery, TestRoutesQuery
+
+    if argv is None:
+        argv = sys.argv
+
+    dotenv.load_dotenv()
+
     client = ct.CasaGeoClient()
 
-    address_queries = DataFrame([
-        {"id": 1, "address": "Fraunhoferstr. 3, 25524 Itzehoe DEU"},
-        {"id": 2, "address": "Hachmannplatz 16, 20099 Hamburg DEU"},
-        {"id": 3, "address": "Sophienblatt 25, 24114 Kiel DEU"},
-    ])
-    save_fixture(
-        cg.address_result(client, address_queries), "coder_address_simple_query"
-    )
+    selected = set(argv[1:])
 
-    client.preferred_language = "de,en"
-    poi_queries = DataFrame([
-        {"id": 1, "position": Point(9.48545, 53.95801), "limit": 2},
-    ])
-    save_fixture(cg.poi_result(client, poi_queries), "coder_poi_simple_query")
-    client.preferred_language = None
-
-    isolines_queries = DataFrame([
-        {
-            "id": 1,
-            "position": POINT_HH,
-            "name": "Hamburg Central Station",
-            "range_type": "time",
-            "ranges": [5, 15],
-            "transport_mode": "car",
-        },
-        {
-            "id": 2,
-            "position": POINT_LUEBECK,
-            "name": "Lübeck Central Station",
-            "range_type": "distance",
-            "ranges": [3000],
-            "transport_mode": "pedestrian",
-        },
-        {
-            "id": 3,
-            "position": POINT_KIEL,
-            "name": "Kiel Central Station",
-            "range_type": "time",
-            "ranges": [10],
-            "transport_mode": "car",
-        },
-    ])
-    save_fixture(
-        cs.isolines_result(client, isolines_queries), "spatial_isolines_simple_query"
-    )
-
-    routes_queries = DataFrame([
-        {
-            "id": index,
-            "origin": POINT_IZET,
-            "destination": position,
-            "routing_mode": "fast",
-            "transport_mode": "car",
-            "destination_name": name,
-        }
-        for index, (position, name) in enumerate(
-            [
-                (POINT_HH, "Hamburg Central Station"),
-                (POINT_KIEL, "Kiel Central Station"),
-                (POINT_LUEBECK, "Lübeck Central Station"),
-            ],
-            start=1,
-        )
-    ])
-    save_fixture(
-        cs.routes_result(client, routes_queries), "spatial_routes_simple_query"
-    )
-
-    waypoints = DataFrame([
-        {"name": "Itzehoe", "position": Point(9.48545, 53.95801)},
-        {"name": "Hamburg", "position": POINT_HH},
-        {"name": "Kiel", "position": POINT_KIEL},
-    ])
-    # Supply destinations explicitly: the server currently forwards an empty
-    # destination list upstream instead of applying the all-origin fallback.
-    matrix_waypoints = DataFrame([
-        {"type": waypoint_type, "position": position}
-        for waypoint_type in ("origin", "destination")
-        for position in waypoints["position"]
-    ])
-    save_fixture(
-        cl.matrix_result(client, matrix_waypoints), "logistics_matrix_simple_query"
-    )
-    save_fixture(cl.tsp_result(client, waypoints), "logistics_tsp_simple_query")
+    for testcase in (
+        TestGeocodeQuery,
+        TestPOIQuery,
+        TestIsolineQuery,
+        TestRoutesQuery,
+        TestMatrixQuery,
+        TestTSPQuery,
+    ):
+        for name, result in testcase.generate_fixtures(client):
+            if selected and name not in selected:
+                continue
+            save_fixture(result, name)
 
 
 if __name__ == "__main__":

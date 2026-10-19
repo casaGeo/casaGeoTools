@@ -93,7 +93,7 @@ sphinx-make() {
 }
 
 generate-fixtures() {
-	uv run tests/offline/generate_fixtures.py
+	uv run tests/offline/generate_fixtures.py "$@"
 }
 
 test-artifact() {
