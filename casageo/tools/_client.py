@@ -159,6 +159,6 @@ class CasaGeoClient:
 
     @staticmethod
     def _default_network_backend() -> NetworkBackend:
-        from ._httpxbackend import HttpxBackend
+        from ._requestsbackend import RequestsBackend
 
-        return HttpxBackend()
+        return RequestsBackend()

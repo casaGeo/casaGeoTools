@@ -9,7 +9,6 @@ authors = [
 dependencies = [
     "flexpolyline>=0.1.0",
     "geopandas>=1.0.0",
-    "httpx>=0.28.1",
     "pandas>=2.2.0",
     "requests>=2.33.0",
     "shapely>=2.1.0",

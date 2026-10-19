@@ -18,11 +18,14 @@ import contextlib
 from collections.abc import Generator
 from typing import Any
 
-import httpx
-
 from ._client import CasaGeoClient, NetworkBackend
 from ._errors import APIValueError, CasaGeoError, InsufficientCreditsError
 from ._util import and_then
+
+try:
+    import httpx  # pyright: ignore[reportMissingImports]
+except ModuleNotFoundError as err:
+    raise CasaGeoError("You must install httpx to use the httpx backend") from err
 
 
 class TokenAuth(httpx.Auth):
