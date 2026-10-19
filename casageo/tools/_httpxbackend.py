@@ -20,7 +20,7 @@ from typing import Any
 
 import httpx
 
-from ._client import CasaGeoClient, NetworkRequestBackend
+from ._client import CasaGeoClient, NetworkBackend
 from ._errors import APIValueError, CasaGeoError, InsufficientCreditsError
 from ._util import and_then
 
@@ -36,8 +36,11 @@ class TokenAuth(httpx.Auth):
         yield request
 
 
-class HttpxBackend(NetworkRequestBackend):
-    def __init__(self, client: CasaGeoClient, /) -> None:
+class HttpxBackend(NetworkBackend):
+    casageoclient: CasaGeoClient
+    httpxclient: httpx.Client
+
+    def setup(self, client: CasaGeoClient, **kwargs) -> None:
         self.casageoclient = client
         self.httpxclient = httpx.Client(
             auth=TokenAuth(client.apikey),

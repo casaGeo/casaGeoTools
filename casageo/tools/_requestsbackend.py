@@ -27,7 +27,7 @@ from casageo.tools import (
     CasaGeoClient,
     CasaGeoError,
     InsufficientCreditsError,
-    NetworkRequestBackend,
+    NetworkBackend,
 )
 from casageo.tools._util import and_then
 
@@ -41,8 +41,11 @@ class TokenAuth(AuthBase):
         return r
 
 
-class RequestsBackend(NetworkRequestBackend):
-    def __init__(self, client: CasaGeoClient, /) -> None:
+class RequestsBackend(NetworkBackend):
+    client: CasaGeoClient
+    session: requests.Session
+
+    def setup(self, client: CasaGeoClient, **kwargs) -> None:
         self.client = client
         self.session = requests.Session()
         self.session.auth = TokenAuth(client.apikey)

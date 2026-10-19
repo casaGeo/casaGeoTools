@@ -17,6 +17,7 @@
 import logging
 import os
 import urllib.parse
+from abc import abstractmethod
 from typing import Any, Protocol, Self
 
 from ._consts import CASAGEOTOOLS_SERVER_URL, UnitSystem
@@ -25,13 +26,20 @@ from ._errors import CasaGeoError
 _logger = logging.getLogger(__name__)
 
 
-class NetworkRequestBackend(Protocol):
+class NetworkBackend(Protocol):
     """:meta private:"""
 
+    def setup(self, client: "CasaGeoClient", **kwargs) -> None:
+        pass
+
+    @abstractmethod
     def request(
         self, method: str, url: str, *, json: Any | None = None, **kwargs
-    ) -> Any: ...
-    def close(self) -> None: ...
+    ) -> Any:
+        raise NotImplementedError
+
+    def close(self) -> None:
+        pass
 
 
 def validate_apikey(apikey: str, /) -> str:
@@ -104,12 +112,15 @@ class CasaGeoClient:
         preferred_language: str | None = None,
         preferred_political_view: str | None = None,
         preferred_unit_system: UnitSystem | str | None = None,
+        # Internal use only, for now
+        network_backend: NetworkBackend | None = None,
     ) -> None:
         self._apikey = validate_apikey(apikey or os.getenv("CASAGEOTOOLS_API_KEY", ""))
         self._server = validate_server_url(
             os.getenv("CASAGEOTOOLS_PROXY_SERVER", "") or CASAGEOTOOLS_SERVER_URL
         )
-        self._backend = self.setup_network_request_backend()
+        self._backend = network_backend or self._default_network_backend()
+        self._backend.setup(self)
 
         # The backend should not read the preferred_* values during
         # initialization, since the user might only configure them
@@ -146,8 +157,8 @@ class CasaGeoClient:
         """Close the network request backend and release any associated resources."""
         self._backend.close()
 
-    def setup_network_request_backend(self) -> NetworkRequestBackend:
-        """:meta private:"""
+    @staticmethod
+    def _default_network_backend() -> NetworkBackend:
         from ._httpxbackend import HttpxBackend
 
-        return HttpxBackend(self)
+        return HttpxBackend()
