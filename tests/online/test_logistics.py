@@ -18,33 +18,38 @@ import os
 import unittest
 from typing import cast
 
+from geopandas import GeoDataFrame
+from pandas import DataFrame
+from shapely import Point
+
 import casageo.logistics as cl
 import casageo.tools as ct
 
 
-class TestLogistics(unittest.TestCase):
+class TestMatrixQuery(unittest.TestCase):
+    waypoints = DataFrame([
+        {"position": Point(9.48545, 53.95801)},  # Itzehoe
+        {"position": Point(10.008223, 53.553089)},  # Hamburg
+        {"position": Point(10.13008, 54.31367)},  # Kiel
+    ])
+
     def setUp(self):
         key = os.getenv("CASAGEOTOOLS_API_KEY") or self.skipTest("No API key provided")
         self.client = ct.CasaGeoClient(key)
 
-    def test_matrix(self):
-        from pandas import DataFrame
-        from shapely import Point
+    def test_matrix_symmetric(self):
+        self._check_result(cl.matrix(self.client, waypoints=self.waypoints))
 
-        waypoints = DataFrame([
-            {"position": Point(9.48545, 53.95801)},  # Itzehoe
-            {"position": Point(10.008223, 53.553089)},  # Hamburg
-            {"position": Point(10.13008, 54.31367)},  # Kiel
-        ])
-        # Explicit destinations avoid the server's broken all-origin fallback.
+    def test_matrix_asymmetric(self):
         waypoints = DataFrame([
             {"type": waypoint_type, "position": position}
             for waypoint_type in ("origin", "destination")
-            for position in waypoints["position"]
+            for position in self.waypoints["position"]
         ])
 
-        result = cl.matrix(self.client, waypoints=waypoints)
+        self._check_result(cl.matrix(self.client, waypoints=waypoints))
 
+    def _check_result(self, result: DataFrame):
         self.assertIsInstance(result, DataFrame)
         self.assertEqual(len(result), 9)
         self.assertListEqual(result["id"].to_list(), [1] * 9)
@@ -63,27 +68,29 @@ class TestLogistics(unittest.TestCase):
                     self.assertGreater(cast(float, row.distance), 0)
                     self.assertGreater(cast(float, row.traveltime), 0)
 
-    def test_tsp(self):
-        from geopandas import GeoDataFrame
-        from pandas import DataFrame
-        from shapely import Point
 
-        waypoints = DataFrame([
-            {
-                "name": "Itzehoe",
-                "navigation": Point(9.48545, 53.95801),
-            },
-            {
-                "name": "Hamburg",
-                "navigation": Point(10.008223, 53.553089),
-            },
-            {
-                "name": "Kiel",
-                "navigation": Point(10.13008, 54.31367),
-            },
-        ])
+class TestTSPQuery(unittest.TestCase):
+    waypoints = DataFrame([
+        {
+            "name": "Itzehoe",
+            "navigation": Point(9.48545, 53.95801),
+        },
+        {
+            "name": "Hamburg",
+            "navigation": Point(10.008223, 53.553089),
+        },
+        {
+            "name": "Kiel",
+            "navigation": Point(10.13008, 54.31367),
+        },
+    ])
 
-        result = cl.tsp(self.client, waypoints=waypoints)
+    def setUp(self):
+        key = os.getenv("CASAGEOTOOLS_API_KEY") or self.skipTest("No API key provided")
+        self.client = ct.CasaGeoClient(key)
+
+    def test_tsp_simple(self):
+        result = cl.tsp(self.client, waypoints=self.waypoints)
 
         self.assertIsInstance(result, GeoDataFrame)
         self.assertEqual(result.crs, "EPSG:4326")
