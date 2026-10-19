@@ -22,12 +22,12 @@ import requests
 import casageo.tools as ct
 
 
-class TestTiles(unittest.TestCase):
+class TestMaptiles(unittest.TestCase):
     def setUp(self):
         key = os.getenv("CASAGEOTOOLS_API_KEY") or self.skipTest("No API key provided")
         self.client = ct.CasaGeoClient(key)
 
-    def test_maptile(self):
+    def test_maptiles(self):
         # XYZ tile containing Hamburg at zoom level 10.
         url = ct.get_maptile_url(self.client).format(z=10, x=540, y=330)
 
