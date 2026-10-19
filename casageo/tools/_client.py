@@ -138,7 +138,9 @@ class CasaGeoClient:
     def request(self, method: str, url: str, *, json: Any | None = None) -> Any:
         """Send a network request to the casaGeo API server and return a JSON object."""
         _logger.debug("Request: %s %s %r", method, url, json)
-        return self._backend.request(method, url, json=json)
+        response = self._backend.request(method, url, json=json)
+        _logger.debug("Response: %s %s %r", method, url, response)
+        return response
 
     def close(self) -> None:
         """Close the network request backend and release any associated resources."""
