@@ -17,7 +17,7 @@
 import os
 import unittest
 
-import httpx
+import requests
 
 import casageo.tools as ct
 
@@ -31,8 +31,8 @@ class TestTiles(unittest.TestCase):
         # XYZ tile containing Hamburg at zoom level 10.
         url = ct.get_maptile_url(self.client).format(z=10, x=540, y=330)
 
-        response = httpx.get(url, timeout=30)
+        response = requests.get(url, timeout=30)
 
-        self.assertEqual(response.status_code, httpx.codes.OK)
+        self.assertEqual(response.status_code, requests.codes.OK)
         self.assertTrue(response.headers.get("content-type", "").startswith("image/"))
         self.assertTrue(response.content)
