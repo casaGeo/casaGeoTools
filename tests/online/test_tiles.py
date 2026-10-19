@@ -36,3 +36,7 @@ class TestTiles(unittest.TestCase):
         self.assertEqual(response.status_code, requests.codes.OK)
         self.assertTrue(response.headers.get("content-type", "").startswith("image/"))
         self.assertTrue(response.content)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -55,6 +55,9 @@ class TestGeocodeQuery(unittest.TestCase):
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
 
+    def tearDown(self):
+        self.client.close()
+
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
         fixture = load_fixture("coder_geocode_simple_query")
@@ -148,6 +151,9 @@ class TestPOIQuery(unittest.TestCase):
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
         self.client.preferred_language = "de,en"
+
+    def tearDown(self):
+        self.client.close()
 
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):

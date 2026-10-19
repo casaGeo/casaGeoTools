@@ -76,6 +76,9 @@ class TestIsolineQuery(unittest.TestCase):
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
 
+    def tearDown(self):
+        self.client.close()
+
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
         fixture = load_fixture("spatial_isoline_simple_query")
@@ -178,6 +181,9 @@ class TestRoutesQuery(unittest.TestCase):
 
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
+
+    def tearDown(self):
+        self.client.close()
 
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):

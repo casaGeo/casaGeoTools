@@ -206,3 +206,7 @@ class TestTSPQuery(unittest.TestCase):
         self.assertIsNotNone(result["position"].iloc[0])
         self.assertIsNotNone(result["travel_distance"].iloc[1])
         self.assertIsNotNone(result["travel_duration"].iloc[1])
+
+
+if __name__ == "__main__":
+    unittest.main()

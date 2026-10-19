@@ -37,6 +37,9 @@ class TestMatrixQuery(unittest.TestCase):
         key = os.getenv("CASAGEOTOOLS_API_KEY") or self.skipTest("No API key provided")
         self.client = ct.CasaGeoClient(key)
 
+    def tearDown(self):
+        self.client.close()
+
     def test_matrix_symmetric(self):
         self._check_result(cl.matrix(self.client, waypoints=self.waypoints))
 
@@ -89,6 +92,9 @@ class TestTSPQuery(unittest.TestCase):
         key = os.getenv("CASAGEOTOOLS_API_KEY") or self.skipTest("No API key provided")
         self.client = ct.CasaGeoClient(key)
 
+    def tearDown(self):
+        self.client.close()
+
     def test_tsp_simple(self):
         result = cl.tsp(self.client, waypoints=self.waypoints)
 
@@ -101,3 +107,7 @@ class TestTSPQuery(unittest.TestCase):
         self.assertIsNotNone(result["position"].iloc[0])
         self.assertIsNotNone(result["travel_distance"].iloc[1])
         self.assertIsNotNone(result["travel_duration"].iloc[1])
+
+
+if __name__ == "__main__":
+    unittest.main()
