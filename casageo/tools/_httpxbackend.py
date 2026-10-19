@@ -64,9 +64,8 @@ class HttpxBackend(NetworkRequestBackend):
                 )
             raise InsufficientCreditsError(response.text)
 
-        response.raise_for_status()
-
-        raise CasaGeoError(f"Unexpected status code {response.status_code}")
+        msg = f"Unexpected status code: {response.status_code} {response.reason_phrase}"
+        raise CasaGeoError(msg)
 
     def close(self) -> None:
         self.httpxclient.close()
