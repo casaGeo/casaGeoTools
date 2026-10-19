@@ -196,7 +196,7 @@ class MatrixResult(CasaGeoResult):
         if error_codes := matrix.get("errorCodes"):
             df["statuscode"] = pd.Series(error_codes)
         else:
-            df["statuscode"] = pd.NA
+            df["statuscode"] = 0
 
         return df
 
