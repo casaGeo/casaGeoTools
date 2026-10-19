@@ -33,7 +33,7 @@ run-checks() {
 run-tests() {
 	run-version-tests
 	run-smoke-tests
-	run-unit-tests
+	run-unit-tests "$@"
 }
 
 run-version-tests() {
@@ -45,13 +45,23 @@ run-smoke-tests() {
 }
 
 run-unit-tests() {
-	uv run python -m unittest discover --start-directory='tests/offline'
+	uv run pytest "$@" tests/offline
 }
 
-# You must set CASAGEOTOOLS_API_KEY for this to work
-# You should also set CASAGEOTOOLS_PROXY_SERVER
+# You must set CASAGEOTOOLS_API_KEY for this to work.
+# You should also set CASAGEOTOOLS_PROXY_SERVER.
+# Loading .env is supported due to pytest-dotenv.
+# Run with --log-cli-level=DEBUG for debug output.
 run-live-tests() {
-	uv run python -m unittest discover --start-directory='tests/online'
+	uv run pytest "$@" tests/online
+}
+
+run-live-tests-against-localhost() {
+	run-live-tests --envfile=env/localhost.env "$@"
+}
+
+run-live-tests-against-production() {
+	run-live-tests --envfile=env/production.env "$@"
 }
 
 build() {
