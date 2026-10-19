@@ -51,7 +51,8 @@ class TestLogistics(unittest.TestCase):
         self.assertListEqual(result["origin"].to_list(), [0, 0, 0, 1, 1, 1, 2, 2, 2])
         self.assertListEqual(result["destination"].to_list(), [0, 1, 2] * 3)
         self.assertListEqual(result["statuscode"].to_list(), [0] * 9)
-        self.assertFalse(result[["distance", "traveltime"]].isna().any().any())
+        self.assertTrue(result["distance"].notna().all())
+        self.assertTrue(result["traveltime"].notna().all())
 
         for row in result.itertuples(index=False):
             with self.subTest(origin=row.origin, destination=row.destination):
