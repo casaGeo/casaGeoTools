@@ -39,19 +39,27 @@ def load_fixture(name: str):
 
 
 class TestGeocodeQuery(unittest.TestCase):
+    queries = DataFrame([
+        {"id": 1, "address": "Fraunhoferstr. 3, 25524 Itzehoe DEU"},
+        {"id": 2, "address": "Hachmannplatz 16, 20099 Hamburg DEU"},
+        {"id": 3, "address": "Sophienblatt 25, 24114 Kiel DEU"},
+    ])
+
+    @staticmethod
+    def generate_fixtures(client: ct.CasaGeoClient):
+        yield (
+            "coder_geocode_simple_query",
+            cc.geocode_result(client, TestGeocodeQuery.queries),
+        )
+
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
-        self.geocode_queries = DataFrame([
-            {"id": 1, "address": "Fraunhoferstr. 3, 25524 Itzehoe DEU"},
-            {"id": 2, "address": "Hachmannplatz 16, 20099 Hamburg DEU"},
-            {"id": 3, "address": "Sophienblatt 25, 24114 Kiel DEU"},
-        ])
 
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
         fixture = load_fixture("coder_geocode_simple_query")
         mock.return_value = fixture["result"]
-        results = cc.geocode(self.client, self.geocode_queries)
+        results = cc.geocode(self.client, self.queries)
         mock.assert_called_once_with(
             self.client,
             "POST",
@@ -122,22 +130,30 @@ class TestGeocodeQuery(unittest.TestCase):
 
 
 class TestPOIQuery(unittest.TestCase):
+    queries = DataFrame([
+        {
+            "id": 1,
+            "position": Point(9.48545, 53.95801),
+            "limit": 2,
+        },
+    ])
+
+    @staticmethod
+    def generate_fixtures(client: ct.CasaGeoClient):
+        yield (
+            "coder_poi_simple_query",
+            cc.poi_result(client, TestPOIQuery.queries, {"language": "de,en"}),
+        )
+
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
         self.client.preferred_language = "de,en"
-        self.poi_queries = DataFrame([
-            {
-                "id": 1,
-                "position": Point(9.48545, 53.95801),
-                "limit": 2,
-            },
-        ])
 
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
         fixture = load_fixture("coder_poi_simple_query")
         mock.return_value = fixture["result"]
-        results = cc.poi(self.client, self.poi_queries)
+        results = cc.poi(self.client, self.queries)
         mock.assert_called_once_with(
             self.client,
             "POST",

@@ -39,34 +39,42 @@ def load_fixture(name: str):
 
 
 class TestIsolineQuery(unittest.TestCase):
+    queries = DataFrame([
+        {
+            "id": 1,
+            "position": Point(10.008223, 53.553089),
+            "name": "Hamburg Central Station",
+            "range_type": "time",
+            "ranges": [5, 15],
+            "transport_mode": "car",
+        },
+        {
+            "id": 2,
+            "position": Point(10.66865, 53.86621),
+            "name": "Lübeck Central Station",
+            "range_type": "distance",
+            "ranges": [3000],
+            "transport_mode": "pedestrian",
+        },
+        {
+            "id": 3,
+            "position": Point(10.13008, 54.31367),
+            "name": "Kiel Central Station",
+            "range_type": "time",
+            "ranges": [10],
+            "transport_mode": "car",
+        },
+    ])
+
+    @staticmethod
+    def generate_fixtures(client: ct.CasaGeoClient):
+        yield (
+            "spatial_isoline_simple_query",
+            cs.isoline_result(client, TestIsolineQuery.queries),
+        )
+
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
-        self.queries = DataFrame([
-            {
-                "id": 1,
-                "position": Point(10.008223, 53.553089),
-                "name": "Hamburg Central Station",
-                "range_type": "time",
-                "ranges": [5, 15],
-                "transport_mode": "car",
-            },
-            {
-                "id": 2,
-                "position": Point(10.66865, 53.86621),
-                "name": "Lübeck Central Station",
-                "range_type": "distance",
-                "ranges": [3000],
-                "transport_mode": "pedestrian",
-            },
-            {
-                "id": 3,
-                "position": Point(10.13008, 54.31367),
-                "name": "Kiel Central Station",
-                "range_type": "time",
-                "ranges": [10],
-                "transport_mode": "car",
-            },
-        ])
 
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
@@ -134,34 +142,42 @@ class TestIsolineQuery(unittest.TestCase):
 
 
 class TestRoutesQuery(unittest.TestCase):
+    queries = DataFrame([
+        {
+            "id": 1,
+            "origin": Point(9.4854461, 53.9580118),
+            "destination": Point(10.008223, 53.553089),
+            "routing_mode": "fast",
+            "transport_mode": "car",
+            "destination_name": "Hamburg Central Station",
+        },
+        {
+            "id": 2,
+            "origin": Point(9.4854461, 53.9580118),
+            "destination": Point(10.13008, 54.31367),
+            "routing_mode": "fast",
+            "transport_mode": "car",
+            "destination_name": "Kiel Central Station",
+        },
+        {
+            "id": 3,
+            "origin": Point(9.4854461, 53.9580118),
+            "destination": Point(10.66865, 53.86621),
+            "routing_mode": "fast",
+            "transport_mode": "car",
+            "destination_name": "Lübeck Central Station",
+        },
+    ])
+
+    @staticmethod
+    def generate_fixtures(client: ct.CasaGeoClient):
+        yield (
+            "spatial_routes_simple_query",
+            cs.routes_result(client, TestRoutesQuery.queries),
+        )
+
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY)
-        self.queries = DataFrame([
-            {
-                "id": 1,
-                "origin": Point(9.4854461, 53.9580118),
-                "destination": Point(10.008223, 53.553089),
-                "routing_mode": "fast",
-                "transport_mode": "car",
-                "destination_name": "Hamburg Central Station",
-            },
-            {
-                "id": 2,
-                "origin": Point(9.4854461, 53.9580118),
-                "destination": Point(10.13008, 54.31367),
-                "routing_mode": "fast",
-                "transport_mode": "car",
-                "destination_name": "Kiel Central Station",
-            },
-            {
-                "id": 3,
-                "origin": Point(9.4854461, 53.9580118),
-                "destination": Point(10.66865, 53.86621),
-                "routing_mode": "fast",
-                "transport_mode": "car",
-                "destination_name": "Lübeck Central Station",
-            },
-        ])
 
     @patch("casageo.tools._client.CasaGeoClient.request", autospec=True)
     def test_simple_query(self, mock):
