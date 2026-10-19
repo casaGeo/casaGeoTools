@@ -19,7 +19,7 @@ import runpy
 import tomllib
 from pathlib import Path
 
-PROJECT_DIR = Path(__file__).parent.parent.parent
+PROJECT_DIR = Path(__file__).parent.parent
 DOCUMENTATION_DIR = PROJECT_DIR / "docs"
 
 

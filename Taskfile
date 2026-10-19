@@ -18,7 +18,7 @@
 # SC2317: Command appears to be unreachable.
 # SC2329: This function is never invoked.
 # shellcheck disable=SC2317,SC2329
-set -Ceufo pipefail
+set -Ceuo pipefail
 
 ##############
 # Main Tasks #
@@ -37,15 +37,15 @@ run-tests() {
 }
 
 run-version-tests() {
-	uv run tests/offline/version_test.py
+	uv run tests/version_test.py
 }
 
 run-smoke-tests() {
-	uv run tests/offline/smoke_test.py
+	uv run tests/smoke_test.py
 }
 
 run-unit-tests() {
-	uv run pytest "$@" tests/offline
+	uv run pytest "$@"
 }
 
 # You must set CASAGEOTOOLS_API_KEY for this to work.
@@ -53,7 +53,7 @@ run-unit-tests() {
 # Loading .env is supported due to pytest-dotenv.
 # Run with --log-cli-level=DEBUG for debug output.
 run-live-tests() {
-	uv run pytest "$@" tests/online
+	uv run pytest "$@" tests/online_test_*.py
 }
 
 run-live-tests-against-localhost() {

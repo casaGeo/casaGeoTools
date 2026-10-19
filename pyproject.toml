@@ -69,18 +69,11 @@ typeCheckingMode = "standard"
 allowedUntypedLibraries = ["flexpolyline"]
 reportMissingTypeArgument = "warning"
 reportUnusedCallResult = false
-exclude = [
-    "**/node_modules", "**/__pycache__", "**/.*",
-    "tests/offline/generate_fixtures.py",
-]
 
 [tool.mypy]
 explicit_package_bases = true
 local_partial_types = true
 strict_bytes = true
-exclude = [
-    'tests/offline/generate_fixtures\.py$',
-]
 
 # Allow mypy to recurse into the flexpolyline package for dynamic type
 # analysis, since the package doesn’t provide types natively. This should be
