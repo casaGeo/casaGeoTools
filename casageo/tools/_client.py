@@ -114,10 +114,13 @@ class CasaGeoClient:
         preferred_unit_system: UnitSystem | str | None = None,
         # Internal use only, for now
         network_backend: NetworkBackend | None = None,
+        server_url: str = "",
     ) -> None:
         self._apikey = validate_apikey(apikey or os.getenv("CASAGEOTOOLS_API_KEY", ""))
         self._server = validate_server_url(
-            os.getenv("CASAGEOTOOLS_PROXY_SERVER", "") or CASAGEOTOOLS_SERVER_URL
+            server_url
+            or os.getenv("CASAGEOTOOLS_PROXY_SERVER", "")
+            or CASAGEOTOOLS_SERVER_URL
         )
         self._backend = network_backend or self._default_network_backend()
         self._backend.setup(self)
