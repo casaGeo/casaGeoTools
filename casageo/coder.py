@@ -830,8 +830,8 @@ def _main(args: Sequence[str] | None = None) -> None:
     results.to_csv(sys.stdout, sep=";", index=False)
 
 
-if __name__ == "__main__":
-    try:
-        _main()
-    except CasaGeoError as e:
-        sys.exit(f"{e.__class__.__name__}: {e}")
+# if __name__ == "__main__":
+#     try:
+#         _main()
+#     except CasaGeoError as e:
+#         sys.exit(f"{e.__class__.__name__}: {e}")
