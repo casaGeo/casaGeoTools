@@ -37,11 +37,11 @@ run-tests() {
 }
 
 run-version-tests() {
-	uv run tests/version_test.py
+	uv run scripts/version_test.py
 }
 
 run-smoke-tests() {
-	uv run tests/smoke_test.py
+	uv run scripts/smoke_test.py
 }
 
 run-unit-tests() {
@@ -93,12 +93,12 @@ sphinx-make() {
 }
 
 generate-fixtures() {
-	uv run tests/offline/generate_fixtures.py "$@"
+	uv run scripts/generate_fixtures.py "$@"
 }
 
 test-artifact() {
 	local artifact=$1
-	uv run --isolated --no-project --with="${artifact:?}" tests/offline/smoke_test.py
+	uv run --isolated --no-project --with="${artifact:?}" scripts/smoke_test.py
 }
 
 extract-changelog-for-version() {

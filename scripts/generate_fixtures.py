@@ -24,7 +24,9 @@ from shapely import Point
 import casageo.tools as ct
 from casageo.tools._types import MultiResult
 
-FIXTURE_DIR = Path(__file__).parent / "fixtures"
+PROJECT_DIR = Path(__file__).parent.parent
+TESTS_DIR = PROJECT_DIR / "tests"
+FIXTURE_DIR = TESTS_DIR / "fixtures"
 POINT_IZET = Point(9.4854461, 53.9580118)
 POINT_HH = Point(10.008223, 53.553089)
 POINT_KIEL = Point(10.13008, 54.31367)
@@ -57,9 +59,12 @@ def main(argv: Sequence[str] | None = None) -> None:
     import sys
 
     import dotenv
-    from test_coder import TestGeocodeQuery, TestPOIQuery
-    from test_logistics import TestMatrixQuery, TestTSPQuery
-    from test_spatial import TestIsolineQuery, TestRoutesQuery
+
+    sys.path.insert(0, str(PROJECT_DIR.absolute()))
+
+    from tests.test_coder import TestGeocodeQuery, TestPOIQuery
+    from tests.test_logistics import TestMatrixQuery, TestTSPQuery
+    from tests.test_spatial import TestIsolineQuery, TestRoutesQuery
 
     if argv is None:
         argv = sys.argv

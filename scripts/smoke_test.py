@@ -28,7 +28,9 @@ import casageo.spatial as cs  # type:ignore
 import casageo.tools as ct
 
 API_KEY = "XXXXX-XXXXX-XXXXX-XXXXX"
-FIXTURE_DIR = Path(__file__).parent / "fixtures"
+PROJECT_DIR = Path(__file__).parent.parent
+TESTS_DIR = PROJECT_DIR / "tests"
+FIXTURE_DIR = TESTS_DIR / "fixtures"
 
 
 @functools.cache
