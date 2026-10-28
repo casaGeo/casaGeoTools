@@ -195,19 +195,19 @@ def and_then(val: Any | None, /, *funcs: Callable[[Any], Any | None]) -> Any | N
     return val
 
 
-def isscalarna(x: Any) -> bool:
+def isscalarna(x: Any, /) -> bool:
     return pd.api.types.is_scalar(x) and cast(bool, pd.isna(x))
 
 
-def delna[K, V](d: Mapping[K, V]) -> dict[K, V]:
+def delna[K, V](d: Mapping[K, V], /) -> dict[K, V]:
     return {k: v for k, v in d.items() if not isscalarna(v)}
 
 
-def replacena[K, V](d: Mapping[K, V]) -> dict[K, V | None]:
+def replacena[K, V](d: Mapping[K, V], /) -> dict[K, V | None]:
     return {k: (None if isscalarna(v) else v) for k, v in d.items()}
 
 
-def getpoint(q: Mapping[Hashable, Any], key: str) -> Point | None:
+def getpoint(q: Mapping[Hashable, Any], /, key: str) -> Point | None:
     # Dataframes may return None instead of KeyError so we have to check for both.
 
     if (p := cast(Any, q.get(key))) is not None:
@@ -224,7 +224,7 @@ def getpoint(q: Mapping[Hashable, Any], key: str) -> Point | None:
     return None
 
 
-def point_xy(p: Point) -> tuple[float, float]:
+def point_xy(p: Point, /) -> tuple[float, float]:
     return (p.x, p.y)
 
 
@@ -250,7 +250,7 @@ def point_mvalue(p: Point, /) -> float | None:
         return None
 
 
-def enlist_if_str[T](s: str | T) -> list[str] | T:
+def enlist_if_str[T](s: str | T, /) -> list[str] | T:
     return [s] if isinstance(s, str) else s
 
 
@@ -281,54 +281,54 @@ def minutes_to_seconds(minutes: timedelta | float | int | Any) -> int:
 
 
 def to_records(
-    df: pd.DataFrame, *fallbacks: Mapping[str, Any]
+    df: pd.DataFrame, /, *fallbacks: Mapping[str, Any]
 ) -> Generator[Mapping[Hashable, Any]]:
     chainmap = ChainMap(*cast(tuple[MutableMapping[Hashable, Any], ...], fallbacks))
     return (chainmap.new_child(replacena(r)) for r in df.to_dict(orient="records"))
 
 
 @rename("IETF BCP47 language tag")
-def cli_ietf_bcp47_language_tag(value: str) -> str:
+def cli_ietf_bcp47_language_tag(value: str, /) -> str:
     return validate_ietf_bcp47_language_tag(value)
 
 
 @rename("ISO 3166-1 alpha-3 country code")
-def cli_iso3166_alpha3_country_code(value: str) -> str:
+def cli_iso3166_alpha3_country_code(value: str, /) -> str:
     return validate_iso3166_alpha3_country_code(value)
 
 
 @rename("comma-separated ISO 3166-1 alpha-3 country code list")
-def cli_iso3166_alpha3_country_code_list(value: str) -> list[str]:
+def cli_iso3166_alpha3_country_code_list(value: str, /) -> list[str]:
     return [validate_iso3166_alpha3_country_code(code) for code in value.split(",")]
 
 
 @rename("Latitude,Longitude point")
-def cli_latlong_point(value: str) -> Point:
+def cli_latlong_point(value: str, /) -> Point:
     lat, lng = value.split(",")
     return Point(float(lng), float(lat))
 
 
 @rename("positive integer")
-def cli_positive_int(value: str) -> int:
+def cli_positive_int(value: str, /) -> int:
     if (x := int(value)) > 0:
         return x
     raise ValueError("number must be greater than zero")
 
 
 @rename("non-negative integer")
-def cli_non_negative_int(value: str) -> int:
+def cli_non_negative_int(value: str, /) -> int:
     if (x := int(value)) >= 0:
         return x
     raise ValueError("number must be non-negative")
 
 
 @rename("ISO 8601 datetime")
-def cli_datetime(value: str) -> datetime:
+def cli_datetime(value: str, /) -> datetime:
     return datetime.fromisoformat(value)
 
 
 @rename("comma-separated feature list")
-def cli_avoidable_feature_list(value: str) -> list[str]:
+def cli_avoidable_feature_list(value: str, /) -> list[str]:
     from casageo.spatial import AvoidableFeature
 
     features = value.split(",")
@@ -340,15 +340,15 @@ def cli_avoidable_feature_list(value: str) -> list[str]:
 
 
 @rename("comma-separated HERE API category code list")
-def cli_here_api_category_code_list(value: str) -> list[str]:
+def cli_here_api_category_code_list(value: str, /) -> list[str]:
     return [validate_here_api_category_code(code) for code in value.split(",")]
 
 
 @rename("comma-separated HERE API chain code list")
-def cli_here_api_chain_code_list(value: str) -> list[str]:
+def cli_here_api_chain_code_list(value: str, /) -> list[str]:
     return [validate_here_api_chain_code(code) for code in value.split(",")]
 
 
 @rename("comma-separated HERE API food type code list")
-def cli_here_api_food_type_code_list(value: str) -> list[str]:
+def cli_here_api_food_type_code_list(value: str, /) -> list[str]:
     return [validate_here_api_food_type_code(code) for code in value.split(",")]
