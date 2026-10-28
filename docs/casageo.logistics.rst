@@ -27,15 +27,6 @@ casageo.logistics module
 
    Calculate a matrix of distance and travel time between waypoints.
 
-   .. _logistics-matrix-query-options:
-
-   Matrix Query Options
-   --------------------
-
-   profile : str
-      The parameter profile to use for route calculation, see
-      :class:`MatrixRoutingProfile`.
-
    .. _logistics-matrix-input-columns:
 
    Matrix Input Columns
@@ -66,18 +57,24 @@ casageo.logistics module
       near the same location.
 
    course : int
-      Optional.
+      The direction (degrees in clockwise direction, 0 is north) from which this
+      waypoint should be approached or in which it should be left.
 
    radius : int
-      Optional.
+      Consider all places within this radius, in meters, as potential candidates
+      for matching the waypoint. If ``snap`` is enabled, match the waypoint to
+      the most significant road within this radius.
 
    snap : bool
-      Optional.
+      Controls the meaning of the ``radius`` parameter, the default is
+      ``False``.
 
    .. _logistics-matrix-output-columns:
 
    Matrix Output Columns
    ---------------------
+
+   The resulting dataframe contains the following columns:
 
    id : Any
       Fixed identifier added to each result of a query.
@@ -104,13 +101,6 @@ casageo.logistics module
 
    Calculate the shortest path among a set of waypoints.
 
-   .. _logistics-tsp-query-options:
-
-   TSP Query Options
-   -----------------
-
-   TBD
-
    .. _logistics-tsp-input-columns:
 
    TSP Input Columns
@@ -135,26 +125,102 @@ casageo.logistics module
       type :class:`float`.
 
    course : int
-      Optional.
+      The direction (degrees in clockwise direction, 0 is north) from which this
+      waypoint should be approached or in which it should be left.
 
    before : list[str]
-      Optional.
+      Names of other waypoints that must be sequenced after this waypoint.
 
    appointment_time : datetime | str
-      Optional.
+      Date and time of an appointment at this waypoint. If set, this waypoint
+      must be reached before the start of the appointment and can only be left
+      after the appointment has ended. You must set a ``service_time`` when
+      using this feature.
 
    service_time : timedelta \| float \| int
-      Optional.
+      Duration of time spent at this waypoint. If an ``appointment_time`` is
+      set, this specifies the duration of the appointment.
 
    interruptible : bool
-      Optional.
+      Whether the ``service_time`` at this waypoint can be interrupted by break
+      times as specified in the ``break_times`` option. The default is ``True``.
 
    .. _logistics-tsp-output-columns:
 
    TSP Output Columns
    ------------------
 
-   TBD
+   The resulting dataframe contains the following columns:
+
+   id : Any
+      Fixed identifier added to each result of a query.
+
+   subid : int
+      Numeric index of the waypoint in the result sequence starting from zero.
+
+   clusterid : int | None
+      If the waypoint is part of a cluster, this is the numeric index of the
+      cluster starting from zero. If clustering is not enabled, or the waypoint
+      is not part of a cluster, the value is ``None``.
+
+   name : str
+      Name of the waypoint.
+
+   position : :class:`~shapely.Point`
+      Position of the waypoint.
+
+   arrival_time : datetime
+      Estimated arrival time at the waypoint.
+
+   departure_time : datetime
+      Estimated departure time at the waypoint.
+
+   travel_distance : float
+      Distance from the previous waypoint to this waypoint in meters. This value
+      is zero for the first waypoint in the sequence.
+
+   travel_duration : float
+      Travel time from the previous waypoint to this waypoint in minutes. This
+      value is zero for the first waypoint in the sequence.
+
+   travel_breaktime : float
+      Total break time spent at this waypoint or traveling to this waypoint.
+
+   travel_resttime : float
+      Total rest time spent at this waypoint or traveling to this waypoint.
+
+   travel_waittime : float
+      Total waiting time at this waypoint.
+
+   travel_warning_codes : list[str]
+      Warning codes for traveling to this waypoint. Warnings may include
+      violated routing constraints, physical restrictions or legal restrictions.
+      Corresponding warning messages can be found in
+      ``travel_warning_messages``.
+
+   travel_warning_messages : list[str]
+      Warning messages for traveling to this waypoint. Warnings may include
+      violated routing constraints, physical restrictions or legal restrictions.
+      Corresponding warning codes can be found in ``travel_warning_codes``.
+
+   When ``coordinates`` is ``True``, the dataframe also contains the following
+   columns:
+
+   position_longitude : float
+      Longitude of the waypoint’s position.
+
+   position_latitude : float
+      Latitude of the waypoint’s position.
+
+   Finally, the dataframe always contains the following error information
+   columns. These contain values only if the corresponding query could not be
+   executed for some reason.
+
+   error_code : str
+      String indicating the type of error.
+
+   error_message : str
+      Human-readable error message.
 
    -----------------------------------------------------------------------------
 

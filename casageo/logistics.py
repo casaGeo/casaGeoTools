@@ -411,15 +411,18 @@ def tsp(
         client (CasaGeoClient):
             The client object authorizing these queries.
         waypoints (~pandas.DataFrame):
-            The dataframe of waypoints to visit
-            (see :ref:`logistics-tsp-input-columns`).
+            The dataframe of waypoints to visit (see
+            :ref:`logistics-tsp-input-columns`).
         origin:
-            Name of the starting waypoint, defaults to the first waypoint.
+            Name of the starting waypoint, defaults to the first
+            waypoint.
         destination:
             Name of the destination waypoint, if any.
         clustering:
-            Enables clustering of waypoints
-            (see :py:class:`TspClusteringMode`).
+            Enables clustering of waypoints (see
+            :py:class:`TspClusteringMode`). Waypoints in the same
+            cluster always form a contiguous block in the result
+            sequence.
         break_times:
             Sets up to five break time slots. Each time slot consists
             of a starting datetime and a duration in minutes.
@@ -427,11 +430,11 @@ def tsp(
             Sets a rest schedule for the driver. Set this to
             ``"default"`` to activate simplified European rules.
         transport_mode:
-            The mode of transport to use for routing
-            (see :py:class:`TransportMode`).
+            The mode of transport to use for routing (see
+            :py:class:`TransportMode`).
         routing_mode:
-            Whether to prefer ``"fast"`` or ``"short"`` routes
-            (see :py:class:`RoutingMode`).
+            Whether to prefer ``"fast"`` or ``"short"`` routes (see
+            :py:class:`RoutingMode`).
         optimize:
             Whether to optimize the waypoint sequence for ``"time"`` or
             for ``"distance"`` (see :py:class:`TspOptimizationTarget`).
@@ -445,22 +448,28 @@ def tsp(
             If set, these countries are excluded from routing. Must be
             a sequence of valid `ISO 3166-1 alpha-3`_ country codes.
         vehicle_length:
-            Specifies the length of the vehicle in centimeters.
+            Specifies the length of the vehicle in centimeters, if
+            known.
         vehicle_width:
-            Specifies the width of the vehicle in centimeters.
+            Specifies the width of the vehicle in centimeters, if known.
         vehicle_height:
-            Specifies the height of the vehicle in centimeters.
+            Specifies the height of the vehicle in centimeters, if
+            known.
         vehicle_axle_weight:
-            Specifies the per-axle weight of the vehicle in kilograms.
+            Specifies the per-axle weight of the vehicle in kilograms,
+            if known.
         vehicle_total_weight:
-            Specifies the total weight of the vehicle in kilograms.
+            Specifies the total weight of the vehicle in kilograms, if
+            known.
         vehicle_trailers:
-            Specifies the number of trailers attached to the vehicle.
+            Specifies the number of trailers attached to the vehicle, if
+            known.
         hazardous_cargo:
             Specifies the types of hazardous cargo carried by the
             vehicle (see :py:class:`TspHazardousCargoType`).
         walking_speed:
-            Specifies the pedestrian walking speed in meters per second.
+            Specifies the walking speed for pedestrian routing in meters
+            per second, if known.
         with_coordinates:
             Whether to include numeric coordinates in the output.
         with_id:
