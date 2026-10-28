@@ -662,6 +662,8 @@ class IsolinesResult(IsolineResult):
 
     .. version-deprecated:: 1.1.0
         The class was renamed to :class:`IsolineResult`.
+
+    :meta private:
     """
 
 
@@ -885,6 +887,7 @@ def routesvia(
     with_arrival_info: bool = False,
     with_id: Any = DEFAULT_REQUEST_ID,
 ) -> GeoDataFrame:
+    """:meta private:"""
     df = routesvia_result(
         client,
         waypoints,
@@ -1011,6 +1014,8 @@ def isolines_result(
 
     .. version-deprecated:: 1.1.0
         The function was renamed to :func:`isoline_result`.
+
+    :meta private:
     """
     return isoline_result(
         client,

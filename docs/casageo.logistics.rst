@@ -34,7 +34,7 @@ casageo.logistics module
 
    profile : str
       The parameter profile to use for route calculation, see
-      :class:`RoutingProfile`.
+      :class:`MatrixRoutingProfile`.
 
    .. _logistics-matrix-input-columns:
 
