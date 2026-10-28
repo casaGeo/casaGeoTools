@@ -39,6 +39,7 @@ from casageo.tools._util import (
     iso_datetime,
     minutes_to_seconds,
     point_xy,
+    seconds_to_minutes,
     to_records,
 )
 
@@ -136,7 +137,6 @@ DEFAULT_TSP_OPTIMIZATION_TARGET: Final[TspOptimizationTarget] = (
     TspOptimizationTarget.TIME
 )
 """The default optimization target for TSP."""
-
 
 _logger = logging.getLogger(__name__)
 
@@ -249,13 +249,13 @@ class TSPResult(CasaGeoResult):
                 row["position"]             = dict_to_point(item)
                 row["arrival_time"]         = item.get("estimatedArrival")
                 row["departure_time"]       = item.get("estimatedDeparture")
-                row["travel_distance"]      = conn.get("distance")
-                row["travel_duration"]      = conn.get("time")
-                row["travel_breaktime"]     = conn.get("break")
-                row["travel_resttime"]      = conn.get("rest")
-                row["travel_waittime"]      = conn.get("waiting")
-                row["travel_warnings"]      = [w.get("message") for w in conn.get("warnings", [])]
-                row["travel_warningcodes"]  = [w.get("code") for w in conn.get("warnings", [])]
+                row["travel_distance"]      = conn.get("distance", 0.0)
+                row["travel_duration"]      = seconds_to_minutes(conn.get("time", 0.0))
+                row["travel_breaktime"]     = seconds_to_minutes(conn.get("break", 0.0))
+                row["travel_resttime"]      = seconds_to_minutes(conn.get("rest", 0.0))
+                row["travel_waittime"]      = seconds_to_minutes(conn.get("waiting", 0.0))
+                row["travel_warning_codes"]     = [w.get("code") for w in conn.get("warnings", [])]
+                row["travel_warning_messages"]  = [w.get("message") for w in conn.get("warnings", [])]
                 # fmt: on
 
             if coordinates:

@@ -280,6 +280,14 @@ def minutes_to_seconds(minutes: timedelta | float | int | Any) -> int:
     raise TypeError(f"Expected float, int, or timedelta, got {type(minutes).__name__}")
 
 
+def seconds_to_minutes(seconds: timedelta | float | int | Any) -> int:
+    if isinstance(seconds, timedelta):
+        return int(seconds.total_seconds() / 60)
+    if isinstance(seconds, (int, float)):
+        return int(seconds / 60)
+    raise TypeError(f"Expected float, int, or timedelta, got {type(seconds).__name__}")
+
+
 def to_records(
     df: pd.DataFrame, /, *fallbacks: Mapping[str, Any]
 ) -> Generator[Mapping[Hashable, Any]]:
