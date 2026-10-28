@@ -36,7 +36,7 @@ from shapely import (
 )
 from typing_extensions import deprecated
 
-from casageo.tools import CasaGeoClient, CasaGeoError
+from casageo.tools import CasaGeoClient
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,

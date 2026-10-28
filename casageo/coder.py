@@ -30,7 +30,7 @@ from geopandas import GeoDataFrame
 from pandas import DataFrame
 from typing_extensions import deprecated
 
-from casageo.tools import CasaGeoClient, CasaGeoError, _util
+from casageo.tools import CasaGeoClient, _util
 from casageo.tools._types import CasaGeoResult, MultiResult
 from casageo.tools._util import (
     and_then,
