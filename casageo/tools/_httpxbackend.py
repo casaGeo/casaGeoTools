@@ -35,7 +35,7 @@ class TokenAuth(httpx.Auth):
     def auth_flow(
         self, request: httpx.Request
     ) -> Generator[httpx.Request, httpx.Response]:
-        request.headers["Authorization"] = self.token
+        request.headers["Authorization"] = f"Token {self.token}"
         yield request
 
 
