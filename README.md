@@ -37,31 +37,9 @@ GeoPandas-friendly interface.
 
 ## 💰 Credit System
 
-casaGeoTools uses a **credit-based API model**.
-
-Each API key includes a balance of credits that are **valid for 1 year**. Unused
-credits **expire after 12 months**.
-
-
-### 🔢 Credit usage per API call
-
-| Operation | Credits per request | Description                               |
-|-----------|---------------------|-------------------------------------------|
-| Geocoding | 3 credits           | Convert address → coordinates             |
-| Routing   | 3 credits           | Compute route between two points          |
-| Isolines  | 20 credits          | Generate isochrone or isodistance polygon |
-
-### 💡 Example usage
-
-With 3,000 credits you can approximately:
-
-- Geocode **1,000 addresses**, or
-- Compute **1,000 routes**, or
-- Generate **150 isolines**
-
-You can also combine requests freely:
-
-> e.g., 500 geocodes + 250 routes + 50 isolines = 3,000 credits total
+casaGeoTools uses a **credit-based API model**. Visit
+<https://www.casageo.de/en/here-connector-for-python.html> for pricing details
+and information about credit usage per API call.
 
 ---
 
@@ -75,7 +53,7 @@ pip install casaGeoTools
 
 ---
 
-## casaGeoTools Beta Example Script
+## casaGeoTools Example Scripts
 
-See the example script under `examples/beta_example_script.py` for a complete
-example of how to use casaGeoTools.
+See the scripts under the `examples/` directory for a complete example of how to
+use casaGeoTools.
