@@ -12,6 +12,8 @@
 4. Move the contents of the "Next Release" section in `CHANGELOG.md` into a new
    section describing version X.Y.Z and update that section as appropriate.
    Commit this change as `Update CHANGELOG.md for version X.Y.Z`.
-5. Tag the release using `git tag -a vX.Y.Z`.
-6. Push the release using `git push --follow-tags`.
-7. Check for any CI failures and recreate the release if necessary.
+5. Push the commits using `git push` and check for any CI failures. Fix any
+   issues and commit your changes as appropriate, then redo this step.
+6. Tag the release using `git tag -a vX.Y.Z`.
+7. Push the release using `git push --follow-tags`.
+8. Check for any CI failures and recreate the release if necessary.
