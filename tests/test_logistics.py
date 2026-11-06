@@ -80,7 +80,7 @@ class TestMatrixQuery(unittest.TestCase):
         mock.assert_called_once_with(
             self.client,
             "POST",
-            "/api/v2/matrix",
+            "api/v2/matrix",
             json={
                 "options": {"profile": cl.MatrixRoutingProfile.CAR_FAST},
                 "waypoints": [
@@ -102,7 +102,7 @@ class TestMatrixQuery(unittest.TestCase):
         mock.assert_called_once_with(
             self.client,
             "POST",
-            "/api/v2/matrix",
+            "api/v2/matrix",
             json={
                 "options": {"profile": cl.MatrixRoutingProfile.CAR_FAST},
                 "waypoints": [
@@ -176,7 +176,7 @@ class TestTSPQuery(unittest.TestCase):
         mock.assert_called_once_with(
             self.client,
             "POST",
-            "/api/v2/tsp",
+            "api/v2/tsp",
             json={
                 "options": {
                     "origin": "Itzehoe",

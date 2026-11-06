@@ -66,7 +66,7 @@ class TestGeocodeQuery(unittest.TestCase):
         mock.assert_called_once_with(
             self.client,
             "POST",
-            "/api/v2/address",
+            "api/v2/address",
             json={
                 "options": {
                     "address_details": False,
@@ -163,7 +163,7 @@ class TestPOIQuery(unittest.TestCase):
         mock.assert_called_once_with(
             self.client,
             "POST",
-            "/api/v2/poi",
+            "api/v2/poi",
             json={
                 "options": {
                     "address_details": False,

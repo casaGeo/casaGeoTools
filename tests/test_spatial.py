@@ -88,7 +88,7 @@ class TestIsolineQuery(unittest.TestCase):
         mock.assert_called_once_with(
             self.client,
             "POST",
-            "/api/v2/isolines",
+            "api/v2/isolines",
             json={
                 "options": {
                     "departure_info": False,
@@ -194,7 +194,7 @@ class TestRoutesQuery(unittest.TestCase):
         mock.assert_called_once_with(
             self.client,
             "POST",
-            "/api/v2/routes",
+            "api/v2/routes",
             json={
                 "options": {
                     "departure_info": False,
