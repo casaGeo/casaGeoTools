@@ -21,14 +21,14 @@ from urllib.parse import quote_plus
 import casageo.tools as ct
 
 API_KEY = "XXXXX-XXXXX-XXXXX-XXXXX"
-SERVER_URL = "https://api.example.com"
+SERVER_URL = "https://api.example.com/path/"
 
 
 class TestMaptiles(unittest.TestCase):
     def setUp(self):
         self.client = ct.CasaGeoClient(API_KEY, server_url=SERVER_URL)
         self.expected_base = (
-            SERVER_URL + "/api/maps/v1/tiles/{z}/{x}/{y}?apikey=" + quote_plus(API_KEY)
+            SERVER_URL + "api/maps/v1/tiles/{z}/{x}/{y}?apikey=" + quote_plus(API_KEY)
         )
         self.raw_value = string.printable
         self.escaped_value = quote_plus(self.raw_value)
