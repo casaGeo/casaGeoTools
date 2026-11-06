@@ -23,5 +23,5 @@ class UnitSystem(StrEnum):
     IMPERIAL = "imperial"
 
 
-CASAGEOTOOLS_SERVER_URL: Final[str] = "https://cg-license.casageo.eu/"
+CASAGEOTOOLS_SERVER_URL: Final[str] = "https://license.casageo.de/casageotools/"
 """The URL of the casaGeoTools API server."""
