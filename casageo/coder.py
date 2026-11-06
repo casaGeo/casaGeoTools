@@ -96,7 +96,6 @@ MAXIMUM_POI_LIMIT: Final[int] = 100
 DEFAULT_POI_LIMIT: Final[int] = 20
 """The default limit on the number of computed results for :func:`poi` queries."""
 
-
 _logger = logging.getLogger(__name__)
 
 
@@ -473,7 +472,7 @@ def geocode_result(
 
     json = client.request(
         "POST",
-        "/api/v2/address",
+        "api/v2/address",
         json={
             "options": options,
             "queries": [
@@ -582,7 +581,7 @@ def poi_result(
 
     json = client.request(
         "POST",
-        "/api/v2/poi",
+        "api/v2/poi",
         json={
             "options": options,
             "queries": [

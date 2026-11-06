@@ -362,7 +362,7 @@ def matrix_result(
     ]
 
     json = client.request(
-        "POST", "/api/v2/matrix", json={"options": options, "waypoints": points}
+        "POST", "api/v2/matrix", json={"options": options, "waypoints": points}
     )
 
     _logger.debug("Matrix Response: %r", json)
@@ -593,7 +593,7 @@ def tsp_result(
     ]
 
     json = client.request(
-        "POST", "/api/v2/tsp", json={"options": options, "waypoints": points}
+        "POST", "api/v2/tsp", json={"options": options, "waypoints": points}
     )
 
     _logger.debug("TSP Response: %r", json)

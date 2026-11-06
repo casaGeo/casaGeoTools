@@ -155,12 +155,11 @@ MAXIMUM_ALTERNATIVE_ROUTES: Final[int] = 6
 DEFAULT_ALTERNATIVE_ROUTES: Final[int] = 0
 """The default number of alternative routes to compute."""
 
-
 _logger = logging.getLogger(__name__)
 
 
 def _isoline_ranges_unit(
-    q: Mapping[Hashable, Any], default: str | None = None
+    q: Mapping[Hashable, Any], default: str | None = None,
 ) -> str | None:
     if (ru := and_then(q.get("ranges_unit"), str)) is not None:
         return ru
@@ -737,7 +736,7 @@ def isoline_result(
 
     json = client.request(
         "POST",
-        "/api/v2/isolines",
+        "api/v2/isolines",
         json={
             "options": options,
             "queries": [
@@ -840,7 +839,7 @@ def routes_result(
 
     json = client.request(
         "POST",
-        "/api/v2/routes",
+        "api/v2/routes",
         json={
             "options": options,
             "queries": [
@@ -950,7 +949,7 @@ def routesvia_result(
 
     json = client.request(
         "POST",
-        "/api/v2/routesvia",
+        "api/v2/routesvia",
         json={
             "options": options,
             "waypoints": points,
