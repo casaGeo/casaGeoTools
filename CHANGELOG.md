@@ -4,23 +4,23 @@
 
 ### Changed
 
-- Switch the default network backend from `httpx` to `requests`
-- The function `address()` was renamed to `geocode()`, the old name is deprecated
-- The function `isolines()` was renamed to `isoline()`, the old name is deprecated
-- Duplicate IDs now raise `ValueError`
-- Module constants are now marked as `Final`
+- Change the default network backend from `httpx` to `requests`
+- Rename `coder.address()` to `coder.geocode()` and deprecate the old name
+- Rename `spatial.isolines()` to `spatial.isoline()` and deprecate the old name
+- Raise `ValueError` on duplicate ID values
+- Mark constants with `typing.Final`
 
 ### Added
 
-- Expose valid string values and integer limits as module constants
+- Add support for truck routing
 - Add a logistics module with support for matrix routing and TSP calculations
 - Add a URL template builder for the casaGeo map tile API
-- Add `coordinates` options for routing and isolines
-- Add `navid` column to enumerate sub-results for results with multiple navigation points
-- Add `direction` output column for isolines
-- Ignore whitespace in comma-separated lists
 - Add support for library versions `geopandas>=1.0.0`, `pandas>=2.2.0` and older versions of `numpy`
-- Add support for truck routing
+- Add `coordinates` option to `spatial.isoline()` and `spatial.routes()`
+- Add `navid` output column to enumerate sub-results for results with multiple navigation points
+- Add `direction` output column to `spatial.isoline()`
+- Expose valid string values and integer limits as module constants
+- Ignore whitespace in comma-separated lists
 
 ### Fixed
 
