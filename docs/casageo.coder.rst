@@ -12,6 +12,17 @@ casageo.coder module
    :undoc-members:
    :show-inheritance:
 
+   .. _coder-general-info:
+
+   General Information
+   ===================
+
+   You can limit the search to a select list of countries using the
+   ``countries`` parameter. Results outside of those specific countries will
+   never be considered. The geographical area selected by the ``countries``
+   parameter may change depending on the value of the ``political_view``
+   parameter.
+
    .. _coder-address-queries:
 
    .. _coder-geocode-queries:
@@ -33,12 +44,6 @@ casageo.coder module
    around that position and ``distance`` values will be computed for the
    results.
 
-   The structured address fields are not hard filters, meaning it is possible to
-   receive results from outside the specified country or city. In contrast, the
-   ``countries`` list *is* a hard filter, limiting the search to only the
-   specified countries.
-
-
    .. _coder-address-query-options:
 
    .. _coder-geocode-query-options:
@@ -54,7 +59,6 @@ casageo.coder module
 
    match_quality : bool
       Include match quality scores in the result.
-
 
    .. _coder-address-input-columns:
 
@@ -137,7 +141,6 @@ casageo.coder module
       -  ``"districtLookup"`` -- When a postal code spans multiple districts,
          return all possible combinations of the postal code with the
          corresponding city and district names.
-
 
    .. _coder-address-output-columns:
 
@@ -321,14 +324,12 @@ casageo.coder module
    error_message : str
       Human-readable error message.
 
-
    .. _coder-poi-queries:
 
    POI Queries
    ===========
 
    Search for points of interest (POI) around given positions.
-
 
    .. _coder-poi-query-options:
 
@@ -343,7 +344,6 @@ casageo.coder module
 
    category_codes : bool
       Include HERE category, chain and food type identifiers in the result.
-
 
    .. _coder-poi-input-columns:
 
@@ -397,7 +397,6 @@ casageo.coder module
       -  ``"districtLookup"`` -- When a postal code spans multiple districts,
          return all possible combinations of the postal code with the
          corresponding city and district names.
-
 
    .. _coder-poi-output-columns:
 
