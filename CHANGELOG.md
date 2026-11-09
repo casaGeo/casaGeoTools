@@ -1,6 +1,6 @@
 # Changelog
 
-## Next Release
+## [1.1.0] - 2026-11-09
 
 ### Changed
 
@@ -27,6 +27,8 @@
 - Fix `TypeError` when `position` is `None`
 - Fix `KeyError` when no navigation points are returned
 - Fix `ValueError` on missing input coordinates
+
+[1.1.0]: https://github.com/casaGeo/casaGeoTools/releases/tag/v1.1.0
 
 
 
