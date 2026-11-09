@@ -159,7 +159,8 @@ _logger = logging.getLogger(__name__)
 
 
 def _isoline_ranges_unit(
-    q: Mapping[Hashable, Any], default: str | None = None,
+    q: Mapping[Hashable, Any],
+    default: str | None = None,
 ) -> str | None:
     if (ru := and_then(q.get("ranges_unit"), str)) is not None:
         return ru
