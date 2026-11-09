@@ -16,6 +16,6 @@
    as `Bump version to X.Y.Z`.
 6. Push the commits using `git push` and check for any CI failures. Fix any
    issues and commit your changes as appropriate, then redo this step.
-7. Tag the release using `git tag -a vX.Y.Z`.
+7. Tag the release using `git tag -a vX.Y.Z -m "Version X.Y.Z"`.
 8. Push the release using `git push --follow-tags`.
 9. Check for any CI failures and recreate the release if necessary.
