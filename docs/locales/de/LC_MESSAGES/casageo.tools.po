@@ -1,0 +1,179 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, casaGeo Data + Services GmbH
+# This file is distributed under the same license as the casaGeoTools
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: casaGeoTools 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-16 23:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../casageo.tools.rst:8
+msgid "casageo.tools module"
+msgstr ""
+
+#: casageo.tools:1 of
+msgid ""
+"This module provides vocabulary types and shared implementation code used"
+" throughout the casaGeoTools library."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:1 of
+msgid "The casaGeo API client."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:3 of
+msgid ""
+"The ``preferred_*`` attributes are used as default values when making API"
+" requests and override the module defaults if not ``None``."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:7 of
+msgid ""
+"This class can be used as a context manager, in which case the "
+":meth:`close` method will be called automatically on scope exit."
+msgstr ""
+
+#: ../../casageo.tools.rst casageo.tools._client.CasaGeoClient.request of
+msgid "Parameters"
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:10 of
+msgid ""
+"Your casaGeo API key. If empty, the ``CASAGEOTOOLS_API_KEY`` environment "
+"variable will be used instead."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:12 of
+msgid ""
+"The preferred language for responses, sets the :attr:`preferred_language`"
+" attribute."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:14 of
+msgid ""
+"The preferred political view for responses, sets the "
+":attr:`preferred_political_view` attribute."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:16 of
+msgid ""
+"The preferred unit system for responses, sets the "
+":attr:`preferred_unit_system` attribute."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:21 of
+msgid ""
+"The preferred language for responses. If set, this must be a valid IETF "
+"BCP47 language tag (e.g. ``\"en-US\"``) or a comma-separated list of such"
+" tags in order of preference."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient of
+msgid "type"
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:25
+#: casageo.tools._client.CasaGeoClient:32 of
+msgid "str | None"
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:29 of
+msgid ""
+"The preferred political view for responses. If set, this must be a valid "
+"ISO 3166-1 alpha-3 country code."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:36 of
+msgid ""
+"The preferred unit system for responses. If set, this must be a valid "
+":class:`UnitSystem` or a string representation thereof (e.g. "
+"``\"metric\"`` or ``\"imperial\"``)."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient:40 of
+msgid "UnitSystem | str | None"
+msgstr ""
+
+#: casageo.tools.CasaGeoClient.apikey:1 of
+msgid "Your casaGeo API key."
+msgstr ""
+
+#: casageo.tools.CasaGeoClient.server_url:1 of
+msgid "The URL of the casaGeo API server."
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient.request:1 of
+msgid "Send a network request to the casaGeo API server and return a JSON object."
+msgstr ""
+
+#: ../../casageo.tools.rst casageo.tools._client.CasaGeoClient.close
+#: casageo.tools._client.CasaGeoClient.request of
+msgid "Return type"
+msgstr ""
+
+#: casageo.tools._client.CasaGeoClient.close:1 of
+msgid "Close the network request backend and release any associated resources."
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:1 of
+msgid "Build a query URL template for the casaGeo XYZ map tiles API."
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:3 of
+msgid "The casaGeo client instance used to retrieve the server URL and API key."
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:4 of
+msgid "Map layer, only ``\"base\"`` is supported for now."
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:5 of
+msgid "Map projection, only ``\"mercator\"`` is supported for now."
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:6 of
+msgid ""
+"Style of the map, one of ``\"standard\"``, ``\"light\"`` or "
+"``\"satellite\"``."
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:7 of
+msgid "Language to use for map labels (BCP 47 language tag)."
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:8 of
+msgid "Second language to use for bilingual map labels (BCP 47 language tag)."
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:9 of
+msgid "Which political view to use (ISO 3166 ALPHA-2 or ALPHA-3 code)."
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:10 of
+msgid "Map tile resolution in pixels per inch, either 100, 200 or 400."
+msgstr ""
+
+#: ../../casageo.tools.rst
+msgid "Returns"
+msgstr ""
+
+#: casageo.tools._maptiles.get_maptile_url:12 of
+#, python-brace-format
+msgid ""
+"The constructed URL template with ``{x}``, ``{y}`` and ``{z}`` "
+"placeholders."
+msgstr ""
+

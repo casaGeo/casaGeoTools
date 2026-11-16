@@ -1,0 +1,830 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, casaGeo Data + Services GmbH
+# This file is distributed under the same license as the casaGeoTools
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: casaGeoTools 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-16 23:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../casageo.spatial.rst:8
+msgid "casageo.spatial module"
+msgstr ""
+
+#: casageo.spatial:1 of
+msgid "This module provides spatial routing operations."
+msgstr ""
+
+#: ../../casageo.spatial.rst:18
+msgid "General Information"
+msgstr ""
+
+#: ../../casageo.spatial.rst:20
+msgid ""
+"All routing is done independently of time and traffic data by default. To"
+" include traffic data in the calculations, set the ``traffic`` parameter "
+"to ``True`` and provide either a ``departure_time`` or an "
+"``arrival_time``."
+msgstr ""
+
+#: ../../casageo.spatial.rst:27
+msgid "Isolines Queries"
+msgstr ""
+
+#: ../../casageo.spatial.rst:29 casageo.spatial.isoline:1 of
+msgid "Calculate isolines around locations."
+msgstr ""
+
+#: ../../casageo.spatial.rst:34
+msgid "Isolines Query Options"
+msgstr ""
+
+#: ../../casageo.spatial.rst:36 ../../casageo.spatial.rst:256
+msgid "departure_info"
+msgstr ""
+
+#: ../../casageo.spatial.rst:-1
+msgid "bool"
+msgstr ""
+
+#: ../../casageo.spatial.rst:37 ../../casageo.spatial.rst:257
+#: casageo.spatial.isoline:10 casageo.spatial.routes:10 of
+msgid "Include additional information about the departure time and location."
+msgstr ""
+
+#: ../../casageo.spatial.rst:39 ../../casageo.spatial.rst:259
+msgid "arrival_info"
+msgstr ""
+
+#: ../../casageo.spatial.rst:40 ../../casageo.spatial.rst:260
+#: casageo.spatial.isoline:11 casageo.spatial.routes:11 of
+msgid "Include additional information about the arrival time and location."
+msgstr ""
+
+#: ../../casageo.spatial.rst:42 ../../casageo.spatial.rst:262
+msgid "coordinates"
+msgstr ""
+
+#: ../../casageo.spatial.rst:43 ../../casageo.spatial.rst:263
+#: casageo.spatial.isoline:12 casageo.spatial.routes:12 of
+msgid "Include numeric coordinate columns in the result."
+msgstr ""
+
+#: ../../casageo.spatial.rst:48
+msgid "Isolines Input Columns"
+msgstr ""
+
+#: ../../casageo.spatial.rst:50 ../../casageo.spatial.rst:270
+msgid "The following columns will be read from the input dataframe:"
+msgstr ""
+
+#: ../../casageo.spatial.rst:52 ../../casageo.spatial.rst:119
+#: ../../casageo.spatial.rst:272 ../../casageo.spatial.rst:333
+msgid "id"
+msgstr ""
+
+#: ../../casageo.spatial.rst:-1
+msgid "Any"
+msgstr ""
+
+#: ../../casageo.spatial.rst:53 ../../casageo.spatial.rst:273
+msgid "Fixed identifier to be added to each result of this query."
+msgstr ""
+
+#: ../../casageo.spatial.rst:55
+msgid "position : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:54 ../../casageo.spatial.rst:153
+#: ../../casageo.spatial.rst:156 ../../casageo.spatial.rst:159
+#: ../../casageo.spatial.rst:198 ../../casageo.spatial.rst:201
+#: ../../casageo.spatial.rst:204 ../../casageo.spatial.rst:274
+#: ../../casageo.spatial.rst:279 ../../casageo.spatial.rst:359
+#: ../../casageo.spatial.rst:362 ../../casageo.spatial.rst:365
+#: ../../casageo.spatial.rst:402 ../../casageo.spatial.rst:405
+#: ../../casageo.spatial.rst:408
+msgid "Point"
+msgstr ""
+
+#: ../../casageo.spatial.rst:56
+msgid ""
+"The center point of the isolines. Instead of a geometry object, you may "
+"also specify this as two separate fields ``position_latitude`` and "
+"``position_longitude`` of type :class:`float`."
+msgstr ""
+
+#: ../../casageo.spatial.rst:60
+msgid "ranges"
+msgstr ""
+
+#: ../../casageo.spatial.rst:-1
+msgid "list[float]"
+msgstr ""
+
+#: ../../casageo.spatial.rst:61
+msgid "The distances or durations for which to calculate isolines."
+msgstr ""
+
+#: ../../casageo.spatial.rst:63
+msgid "ranges_unit"
+msgstr ""
+
+#: ../../casageo.spatial.rst:-1
+msgid "str"
+msgstr ""
+
+#: ../../casageo.spatial.rst:64
+msgid ""
+"The unit for the range values, either ``\"minutes\"`` or ``\"meters\"``. "
+"If unset, falls back to reading the field ``range_type`` which can either"
+" be ``\"time\"`` (minutes) or ``\"distance\"`` (meters)."
+msgstr ""
+
+#: ../../casageo.spatial.rst:68 ../../casageo.spatial.rst:288
+msgid "language"
+msgstr ""
+
+#: ../../casageo.spatial.rst:69 ../../casageo.spatial.rst:289
+msgid ""
+"The preferred language for the response. This must be a valid `IETF "
+"BCP47`_ language tag, such as ``\"en-US\"``, or a comma-separated list of"
+" such tags in order of preference."
+msgstr ""
+
+#: ../../casageo.spatial.rst:73 ../../casageo.spatial.rst:293
+msgid "unit_system"
+msgstr ""
+
+#: ../../casageo.spatial.rst:74 ../../casageo.spatial.rst:294
+msgid ""
+"The system of units to use for localized quantities, either "
+"``\"metric\"`` or ``\"imperial\"``."
+msgstr ""
+
+#: ../../casageo.spatial.rst:77 ../../casageo.spatial.rst:297
+msgid "transport_mode"
+msgstr ""
+
+#: ../../casageo.spatial.rst:78
+msgid ""
+"The mode of transport to use for routing, one of ``\"car\"``, "
+"``\"pedestrian\"`` or ``\"bicycle\"``."
+msgstr ""
+
+#: ../../casageo.spatial.rst:81 ../../casageo.spatial.rst:301
+msgid "routing_mode"
+msgstr ""
+
+#: ../../casageo.spatial.rst:82 ../../casageo.spatial.rst:302
+msgid "Whether to prefer ``\"fast\"`` or ``\"short\"`` routes."
+msgstr ""
+
+#: ../../casageo.spatial.rst:84 ../../casageo.spatial.rst:137
+msgid "direction"
+msgstr ""
+
+#: ../../casageo.spatial.rst:85 ../../casageo.spatial.rst:138
+msgid ""
+"The direction of travel relative to the center point, either "
+"``\"outgoing\"`` or ``\"incoming\"``."
+msgstr ""
+
+#: ../../casageo.spatial.rst:88 ../../casageo.spatial.rst:148
+#: ../../casageo.spatial.rst:304 ../../casageo.spatial.rst:354
+msgid "departure_time"
+msgstr ""
+
+#: ../../casageo.spatial.rst:-1
+msgid "datetime"
+msgstr ""
+
+#: ../../casageo.spatial.rst:89
+msgid ""
+"The date and time of departure for time-dependent routing. This value is "
+"only used when ``direction`` is ``\"outgoing\"``."
+msgstr ""
+
+#: ../../casageo.spatial.rst:92 ../../casageo.spatial.rst:193
+#: ../../casageo.spatial.rst:307 ../../casageo.spatial.rst:397
+msgid "arrival_time"
+msgstr ""
+
+#: ../../casageo.spatial.rst:93
+msgid ""
+"The date and time of arrival for time-dependent routing. This value is "
+"only used when ``direction`` is ``\"incoming\"``."
+msgstr ""
+
+#: ../../casageo.spatial.rst:96 ../../casageo.spatial.rst:310
+msgid "traffic"
+msgstr ""
+
+#: ../../casageo.spatial.rst:97 ../../casageo.spatial.rst:311
+msgid "Whether to consider traffic data during routing."
+msgstr ""
+
+#: ../../casageo.spatial.rst:99 ../../casageo.spatial.rst:313
+msgid ""
+"When using this feature, you should also specify either "
+"``departure_time`` or ``arrival_time``, depending on ``direction``, to "
+"get meaningful and reproducible results."
+msgstr ""
+
+#: ../../casageo.spatial.rst:103 ../../casageo.spatial.rst:317
+msgid "avoid_features"
+msgstr ""
+
+#: ../../casageo.spatial.rst:-1
+msgid "str | list[str]"
+msgstr ""
+
+#: ../../casageo.spatial.rst:104 ../../casageo.spatial.rst:318
+msgid ""
+"If set, these route features are avoided during routing. This parameter "
+"treats a comma-separated string as a list of strings."
+msgstr ""
+
+#: ../../casageo.spatial.rst:107 ../../casageo.spatial.rst:321
+msgid "exclude_countries"
+msgstr ""
+
+#: ../../casageo.spatial.rst:108 ../../casageo.spatial.rst:322
+msgid ""
+"If set, these countries are excluded from routing. Must be a sequence of "
+"valid `ISO 3166-1 alpha-3`_ country codes. This parameter treats a comma-"
+"separated string as a list of strings."
+msgstr ""
+
+#: ../../casageo.spatial.rst:115
+msgid "Isolines Output Columns"
+msgstr ""
+
+#: ../../casageo.spatial.rst:117 ../../casageo.spatial.rst:331
+msgid "The resulting dataframe contains the following columns:"
+msgstr ""
+
+#: ../../casageo.spatial.rst:120 ../../casageo.spatial.rst:334
+msgid "Fixed identifier added to each result of a query."
+msgstr ""
+
+#: ../../casageo.spatial.rst:122 ../../casageo.spatial.rst:336
+msgid "subid"
+msgstr ""
+
+#: ../../casageo.spatial.rst:-1
+msgid "int"
+msgstr ""
+
+#: ../../casageo.spatial.rst:123 ../../casageo.spatial.rst:337
+msgid "Numeric index of the result starting from zero."
+msgstr ""
+
+#: ../../casageo.spatial.rst:125
+msgid "geometry : :class:`~shapely.MultiPolygon`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:124
+msgid "MultiPolygon"
+msgstr ""
+
+#: ../../casageo.spatial.rst:126
+msgid "A MultiPolygon representing the isoline’s geometry."
+msgstr ""
+
+#: ../../casageo.spatial.rst:128
+msgid "rangetype"
+msgstr ""
+
+#: ../../casageo.spatial.rst:129
+msgid "String representing the type of the distance value."
+msgstr ""
+
+#: ../../casageo.spatial.rst:131
+msgid "rangeunit"
+msgstr ""
+
+#: ../../casageo.spatial.rst:132
+msgid "String representing the unit of the range value."
+msgstr ""
+
+#: ../../casageo.spatial.rst:134
+msgid "rangevalue"
+msgstr ""
+
+#: ../../casageo.spatial.rst:-1
+msgid "float"
+msgstr ""
+
+#: ../../casageo.spatial.rst:135
+msgid "The distance value represented by this range."
+msgstr ""
+
+#: ../../casageo.spatial.rst:141 ../../casageo.spatial.rst:348
+msgid "timestamp"
+msgstr ""
+
+#: ../../casageo.spatial.rst:142 ../../casageo.spatial.rst:349
+msgid "Timestamp of when this result was created."
+msgstr ""
+
+#: ../../casageo.spatial.rst:144
+msgid ""
+"When ``departure_info`` is ``True``, the dataframe also contains the "
+"columns below. If the direction of the query was not ``\"outgoing\"``, "
+"all these values will be null."
+msgstr ""
+
+#: ../../casageo.spatial.rst:149 ../../casageo.spatial.rst:355
+msgid "Timestamp representing the expected departure time."
+msgstr ""
+
+#: ../../casageo.spatial.rst:151 ../../casageo.spatial.rst:357
+msgid "departure_placename"
+msgstr ""
+
+#: ../../casageo.spatial.rst:152 ../../casageo.spatial.rst:358
+msgid "Name of the departure location."
+msgstr ""
+
+#: ../../casageo.spatial.rst:154 ../../casageo.spatial.rst:360
+msgid "departure_position : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:155 ../../casageo.spatial.rst:361
+msgid "Resolved position of the departure location used for route calculation."
+msgstr ""
+
+#: ../../casageo.spatial.rst:157 ../../casageo.spatial.rst:363
+msgid "departure_displayposition : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:158 ../../casageo.spatial.rst:364
+msgid "Position of a map marker referring to the departure location."
+msgstr ""
+
+#: ../../casageo.spatial.rst:160 ../../casageo.spatial.rst:366
+msgid "departure_queryposition : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:161 ../../casageo.spatial.rst:206
+#: ../../casageo.spatial.rst:367 ../../casageo.spatial.rst:410
+msgid "The original position provided in the request."
+msgstr ""
+
+#: ../../casageo.spatial.rst:163
+msgid ""
+"When ``departure_info`` is ``True`` and ``coordinates`` is ``True``, the "
+"dataframe also contains the columns below. If the direction of the query "
+"was not ``\"outgoing\"``, all these values will be null."
+msgstr ""
+
+#: ../../casageo.spatial.rst:167 ../../casageo.spatial.rst:372
+msgid "departure_longitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:168 ../../casageo.spatial.rst:373
+msgid "Longitude of the departure location in WGS84 decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:170 ../../casageo.spatial.rst:375
+msgid "departure_latitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:171 ../../casageo.spatial.rst:376
+msgid "Latitude of the departure location in WGS84 decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:173 ../../casageo.spatial.rst:378
+msgid "departure_displaylongitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:174 ../../casageo.spatial.rst:379
+msgid ""
+"Longitude of a map marker referring to the departure location in WGS84 "
+"decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:177 ../../casageo.spatial.rst:382
+msgid "departure_displaylatitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:178 ../../casageo.spatial.rst:383
+msgid ""
+"Latitude of a map marker referring to the departure location in WGS84 "
+"decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:181 ../../casageo.spatial.rst:386
+msgid "departure_querylongitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:182 ../../casageo.spatial.rst:227
+#: ../../casageo.spatial.rst:387 ../../casageo.spatial.rst:430
+msgid ""
+"Longitude of the original position provided in the request in WGS84 "
+"decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:185 ../../casageo.spatial.rst:390
+msgid "departure_querylatitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:186 ../../casageo.spatial.rst:231
+#: ../../casageo.spatial.rst:391 ../../casageo.spatial.rst:434
+msgid ""
+"Latitude of the original position provided in the request in WGS84 "
+"decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:189
+msgid ""
+"When ``arrival_info`` is ``True``, the dataframe also contains the "
+"columns below. If the direction of the query was not ``\"incoming\"``, "
+"all these values will be null."
+msgstr ""
+
+#: ../../casageo.spatial.rst:194 ../../casageo.spatial.rst:398
+msgid "Timestamp representing the expected arrival time."
+msgstr ""
+
+#: ../../casageo.spatial.rst:196 ../../casageo.spatial.rst:400
+msgid "arrival_placename"
+msgstr ""
+
+#: ../../casageo.spatial.rst:197 ../../casageo.spatial.rst:401
+msgid "Name of the arrival location."
+msgstr ""
+
+#: ../../casageo.spatial.rst:199 ../../casageo.spatial.rst:403
+msgid "arrival_position : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:200 ../../casageo.spatial.rst:404
+msgid "Resolved position of the arrival location used for route calculation."
+msgstr ""
+
+#: ../../casageo.spatial.rst:202 ../../casageo.spatial.rst:406
+msgid "arrival_displayposition : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:203 ../../casageo.spatial.rst:407
+msgid "Position of a map marker referring to the arrival location."
+msgstr ""
+
+#: ../../casageo.spatial.rst:205 ../../casageo.spatial.rst:409
+msgid "arrival_queryposition : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:208
+msgid ""
+"When ``arrival_info`` is ``True`` and ``coordinates`` is ``True``, the "
+"dataframe also contains the columns below. If the direction of the query "
+"was not ``\"incoming\"``, all these values will be null."
+msgstr ""
+
+#: ../../casageo.spatial.rst:212 ../../casageo.spatial.rst:415
+msgid "arrival_longitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:213 ../../casageo.spatial.rst:416
+msgid "Longitude of the arrival location in WGS84 decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:215 ../../casageo.spatial.rst:418
+msgid "arrival_latitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:216 ../../casageo.spatial.rst:419
+msgid "Latitude of the arrival location in WGS84 decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:218 ../../casageo.spatial.rst:421
+msgid "arrival_displaylongitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:219 ../../casageo.spatial.rst:422
+msgid ""
+"Longitude of a map marker referring to the arrival location in WGS84 "
+"decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:222 ../../casageo.spatial.rst:425
+msgid "arrival_displaylatitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:223 ../../casageo.spatial.rst:426
+msgid ""
+"Latitude of a map marker referring to the arrival location in WGS84 "
+"decimal degrees."
+msgstr ""
+
+#: ../../casageo.spatial.rst:226 ../../casageo.spatial.rst:429
+msgid "arrival_querylongitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:230 ../../casageo.spatial.rst:433
+msgid "arrival_querylatitude"
+msgstr ""
+
+#: ../../casageo.spatial.rst:234 ../../casageo.spatial.rst:437
+msgid ""
+"Finally, the dataframe always contains the following error information "
+"columns. These contain values only if the corresponding query could not "
+"be executed for some reason."
+msgstr ""
+
+#: ../../casageo.spatial.rst:238 ../../casageo.spatial.rst:441
+msgid "error_code"
+msgstr ""
+
+#: ../../casageo.spatial.rst:239 ../../casageo.spatial.rst:442
+msgid "String indicating the type of error."
+msgstr ""
+
+#: ../../casageo.spatial.rst:241 ../../casageo.spatial.rst:444
+msgid "error_message"
+msgstr ""
+
+#: ../../casageo.spatial.rst:242 ../../casageo.spatial.rst:445
+msgid "Human-readable error message."
+msgstr ""
+
+#: ../../casageo.spatial.rst:247
+msgid "Routing Queries"
+msgstr ""
+
+#: ../../casageo.spatial.rst:249 casageo.spatial.routes:1 of
+msgid "Calculate routes between two locations."
+msgstr ""
+
+#: ../../casageo.spatial.rst:254
+msgid "Routing Query Options"
+msgstr ""
+
+#: ../../casageo.spatial.rst:268
+msgid "Routing Input Columns"
+msgstr ""
+
+#: ../../casageo.spatial.rst:275
+msgid "origin : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:276
+msgid ""
+"The starting point of the route. Instead of a geometry object, you may "
+"also specify this as two separate fields ``origin_latitude`` and "
+"``origin_longitude`` of type :class:`float`."
+msgstr ""
+
+#: ../../casageo.spatial.rst:280
+msgid "destination : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:281
+msgid ""
+"The destination point of the route. Instead of a geometry object, you may"
+" also specify this as two separate fields ``destination_latitude`` and "
+"``destination_longitude`` of type :class:`float`."
+msgstr ""
+
+#: ../../casageo.spatial.rst:285
+msgid "alternatives"
+msgstr ""
+
+#: ../../casageo.spatial.rst:286
+msgid "The number of alternate routes to calculate."
+msgstr ""
+
+#: ../../casageo.spatial.rst:298
+msgid ""
+"The mode of transport to use for routing, one of ``\"car\"``, "
+"``\"pedestrian\"``, ``\"bicycle\"`` or ``\"truck\"``."
+msgstr ""
+
+#: ../../casageo.spatial.rst:305
+msgid "The date and time of departure for time-dependent routing."
+msgstr ""
+
+#: ../../casageo.spatial.rst:308
+msgid "The date and time of arrival for time-dependent routing."
+msgstr ""
+
+#: ../../casageo.spatial.rst:329
+msgid "Routing Output Columns"
+msgstr ""
+
+#: ../../casageo.spatial.rst:339
+msgid "geometry : :class:`~shapely.MultiLineString`"
+msgstr ""
+
+#: ../../casageo.spatial.rst:338
+msgid "MultiLineString"
+msgstr ""
+
+#: ../../casageo.spatial.rst:340
+msgid "Geometry of the route by sections."
+msgstr ""
+
+#: ../../casageo.spatial.rst:342
+msgid "length"
+msgstr ""
+
+#: ../../casageo.spatial.rst:343
+msgid "Total length of the route in meters."
+msgstr ""
+
+#: ../../casageo.spatial.rst:345
+msgid "duration"
+msgstr ""
+
+#: ../../casageo.spatial.rst:346
+msgid "Total duration of the route in minutes."
+msgstr ""
+
+#: ../../casageo.spatial.rst:351
+msgid ""
+"When ``departure_info`` is ``True``, the dataframe also contains the "
+"columns below."
+msgstr ""
+
+#: ../../casageo.spatial.rst:369
+msgid ""
+"When ``departure_info`` is ``True`` and ``coordinates`` is ``True``, the "
+"dataframe also contains the columns below."
+msgstr ""
+
+#: ../../casageo.spatial.rst:394
+msgid ""
+"When ``arrival_info`` is ``True``, the dataframe also contains the "
+"columns below."
+msgstr ""
+
+#: ../../casageo.spatial.rst:412
+msgid ""
+"When ``arrival_info`` is ``True`` and ``coordinates`` is ``True``, the "
+"dataframe also contains the columns below."
+msgstr ""
+
+#: casageo.spatial.RangeType:1 of
+msgid "Range type values."
+msgstr ""
+
+#: casageo.spatial.RangeUnit:1 of
+msgid "Range unit values."
+msgstr ""
+
+#: casageo.spatial.TransportMode:1 of
+msgid "Modes of transport."
+msgstr ""
+
+#: casageo.spatial.RoutingMode:1 of
+msgid "Routing modes."
+msgstr ""
+
+#: casageo.spatial.DirectionType:1 of
+msgid "Direction types."
+msgstr ""
+
+#: casageo.spatial.AvoidableFeature:1 of
+msgid "Avoidable features."
+msgstr ""
+
+#: casageo.spatial.RANGE_TYPE_BY_UNIT:1 of
+msgid "Mapping of range units to corresponding range types."
+msgstr ""
+
+#: casageo.spatial.RANGE_COEFFICIENT_BY_UNIT:1 of
+msgid "Mapping of range units to to SI base unit multiplication factors."
+msgstr ""
+
+#: casageo.spatial.DEFAULT_REQUEST_ID:1 of
+msgid "The default ID value for single-shot requests."
+msgstr ""
+
+#: casageo.spatial.DEFAULT_TRANSPORT_MODE:1 of
+msgid "The default transport mode."
+msgstr ""
+
+#: casageo.spatial.DEFAULT_ROUTING_MODE:1 of
+msgid "The default routing mode."
+msgstr ""
+
+#: casageo.spatial.DEFAULT_DIRECTION:1 of
+msgid "The default routing direction."
+msgstr ""
+
+#: casageo.spatial.DEFAULT_RANGE_UNIT:1 of
+msgid "The default unit for range values."
+msgstr ""
+
+#: casageo.spatial.RESULT_RANGE_UNIT_BY_TYPE:1 of
+msgid "The unit for returned range values by type."
+msgstr ""
+
+#: casageo.spatial.MINIMUM_ALTERNATIVE_ROUTES:1 of
+msgid "The minimum number of alternative routes to compute."
+msgstr ""
+
+#: casageo.spatial.MAXIMUM_ALTERNATIVE_ROUTES:1 of
+msgid "The maximum number of alternative routes to compute."
+msgstr ""
+
+#: casageo.spatial.DEFAULT_ALTERNATIVE_ROUTES:1 of
+msgid "The default number of alternative routes to compute."
+msgstr ""
+
+#: casageo.spatial.isoline:3 of
+msgid "See :ref:`spatial-isoline-queries` in the module documentation."
+msgstr ""
+
+#: ../../casageo.spatial.rst
+msgid "Parameters"
+msgstr ""
+
+#: casageo.spatial.isoline:5 casageo.spatial.routes:5 of
+msgid "The client object authorizing these queries."
+msgstr ""
+
+#: casageo.spatial.isoline:7 casageo.spatial.routes:7 of
+msgid "The dataframe of queries."
+msgstr ""
+
+#: casageo.spatial.isoline:9 casageo.spatial.routes:9 of
+msgid "An optional mapping of default values for missing input columns."
+msgstr ""
+
+#: ../../casageo.spatial.rst
+msgid "Returns"
+msgstr ""
+
+#: casageo.spatial.isoline:14 of
+msgid ""
+"The list of results as an EPSG:4326 GeoDataFrame. The shape is described "
+"under :ref:`spatial-isoline-output-columns` in the module documentation."
+"  The geometry column of the dataframe is the ``geometry`` column."
+msgstr ""
+
+#: casageo.spatial.isoline:14 of
+msgid ""
+"The list of results as an EPSG:4326 GeoDataFrame. The shape is described "
+"under :ref:`spatial-isoline-output-columns` in the module documentation."
+msgstr ""
+
+#: casageo.spatial.isoline:19 casageo.spatial.routes:19 of
+msgid "The geometry column of the dataframe is the ``geometry`` column."
+msgstr ""
+
+#: ../../casageo.spatial.rst
+msgid "Return type"
+msgstr ""
+
+#: ../../casageo.spatial.rst
+msgid "Raises"
+msgstr ""
+
+#: casageo.spatial.isoline:22 casageo.spatial.routes:22 of
+msgid "If the account does not have enough credits."
+msgstr ""
+
+#: casageo.spatial.isoline:23 casageo.spatial.routes:23 of
+msgid "If the request could not be executed for another reason."
+msgstr ""
+
+#: casageo.spatial.routes:3 of
+msgid "See :ref:`spatial-routing-queries` in the module documentation."
+msgstr ""
+
+#: casageo.spatial.routes:14 of
+msgid ""
+"The list of results as an EPSG:4326 GeoDataFrame. The shape is described "
+"under :ref:`spatial-routing-output-columns` in the module documentation."
+"  The geometry column of the dataframe is the ``geometry`` column."
+msgstr ""
+
+#: casageo.spatial.routes:14 of
+msgid ""
+"The list of results as an EPSG:4326 GeoDataFrame. The shape is described "
+"under :ref:`spatial-routing-output-columns` in the module documentation."
+msgstr ""
+
+#: casageo.spatial.isolines:1 of
+msgid "Deprecated alias for :func:`isoline`."
+msgstr ""
+
+#: casageo.spatial.isolines:3 of
+msgid "The function was renamed to :func:`isoline`."
+msgstr ""
+

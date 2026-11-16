@@ -84,12 +84,27 @@ build-docs() {
 	sphinx-make html
 }
 
+build-docs-de() {
+	SPHINXOPTS="${SPHINXOPTS-} -Dlanguage=de" build-docs
+}
+
 #######################
 # Supplementary Tasks #
 #######################
 
 sphinx-make() {
 	make -C docs SPHINXBUILD='uv run sphinx-build' "$@"
+}
+
+update-translations() {
+	sphinx-make gettext
+	uv run sphinx-intl --config=docs/conf.py update \
+		--pot-dir=docs/_build/gettext --language=de \
+		"$@"
+}
+
+update-translations-drop-obsolete() {
+	update-translations --no-obsolete "$@"
 }
 
 generate-fixtures() {

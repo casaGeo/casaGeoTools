@@ -1,0 +1,962 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, casaGeo Data + Services GmbH
+# This file is distributed under the same license as the casaGeoTools
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: casaGeoTools 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-16 23:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../casageo.coder.rst:8
+msgid "casageo.coder module"
+msgstr ""
+
+#: casageo.coder:1 of
+msgid "This module provides geocoding and search operations."
+msgstr ""
+
+#: ../../casageo.coder.rst:18
+msgid "General Information"
+msgstr ""
+
+#: ../../casageo.coder.rst:20
+msgid ""
+"You can limit the search to a select list of countries using the "
+"``countries`` parameter. Results outside of those specific countries will"
+" never be considered. The geographical area selected by the ``countries``"
+" parameter may change depending on the value of the ``political_view`` "
+"parameter."
+msgstr ""
+
+#: ../../casageo.coder.rst:31
+msgid "Geocode Queries"
+msgstr ""
+
+#: ../../casageo.coder.rst:33 casageo.coder.geocode:1 of
+msgid "Geocode addresses."
+msgstr ""
+
+#: ../../casageo.coder.rst:35
+msgid ""
+"You can supply either a free-form address string or a combination of "
+"country, state, county, city, district, street, house number and postal "
+"code. Combining these two approaches is also supported."
+msgstr ""
+
+#: ../../casageo.coder.rst:39
+msgid ""
+"If the input data combines street and house number information into a "
+"single field, you can pass the resulting string to the ``street`` field "
+"and leave the ``housenumber`` field unset."
+msgstr ""
+
+#: ../../casageo.coder.rst:43
+msgid ""
+"If you specify a ``position`` for the search, the search will favor "
+"places around that position and ``distance`` values will be computed for "
+"the results."
+msgstr ""
+
+#: ../../casageo.coder.rst:52
+msgid "Geocode Query Options"
+msgstr ""
+
+#: ../../casageo.coder.rst:54 ../../casageo.coder.rst:339
+msgid "address_details"
+msgstr ""
+
+#: ../../casageo.coder.rst:-1
+msgid "bool"
+msgstr ""
+
+#: ../../casageo.coder.rst:55 ../../casageo.coder.rst:340
+#: casageo.coder.geocode:10 casageo.coder.poi:10 of
+msgid "Include additional address details in the result."
+msgstr ""
+
+#: ../../casageo.coder.rst:57 ../../casageo.coder.rst:342
+msgid "coordinates"
+msgstr ""
+
+#: ../../casageo.coder.rst:58 ../../casageo.coder.rst:343
+#: casageo.coder.geocode:11 casageo.coder.poi:11 of
+msgid "Include numeric coordinate columns in the result."
+msgstr ""
+
+#: ../../casageo.coder.rst:60
+msgid "match_quality"
+msgstr ""
+
+#: ../../casageo.coder.rst:61 casageo.coder.geocode:12 of
+msgid "Include match quality scores in the result."
+msgstr ""
+
+#: ../../casageo.coder.rst:68
+msgid "Geocode Input Columns"
+msgstr ""
+
+#: ../../casageo.coder.rst:70 ../../casageo.coder.rst:353
+msgid "The following columns will be read from the input dataframe:"
+msgstr ""
+
+#: ../../casageo.coder.rst:72 ../../casageo.coder.rst:154
+#: ../../casageo.coder.rst:355 ../../casageo.coder.rst:408
+msgid "id"
+msgstr ""
+
+#: ../../casageo.coder.rst:-1
+msgid "Any"
+msgstr ""
+
+#: ../../casageo.coder.rst:73 ../../casageo.coder.rst:356
+msgid "Fixed identifier to be added to each result of this query."
+msgstr ""
+
+#: ../../casageo.coder.rst:75 ../../casageo.coder.rst:160
+msgid "address"
+msgstr ""
+
+#: ../../casageo.coder.rst:-1
+msgid "str"
+msgstr ""
+
+#: ../../casageo.coder.rst:76
+msgid "A free-form address string."
+msgstr ""
+
+#: ../../casageo.coder.rst:78 ../../casageo.coder.rst:190
+#: ../../casageo.coder.rst:439
+msgid "country"
+msgstr ""
+
+#: ../../casageo.coder.rst:79
+msgid "The name of a country."
+msgstr ""
+
+#: ../../casageo.coder.rst:81 ../../casageo.coder.rst:196
+#: ../../casageo.coder.rst:445
+msgid "state"
+msgstr ""
+
+#: ../../casageo.coder.rst:82
+msgid "The name of a state or province."
+msgstr ""
+
+#: ../../casageo.coder.rst:84 ../../casageo.coder.rst:202
+#: ../../casageo.coder.rst:451
+msgid "county"
+msgstr ""
+
+#: ../../casageo.coder.rst:85
+msgid "The name of a county."
+msgstr ""
+
+#: ../../casageo.coder.rst:87 ../../casageo.coder.rst:208
+#: ../../casageo.coder.rst:457
+msgid "city"
+msgstr ""
+
+#: ../../casageo.coder.rst:88
+msgid "The name of a city."
+msgstr ""
+
+#: ../../casageo.coder.rst:90 ../../casageo.coder.rst:211
+#: ../../casageo.coder.rst:460
+msgid "district"
+msgstr ""
+
+#: ../../casageo.coder.rst:91
+msgid "The name of a city district."
+msgstr ""
+
+#: ../../casageo.coder.rst:93 ../../casageo.coder.rst:217
+#: ../../casageo.coder.rst:466
+msgid "street"
+msgstr ""
+
+#: ../../casageo.coder.rst:94
+msgid "The name of a street, optionally including a house number."
+msgstr ""
+
+#: ../../casageo.coder.rst:96 ../../casageo.coder.rst:232
+#: ../../casageo.coder.rst:481
+msgid "housenumber"
+msgstr ""
+
+#: ../../casageo.coder.rst:97
+msgid "The house number, including any extensions."
+msgstr ""
+
+#: ../../casageo.coder.rst:99 ../../casageo.coder.rst:229
+#: ../../casageo.coder.rst:478
+msgid "postalcode"
+msgstr ""
+
+#: ../../casageo.coder.rst:100
+msgid "The postal code."
+msgstr ""
+
+#: ../../casageo.coder.rst:102 ../../casageo.coder.rst:168
+#: ../../casageo.coder.rst:358 ../../casageo.coder.rst:420
+msgid "position : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.coder.rst:101 ../../casageo.coder.rst:167
+#: ../../casageo.coder.rst:170 ../../casageo.coder.rst:357
+#: ../../casageo.coder.rst:419 ../../casageo.coder.rst:422
+msgid "Point"
+msgstr ""
+
+#: ../../casageo.coder.rst:103 ../../casageo.coder.rst:359
+msgid ""
+"The geographical center of the search. Instead of a geometry object, you "
+"may also specify this as two separate fields ``position_latitude`` and "
+"``position_longitude`` of type :class:`float`."
+msgstr ""
+
+#: ../../casageo.coder.rst:107 ../../casageo.coder.rst:363
+msgid "language"
+msgstr ""
+
+#: ../../casageo.coder.rst:108 ../../casageo.coder.rst:364
+msgid ""
+"The preferred language for the response. This must be a valid `IETF "
+"BCP47`_ language tag, such as ``\"en-US\"``, or a comma-separated list of"
+" such tags in order of preference."
+msgstr ""
+
+#: ../../casageo.coder.rst:112 ../../casageo.coder.rst:368
+msgid "political_view"
+msgstr ""
+
+#: ../../casageo.coder.rst:113 ../../casageo.coder.rst:369
+msgid ""
+"The political view of the query regarding disputed territories. This must"
+" be a valid `ISO 3166-1 alpha-3`_ country code."
+msgstr ""
+
+#: ../../casageo.coder.rst:116 ../../casageo.coder.rst:372
+msgid "limit"
+msgstr ""
+
+#: ../../casageo.coder.rst:-1
+msgid "int"
+msgstr ""
+
+#: ../../casageo.coder.rst:117 ../../casageo.coder.rst:373
+msgid ""
+"Limit on the number of results to return for each query. Must be between "
+"1 and 100. If unset, the default limit will be used."
+msgstr ""
+
+#: ../../casageo.coder.rst:120 ../../casageo.coder.rst:376
+msgid "countries"
+msgstr ""
+
+#: ../../casageo.coder.rst:-1
+msgid "str | list[str]"
+msgstr ""
+
+#: ../../casageo.coder.rst:121 ../../casageo.coder.rst:377
+msgid ""
+"If set, the search is limited to the specified countries. Must be a "
+"sequence of valid `ISO 3166-1 alpha-3`_ country codes. This parameter "
+"treats a comma-separated string as a list of strings."
+msgstr ""
+
+#: ../../casageo.coder.rst:125 ../../casageo.coder.rst:381
+msgid "address_names_mode"
+msgstr ""
+
+#: ../../casageo.coder.rst:126 ../../casageo.coder.rst:382
+msgid "How to handle places with multiple names."
+msgstr ""
+
+#: ../../casageo.coder.rst:128 ../../casageo.coder.rst:384
+msgid ""
+"``\"default\"`` -- Prefer matched names for administrative places and "
+"normalized names for street names."
+msgstr ""
+
+#: ../../casageo.coder.rst:130 ../../casageo.coder.rst:386
+msgid "``\"matched\"`` -- Prefer names that match the input query."
+msgstr ""
+
+#: ../../casageo.coder.rst:131 ../../casageo.coder.rst:387
+msgid "``\"normalized\"`` -- Prefer the official names of places."
+msgstr ""
+
+#: ../../casageo.coder.rst:133 ../../casageo.coder.rst:389
+msgid "postal_code_mode"
+msgstr ""
+
+#: ../../casageo.coder.rst:134 ../../casageo.coder.rst:390
+msgid "How to handle postal codes spanning multiple cities or districts."
+msgstr ""
+
+#: ../../casageo.coder.rst:136 ../../casageo.coder.rst:392
+msgid ""
+"``\"default\"`` -- Return only one result per postal code, leaving the "
+"city or district name blank if necessary."
+msgstr ""
+
+#: ../../casageo.coder.rst:138 ../../casageo.coder.rst:394
+msgid ""
+"``\"cityLookup\"`` -- When a postal code spans multiple cities, return "
+"all possible combinations of the postal code with the corresponding city "
+"names."
+msgstr ""
+
+#: ../../casageo.coder.rst:141 ../../casageo.coder.rst:397
+msgid ""
+"``\"districtLookup\"`` -- When a postal code spans multiple districts, "
+"return all possible combinations of the postal code with the "
+"corresponding city and district names."
+msgstr ""
+
+#: ../../casageo.coder.rst:150
+msgid "Geocode Output Columns"
+msgstr ""
+
+#: ../../casageo.coder.rst:152 ../../casageo.coder.rst:406
+msgid "The resulting dataframe contains the following columns:"
+msgstr ""
+
+#: ../../casageo.coder.rst:155 ../../casageo.coder.rst:409
+msgid "Fixed identifier added to each result of a query."
+msgstr ""
+
+#: ../../casageo.coder.rst:157 ../../casageo.coder.rst:411
+msgid "subid"
+msgstr ""
+
+#: ../../casageo.coder.rst:158 ../../casageo.coder.rst:412
+msgid "Numeric index of the result starting from zero."
+msgstr ""
+
+#: ../../casageo.coder.rst:161 ../../casageo.coder.rst:415
+msgid "Localized display name of this result item."
+msgstr ""
+
+#: ../../casageo.coder.rst:163 ../../casageo.coder.rst:417
+msgid "resulttype"
+msgstr ""
+
+#: ../../casageo.coder.rst:164
+msgid ""
+"The type of the result item, one of ``\"addressBlock\"``, "
+"``\"administrativeArea\"``, ``\"houseNumber\"``, ``\"intersection\"``, "
+"``\"locality\"``, ``\"place\"``, ``\"postalCodePoint\"`` or "
+"``\"street\"``."
+msgstr ""
+
+#: ../../casageo.coder.rst:169 ../../casageo.coder.rst:421
+msgid "The coordinates of a pin on a map corresponding to the item."
+msgstr ""
+
+#: ../../casageo.coder.rst:171 ../../casageo.coder.rst:423
+msgid "navigation : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.coder.rst:172 ../../casageo.coder.rst:424
+msgid "The coordinates of a navigation point corresponding to the item."
+msgstr ""
+
+#: ../../casageo.coder.rst:174 ../../casageo.coder.rst:426
+msgid "distance"
+msgstr ""
+
+#: ../../casageo.coder.rst:175 ../../casageo.coder.rst:427
+msgid "The distance from the search position to the result item in meters."
+msgstr ""
+
+#: ../../casageo.coder.rst:177
+msgid "relevance"
+msgstr ""
+
+#: ../../casageo.coder.rst:-1
+msgid "float"
+msgstr ""
+
+#: ../../casageo.coder.rst:178
+msgid "The relevance of the result to the query as a number between zero and one."
+msgstr ""
+
+#: ../../casageo.coder.rst:180 ../../casageo.coder.rst:429
+msgid "timestamp"
+msgstr ""
+
+#: ../../casageo.coder.rst:-1
+msgid "datetime"
+msgstr ""
+
+#: ../../casageo.coder.rst:181 ../../casageo.coder.rst:430
+msgid "Timestamp of when this result was created."
+msgstr ""
+
+#: ../../casageo.coder.rst:183 ../../casageo.coder.rst:432
+msgid ""
+"When ``address_details`` is ``True``, the dataframe also contains the "
+"following columns:"
+msgstr ""
+
+#: ../../casageo.coder.rst:186 ../../casageo.coder.rst:435
+msgid "postaladdress"
+msgstr ""
+
+#: ../../casageo.coder.rst:187 ../../casageo.coder.rst:436
+msgid ""
+"Full address of the item, formatted according to the regional postal "
+"rules. May not include all address components."
+msgstr ""
+
+#: ../../casageo.coder.rst:191 ../../casageo.coder.rst:440
+msgid "Name of the country."
+msgstr ""
+
+#: ../../casageo.coder.rst:193 ../../casageo.coder.rst:442
+msgid "countrycode"
+msgstr ""
+
+#: ../../casageo.coder.rst:194 ../../casageo.coder.rst:443
+msgid "`ISO 3166-1 alpha-3`_ country code of the country."
+msgstr ""
+
+#: ../../casageo.coder.rst:197 ../../casageo.coder.rst:446
+msgid "Name of the state within the country."
+msgstr ""
+
+#: ../../casageo.coder.rst:199 ../../casageo.coder.rst:448
+msgid "statecode"
+msgstr ""
+
+#: ../../casageo.coder.rst:200 ../../casageo.coder.rst:449
+msgid "Code or abbreviation of the state."
+msgstr ""
+
+#: ../../casageo.coder.rst:203 ../../casageo.coder.rst:452
+msgid "Name of the county or subdivision within the state."
+msgstr ""
+
+#: ../../casageo.coder.rst:205 ../../casageo.coder.rst:454
+msgid "countycode"
+msgstr ""
+
+#: ../../casageo.coder.rst:206 ../../casageo.coder.rst:455
+msgid "Code or abbreviation of the county."
+msgstr ""
+
+#: ../../casageo.coder.rst:209 ../../casageo.coder.rst:458
+msgid "Name of the city."
+msgstr ""
+
+#: ../../casageo.coder.rst:212 ../../casageo.coder.rst:461
+msgid "Name of the district within the city."
+msgstr ""
+
+#: ../../casageo.coder.rst:214 ../../casageo.coder.rst:463
+msgid "subdistrict"
+msgstr ""
+
+#: ../../casageo.coder.rst:215 ../../casageo.coder.rst:464
+msgid "Name of the subdistrict within the city."
+msgstr ""
+
+#: ../../casageo.coder.rst:218 ../../casageo.coder.rst:467
+msgid "Name of the street."
+msgstr ""
+
+#: ../../casageo.coder.rst:220 ../../casageo.coder.rst:469
+msgid "streets"
+msgstr ""
+
+#: ../../casageo.coder.rst:-1
+msgid "list[str]"
+msgstr ""
+
+#: ../../casageo.coder.rst:221 ../../casageo.coder.rst:470
+msgid "List of street names on an intersection."
+msgstr ""
+
+#: ../../casageo.coder.rst:223 ../../casageo.coder.rst:472
+msgid "block"
+msgstr ""
+
+#: ../../casageo.coder.rst:224 ../../casageo.coder.rst:473
+msgid "Name of the city block."
+msgstr ""
+
+#: ../../casageo.coder.rst:226 ../../casageo.coder.rst:475
+msgid "subblock"
+msgstr ""
+
+#: ../../casageo.coder.rst:227 ../../casageo.coder.rst:476
+msgid "Name of the subblock within the city block."
+msgstr ""
+
+#: ../../casageo.coder.rst:230 ../../casageo.coder.rst:479
+msgid "Postal code associated with the item."
+msgstr ""
+
+#: ../../casageo.coder.rst:233 ../../casageo.coder.rst:482
+msgid "House number, including associated qualifiers."
+msgstr ""
+
+#: ../../casageo.coder.rst:235 ../../casageo.coder.rst:484
+msgid "building"
+msgstr ""
+
+#: ../../casageo.coder.rst:236 ../../casageo.coder.rst:485
+msgid "Name of the building."
+msgstr ""
+
+#: ../../casageo.coder.rst:238 ../../casageo.coder.rst:487
+msgid "unit"
+msgstr ""
+
+#: ../../casageo.coder.rst:239 ../../casageo.coder.rst:488
+msgid "Information about the unit within the building."
+msgstr ""
+
+#: ../../casageo.coder.rst:241 ../../casageo.coder.rst:490
+msgid ""
+"When ``coordinates`` is True, the dataframe also contains the following "
+"columns:"
+msgstr ""
+
+#: ../../casageo.coder.rst:244 ../../casageo.coder.rst:493
+msgid "position_longitude"
+msgstr ""
+
+#: ../../casageo.coder.rst:245 ../../casageo.coder.rst:494
+msgid "Longitude of the item’s position."
+msgstr ""
+
+#: ../../casageo.coder.rst:247 ../../casageo.coder.rst:496
+msgid "position_latitude"
+msgstr ""
+
+#: ../../casageo.coder.rst:248 ../../casageo.coder.rst:497
+msgid "Latitude of the item’s position."
+msgstr ""
+
+#: ../../casageo.coder.rst:250 ../../casageo.coder.rst:499
+msgid "navigation_longitude"
+msgstr ""
+
+#: ../../casageo.coder.rst:251 ../../casageo.coder.rst:500
+msgid "Longitude of the navigation point."
+msgstr ""
+
+#: ../../casageo.coder.rst:253 ../../casageo.coder.rst:502
+msgid "navigation_latitude"
+msgstr ""
+
+#: ../../casageo.coder.rst:254 ../../casageo.coder.rst:503
+msgid "Latitude of the navigation point."
+msgstr ""
+
+#: ../../casageo.coder.rst:256
+msgid ""
+"When ``match_quality`` is ``True``, the dataframe also contains the "
+"columns below. Each of the values is a number between zero and one, "
+"indicating how well the output field matches the corresponding input "
+"field."
+msgstr ""
+
+#: ../../casageo.coder.rst:260
+msgid "mq_country"
+msgstr ""
+
+#: ../../casageo.coder.rst:261
+msgid "Match quality of the ``country`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:263
+msgid "mq_countrycode"
+msgstr ""
+
+#: ../../casageo.coder.rst:264
+msgid "Match quality of the ``countrycode`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:266
+msgid "mq_state"
+msgstr ""
+
+#: ../../casageo.coder.rst:267
+msgid "Match quality of the ``state`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:269
+msgid "mq_statecode"
+msgstr ""
+
+#: ../../casageo.coder.rst:270
+msgid "Match quality of the ``statecode`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:272
+msgid "mq_county"
+msgstr ""
+
+#: ../../casageo.coder.rst:273
+msgid "Match quality of the ``county`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:275
+msgid "mq_countycode"
+msgstr ""
+
+#: ../../casageo.coder.rst:276
+msgid "Match quality of the ``countycode`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:278
+msgid "mq_city"
+msgstr ""
+
+#: ../../casageo.coder.rst:279
+msgid "Match quality of the ``city`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:281
+msgid "mq_district"
+msgstr ""
+
+#: ../../casageo.coder.rst:282
+msgid "Match quality of the ``district`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:284
+msgid "mq_subdistrict"
+msgstr ""
+
+#: ../../casageo.coder.rst:285
+msgid "Match quality of the ``subdistrict`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:287
+msgid "mq_street"
+msgstr ""
+
+#: ../../casageo.coder.rst:288
+msgid ""
+"Average match quality of the ``streets`` field against each street name "
+"in the input query."
+msgstr ""
+
+#: ../../casageo.coder.rst:291
+msgid "mq_block"
+msgstr ""
+
+#: ../../casageo.coder.rst:292
+msgid "Match quality of the ``block`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:294
+msgid "mq_subblock"
+msgstr ""
+
+#: ../../casageo.coder.rst:295
+msgid "Match quality of the ``subblock`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:297
+msgid "mq_postalcode"
+msgstr ""
+
+#: ../../casageo.coder.rst:298
+msgid "Match quality of the ``postalcode`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:300
+msgid "mq_housenumber"
+msgstr ""
+
+#: ../../casageo.coder.rst:301
+msgid ""
+"Match quality of the ``housenumber`` field. If the requested house number"
+" could not be found, this indicates the numeric difference between the "
+"requested house number and the returned house number."
+msgstr ""
+
+#: ../../casageo.coder.rst:305
+msgid "mq_building"
+msgstr ""
+
+#: ../../casageo.coder.rst:306
+msgid "Match quality of the ``building`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:308
+msgid "mq_unit"
+msgstr ""
+
+#: ../../casageo.coder.rst:309
+msgid "Match quality of the ``unit`` field."
+msgstr ""
+
+#: ../../casageo.coder.rst:311
+msgid "mq_placename"
+msgstr ""
+
+#: ../../casageo.coder.rst:312
+msgid "Match quality of the resulting place name against the input query."
+msgstr ""
+
+#: ../../casageo.coder.rst:314
+msgid "mq_ontologyname"
+msgstr ""
+
+#: ../../casageo.coder.rst:315
+msgid "Match quality of the resulting ontology name against the input query."
+msgstr ""
+
+#: ../../casageo.coder.rst:317 ../../casageo.coder.rst:517
+msgid ""
+"Finally, the dataframe always contains the following error information "
+"columns. These contain values only if the corresponding query could not "
+"be executed for some reason."
+msgstr ""
+
+#: ../../casageo.coder.rst:321 ../../casageo.coder.rst:521
+msgid "error_code"
+msgstr ""
+
+#: ../../casageo.coder.rst:322 ../../casageo.coder.rst:522
+msgid "String indicating the type of error."
+msgstr ""
+
+#: ../../casageo.coder.rst:324 ../../casageo.coder.rst:524
+msgid "error_message"
+msgstr ""
+
+#: ../../casageo.coder.rst:325 ../../casageo.coder.rst:525
+msgid "Human-readable error message."
+msgstr ""
+
+#: ../../casageo.coder.rst:330
+msgid "POI Queries"
+msgstr ""
+
+#: ../../casageo.coder.rst:332 casageo.coder.poi:1 of
+msgid "Search for points of interest (POI) around given positions."
+msgstr ""
+
+#: ../../casageo.coder.rst:337
+msgid "POI Query Options"
+msgstr ""
+
+#: ../../casageo.coder.rst:345
+msgid "category_codes"
+msgstr ""
+
+#: ../../casageo.coder.rst:346 casageo.coder.poi:12 of
+msgid "Include HERE category, chain and food type identifiers in the result."
+msgstr ""
+
+#: ../../casageo.coder.rst:351
+msgid "POI Input Columns"
+msgstr ""
+
+#: ../../casageo.coder.rst:404
+msgid "POI Output Columns"
+msgstr ""
+
+#: ../../casageo.coder.rst:414
+msgid "title"
+msgstr ""
+
+#: ../../casageo.coder.rst:418
+msgid "The type of the result item."
+msgstr ""
+
+#: ../../casageo.coder.rst:505
+msgid ""
+"When ``category_codes`` is ``True``, the dataframe also contains the "
+"following columns:"
+msgstr ""
+
+#: ../../casageo.coder.rst:508
+msgid "here_categories"
+msgstr ""
+
+#: ../../casageo.coder.rst:509
+msgid "List of `HERE category identifiers`_ assigned to the item."
+msgstr ""
+
+#: ../../casageo.coder.rst:511
+msgid "here_chains"
+msgstr ""
+
+#: ../../casageo.coder.rst:512
+msgid "List of `HERE chain identifiers`_ assigned to the item."
+msgstr ""
+
+#: ../../casageo.coder.rst:514
+msgid "here_foodtypes"
+msgstr ""
+
+#: ../../casageo.coder.rst:515
+msgid "List of `HERE food type identifiers`_ assigned to the item."
+msgstr ""
+
+#: casageo.coder.AddressNamesMode:1 of
+msgid "Address name selection modes."
+msgstr ""
+
+#: casageo.coder.PostalCodeMode:1 of
+msgid "Postal code processing modes."
+msgstr ""
+
+#: casageo.coder.DEFAULT_REQUEST_ID:1 of
+msgid "The default ID value for single-shot requests."
+msgstr ""
+
+#: casageo.coder.DEFAULT_ADDRESS_NAMES_MODE:1 of
+msgid "The default address names mode."
+msgstr ""
+
+#: casageo.coder.DEFAULT_POSTAL_CODE_MODE:1 of
+msgid "The default postal code mode."
+msgstr ""
+
+#: casageo.coder.MINIMUM_GEOCODE_LIMIT:1 of
+msgid ""
+"The minimum limit on the number of computed results for :func:`geocode` "
+"queries."
+msgstr ""
+
+#: casageo.coder.MAXIMUM_GEOCODE_LIMIT:1 of
+msgid ""
+"The maximum limit on the number of computed results for :func:`geocode` "
+"queries."
+msgstr ""
+
+#: casageo.coder.DEFAULT_GEOCODE_LIMIT:1 of
+msgid ""
+"The default limit on the number of computed results for :func:`geocode` "
+"queries."
+msgstr ""
+
+#: casageo.coder.MINIMUM_POI_LIMIT:1 of
+msgid ""
+"The minimum limit on the number of computed results for :func:`poi` "
+"queries."
+msgstr ""
+
+#: casageo.coder.MAXIMUM_POI_LIMIT:1 of
+msgid ""
+"The maximum limit on the number of computed results for :func:`poi` "
+"queries."
+msgstr ""
+
+#: casageo.coder.DEFAULT_POI_LIMIT:1 of
+msgid ""
+"The default limit on the number of computed results for :func:`poi` "
+"queries."
+msgstr ""
+
+#: casageo.coder.geocode:3 of
+msgid "See :ref:`coder-geocode-queries` in the module documentation."
+msgstr ""
+
+#: ../../casageo.coder.rst
+msgid "Parameters"
+msgstr ""
+
+#: casageo.coder.geocode:5 casageo.coder.poi:5 of
+msgid "The client object authorizing these queries."
+msgstr ""
+
+#: casageo.coder.geocode:7 casageo.coder.poi:7 of
+msgid "The dataframe of queries."
+msgstr ""
+
+#: casageo.coder.geocode:9 casageo.coder.poi:9 of
+msgid "An optional mapping of default values for missing input columns."
+msgstr ""
+
+#: ../../casageo.coder.rst
+msgid "Returns"
+msgstr ""
+
+#: casageo.coder.geocode:14 of
+msgid ""
+"The list of results as an EPSG:4326 GeoDataFrame. The shape is described "
+"under :ref:`coder-geocode-output-columns` in the module documentation.  "
+"The geometry column of the dataframe is the ``position`` column. If you "
+"want to work with navigation points instead, change it to the "
+"``navigation`` column instead."
+msgstr ""
+
+#: casageo.coder.geocode:14 of
+msgid ""
+"The list of results as an EPSG:4326 GeoDataFrame. The shape is described "
+"under :ref:`coder-geocode-output-columns` in the module documentation."
+msgstr ""
+
+#: casageo.coder.geocode:18 casageo.coder.poi:18 of
+msgid ""
+"The geometry column of the dataframe is the ``position`` column. If you "
+"want to work with navigation points instead, change it to the "
+"``navigation`` column instead."
+msgstr ""
+
+#: ../../casageo.coder.rst
+msgid "Return type"
+msgstr ""
+
+#: ../../casageo.coder.rst
+msgid "Raises"
+msgstr ""
+
+#: casageo.coder.geocode:23 casageo.coder.poi:23 of
+msgid "If the account does not have enough credits."
+msgstr ""
+
+#: casageo.coder.geocode:24 casageo.coder.poi:24 of
+msgid "If the request could not be executed for another reason."
+msgstr ""
+
+#: casageo.coder.poi:3 of
+msgid "See :ref:`coder-poi-queries` in the module documentation."
+msgstr ""
+
+#: casageo.coder.poi:14 of
+msgid ""
+"The list of results as an EPSG:4326 GeoDataFrame. The shape is described "
+"under :ref:`coder-poi-output-columns` in the module documentation.  The "
+"geometry column of the dataframe is the ``position`` column. If you want "
+"to work with navigation points instead, change it to the ``navigation`` "
+"column instead."
+msgstr ""
+
+#: casageo.coder.poi:14 of
+msgid ""
+"The list of results as an EPSG:4326 GeoDataFrame. The shape is described "
+"under :ref:`coder-poi-output-columns` in the module documentation."
+msgstr ""
+
+#: casageo.coder.address:1 of
+msgid "Deprecated alias for :func:`geocode`."
+msgstr ""
+
+#: casageo.coder.address:3 of
+msgid "The function was renamed to :func:`geocode`."
+msgstr ""
+

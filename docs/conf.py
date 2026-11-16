@@ -21,6 +21,8 @@ extensions = [
     "sphinx.ext.napoleon",
 ]
 
+gettext_compact = False
+
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 

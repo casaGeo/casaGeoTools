@@ -1,0 +1,703 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, casaGeo Data + Services GmbH
+# This file is distributed under the same license as the casaGeoTools
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: casaGeoTools 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-16 23:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../casageo.logistics.rst:8
+msgid "casageo.logistics module"
+msgstr ""
+
+#: casageo.logistics:1 of
+msgid "This module provides operations for logistical calculations."
+msgstr ""
+
+#: ../../casageo.logistics.rst:18
+msgid "General Information"
+msgstr ""
+
+#: ../../casageo.logistics.rst:20
+msgid ""
+"The functions in this module are single-shot calculations, not batch "
+"calculations like in :ref:`coder-module` and :ref:`spatial-module`."
+msgstr ""
+
+#: ../../casageo.logistics.rst:26
+msgid "Matrix Queries"
+msgstr ""
+
+#: ../../casageo.logistics.rst:28 casageo.logistics.matrix:1 of
+msgid "Calculate a matrix of distance and travel time between waypoints."
+msgstr ""
+
+#: ../../casageo.logistics.rst:33
+msgid "Matrix Input Columns"
+msgstr ""
+
+#: ../../casageo.logistics.rst:35 ../../casageo.logistics.rst:109
+msgid "The following columns will be read from the input dataframe:"
+msgstr ""
+
+#: ../../casageo.logistics.rst:37
+msgid "type"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "str"
+msgstr ""
+
+#: ../../casageo.logistics.rst:38
+msgid ""
+"Either ``\"origin\"`` or ``\"destination\"``, the default is "
+"``\"origin\"``. If no destination waypoints are specified, routes are "
+"calculated between all origin waypoints."
+msgstr ""
+
+#: ../../casageo.logistics.rst:42 ../../casageo.logistics.rst:114
+#: ../../casageo.logistics.rst:169
+msgid "position : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.logistics.rst:41 ../../casageo.logistics.rst:47
+#: ../../casageo.logistics.rst:113 ../../casageo.logistics.rst:119
+#: ../../casageo.logistics.rst:168
+msgid "Point"
+msgstr ""
+
+#: ../../casageo.logistics.rst:43 ../../casageo.logistics.rst:115
+msgid ""
+"Navigation coordinates corresponding to the waypoint. Instead of a "
+"geometry object, you may also specify this as two separate fields "
+"``position_latitude`` and ``position_longitude`` of type :class:`float`. "
+"**Required**."
+msgstr ""
+
+#: ../../casageo.logistics.rst:48 ../../casageo.logistics.rst:120
+msgid "streetposition : :class:`~shapely.Point`"
+msgstr ""
+
+#: ../../casageo.logistics.rst:49 ../../casageo.logistics.rst:121
+msgid ""
+"Coordinates of the destination corresponding to the waypoint, if any. "
+"This is used to select the the correct side of the street where "
+"necessary. Instead of a geometry object, you may also specify this as two"
+" separate fields ``streetposition_latitude`` and "
+"``streetposition_longitude`` of type :class:`float`."
+msgstr ""
+
+#: ../../casageo.logistics.rst:55
+msgid "placename"
+msgstr ""
+
+#: ../../casageo.logistics.rst:56
+msgid ""
+"Name of the target destination to select between multiple destinations "
+"near the same location."
+msgstr ""
+
+#: ../../casageo.logistics.rst:59 ../../casageo.logistics.rst:127
+msgid "course"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "int"
+msgstr ""
+
+#: ../../casageo.logistics.rst:60 ../../casageo.logistics.rst:128
+msgid ""
+"The direction (degrees in clockwise direction, 0 is north) from which "
+"this waypoint should be approached or in which it should be left."
+msgstr ""
+
+#: ../../casageo.logistics.rst:63
+msgid "radius"
+msgstr ""
+
+#: ../../casageo.logistics.rst:64
+msgid ""
+"Consider all places within this radius, in meters, as potential "
+"candidates for matching the waypoint. If ``snap`` is enabled, match the "
+"waypoint to the most significant road within this radius."
+msgstr ""
+
+#: ../../casageo.logistics.rst:68
+msgid "snap"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "bool"
+msgstr ""
+
+#: ../../casageo.logistics.rst:69
+msgid ""
+"Controls the meaning of the ``radius`` parameter, the default is "
+"``False``."
+msgstr ""
+
+#: ../../casageo.logistics.rst:75
+msgid "Matrix Output Columns"
+msgstr ""
+
+#: ../../casageo.logistics.rst:77 ../../casageo.logistics.rst:153
+msgid "The resulting dataframe contains the following columns:"
+msgstr ""
+
+#: ../../casageo.logistics.rst:79 ../../casageo.logistics.rst:155
+msgid "id"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "Any"
+msgstr ""
+
+#: ../../casageo.logistics.rst:80 ../../casageo.logistics.rst:156
+msgid "Fixed identifier added to each result of a query."
+msgstr ""
+
+#: ../../casageo.logistics.rst:82
+msgid "origin"
+msgstr ""
+
+#: ../../casageo.logistics.rst:83
+msgid "Index of the origin waypoint in the list of origins."
+msgstr ""
+
+#: ../../casageo.logistics.rst:85
+msgid "destination"
+msgstr ""
+
+#: ../../casageo.logistics.rst:86
+msgid "Index of the destination waypoint in the list of destinations."
+msgstr ""
+
+#: ../../casageo.logistics.rst:88
+msgid "distance"
+msgstr ""
+
+#: ../../casageo.logistics.rst:89
+msgid "Travel distance between origin and destination in meters."
+msgstr ""
+
+#: ../../casageo.logistics.rst:91
+msgid "traveltime"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "float"
+msgstr ""
+
+#: ../../casageo.logistics.rst:92
+msgid "Travel time between origin and destination in minutes."
+msgstr ""
+
+#: ../../casageo.logistics.rst:94
+msgid "statuscode"
+msgstr ""
+
+#: ../../casageo.logistics.rst:95
+msgid "Zero on success, nonzero if a route could not be calculated."
+msgstr ""
+
+#: ../../casageo.logistics.rst:100
+msgid "TSP Queries"
+msgstr ""
+
+#: ../../casageo.logistics.rst:102 casageo.logistics.tsp:1 of
+msgid "Calculate the shortest path among a set of waypoints."
+msgstr ""
+
+#: ../../casageo.logistics.rst:107
+msgid "TSP Input Columns"
+msgstr ""
+
+#: ../../casageo.logistics.rst:111 ../../casageo.logistics.rst:166
+msgid "name"
+msgstr ""
+
+#: ../../casageo.logistics.rst:112
+msgid "Unique string identifier for the waypoint. **Required**."
+msgstr ""
+
+#: ../../casageo.logistics.rst:131
+msgid "before"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "list[str]"
+msgstr ""
+
+#: ../../casageo.logistics.rst:132
+msgid "Names of other waypoints that must be sequenced after this waypoint."
+msgstr ""
+
+#: ../../casageo.logistics.rst:134
+msgid "appointment_time"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "datetime | str"
+msgstr ""
+
+#: ../../casageo.logistics.rst:135
+msgid ""
+"Date and time of an appointment at this waypoint. If set, this waypoint "
+"must be reached before the start of the appointment and can only be left "
+"after the appointment has ended. You must set a ``service_time`` when "
+"using this feature."
+msgstr ""
+
+#: ../../casageo.logistics.rst:140
+msgid "service_time : timedelta \\| float \\| int"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "timedelta \\| float \\| int"
+msgstr ""
+
+#: ../../casageo.logistics.rst:141
+msgid ""
+"Duration of time spent at this waypoint. If an ``appointment_time`` is "
+"set, this specifies the duration of the appointment."
+msgstr ""
+
+#: ../../casageo.logistics.rst:144
+msgid "interruptible"
+msgstr ""
+
+#: ../../casageo.logistics.rst:145
+msgid ""
+"Whether the ``service_time`` at this waypoint can be interrupted by break"
+" times as specified in the ``break_times`` option. The default is "
+"``True``."
+msgstr ""
+
+#: ../../casageo.logistics.rst:151
+msgid "TSP Output Columns"
+msgstr ""
+
+#: ../../casageo.logistics.rst:158
+msgid "subid"
+msgstr ""
+
+#: ../../casageo.logistics.rst:159
+msgid "Numeric index of the waypoint in the result sequence starting from zero."
+msgstr ""
+
+#: ../../casageo.logistics.rst:161
+msgid "clusterid"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "int | None"
+msgstr ""
+
+#: ../../casageo.logistics.rst:162
+msgid ""
+"If the waypoint is part of a cluster, this is the numeric index of the "
+"cluster starting from zero. If clustering is not enabled, or the waypoint"
+" is not part of a cluster, the value is ``None``."
+msgstr ""
+
+#: ../../casageo.logistics.rst:167
+msgid "Name of the waypoint."
+msgstr ""
+
+#: ../../casageo.logistics.rst:170
+msgid "Position of the waypoint."
+msgstr ""
+
+#: ../../casageo.logistics.rst:172
+msgid "arrival_time"
+msgstr ""
+
+#: ../../casageo.logistics.rst:-1
+msgid "datetime"
+msgstr ""
+
+#: ../../casageo.logistics.rst:173
+msgid "Estimated arrival time at the waypoint."
+msgstr ""
+
+#: ../../casageo.logistics.rst:175
+msgid "departure_time"
+msgstr ""
+
+#: ../../casageo.logistics.rst:176
+msgid "Estimated departure time at the waypoint."
+msgstr ""
+
+#: ../../casageo.logistics.rst:178
+msgid "travel_distance"
+msgstr ""
+
+#: ../../casageo.logistics.rst:179
+msgid ""
+"Distance from the previous waypoint to this waypoint in meters. This "
+"value is zero for the first waypoint in the sequence."
+msgstr ""
+
+#: ../../casageo.logistics.rst:182
+msgid "travel_duration"
+msgstr ""
+
+#: ../../casageo.logistics.rst:183
+msgid ""
+"Travel time from the previous waypoint to this waypoint in minutes. This "
+"value is zero for the first waypoint in the sequence."
+msgstr ""
+
+#: ../../casageo.logistics.rst:186
+msgid "travel_breaktime"
+msgstr ""
+
+#: ../../casageo.logistics.rst:187
+msgid "Total break time spent at this waypoint or traveling to this waypoint."
+msgstr ""
+
+#: ../../casageo.logistics.rst:189
+msgid "travel_resttime"
+msgstr ""
+
+#: ../../casageo.logistics.rst:190
+msgid "Total rest time spent at this waypoint or traveling to this waypoint."
+msgstr ""
+
+#: ../../casageo.logistics.rst:192
+msgid "travel_waittime"
+msgstr ""
+
+#: ../../casageo.logistics.rst:193
+msgid "Total waiting time at this waypoint."
+msgstr ""
+
+#: ../../casageo.logistics.rst:195
+msgid "travel_warning_codes"
+msgstr ""
+
+#: ../../casageo.logistics.rst:196
+msgid ""
+"Warning codes for traveling to this waypoint. Warnings may include "
+"violated routing constraints, physical restrictions or legal "
+"restrictions. Corresponding warning messages can be found in "
+"``travel_warning_messages``."
+msgstr ""
+
+#: ../../casageo.logistics.rst:201
+msgid "travel_warning_messages"
+msgstr ""
+
+#: ../../casageo.logistics.rst:202
+msgid ""
+"Warning messages for traveling to this waypoint. Warnings may include "
+"violated routing constraints, physical restrictions or legal "
+"restrictions. Corresponding warning codes can be found in "
+"``travel_warning_codes``."
+msgstr ""
+
+#: ../../casageo.logistics.rst:206
+msgid ""
+"When ``coordinates`` is ``True``, the dataframe also contains the "
+"following columns:"
+msgstr ""
+
+#: ../../casageo.logistics.rst:209
+msgid "position_longitude"
+msgstr ""
+
+#: ../../casageo.logistics.rst:210
+msgid "Longitude of the waypoint’s position."
+msgstr ""
+
+#: ../../casageo.logistics.rst:212
+msgid "position_latitude"
+msgstr ""
+
+#: ../../casageo.logistics.rst:213
+msgid "Latitude of the waypoint’s position."
+msgstr ""
+
+#: ../../casageo.logistics.rst:215
+msgid ""
+"Finally, the dataframe always contains the following error information "
+"columns. These contain values only if the corresponding query could not "
+"be executed for some reason."
+msgstr ""
+
+#: ../../casageo.logistics.rst:219
+msgid "error_code"
+msgstr ""
+
+#: ../../casageo.logistics.rst:220
+msgid "String indicating the type of error."
+msgstr ""
+
+#: ../../casageo.logistics.rst:222
+msgid "error_message"
+msgstr ""
+
+#: ../../casageo.logistics.rst:223
+msgid "Human-readable error message."
+msgstr ""
+
+#: casageo.logistics.TspAvoidableFeature:1 of
+msgid "Features that can be avoided."
+msgstr ""
+
+#: casageo.logistics.TspClusteringMode:1 of
+msgid "Supported clustering modes."
+msgstr ""
+
+#: casageo.logistics.TspHazardousCargoType:1 of
+msgid "Supported types of hazardous cargo."
+msgstr ""
+
+#: casageo.logistics.TspOptimizationTarget:1 of
+msgid "Supported optimization targets."
+msgstr ""
+
+#: casageo.logistics.RoutingMode:1 of
+msgid "Supported routing modes."
+msgstr ""
+
+#: casageo.logistics.MatrixRoutingProfile:1 of
+msgid "Supported matrix routing profiles."
+msgstr ""
+
+#: casageo.logistics.TransportMode:1 of
+msgid "Supported transport modes."
+msgstr ""
+
+#: casageo.logistics.DEFAULT_REQUEST_ID:1 of
+msgid "The default ID value for single-shot requests."
+msgstr ""
+
+#: casageo.logistics.DEFAULT_MATRIX_ROUTING_PROFILE:1 of
+msgid "The default routing profile for matrix routing."
+msgstr ""
+
+#: casageo.logistics.DEFAULT_TSP_TRANSPORT_MODE:1 of
+msgid "The default transport mode for TSP."
+msgstr ""
+
+#: casageo.logistics.DEFAULT_TSP_ROUTING_MODE:1 of
+msgid "The default routing mode for TSP."
+msgstr ""
+
+#: casageo.logistics.DEFAULT_TSP_OPTIMIZATION_TARGET:1 of
+msgid "The default optimization target for TSP."
+msgstr ""
+
+#: casageo.logistics.matrix:3 of
+msgid "See :ref:`logistics-matrix-queries` in the module documentation."
+msgstr ""
+
+#: ../../casageo.logistics.rst
+msgid "Parameters"
+msgstr ""
+
+#: casageo.logistics.matrix:5 casageo.logistics.tsp:5 of
+msgid "The client object authorizing these queries."
+msgstr ""
+
+#: casageo.logistics.matrix:7 of
+msgid "The dataframe of waypoints (see :ref:`logistics-matrix-input-columns`)."
+msgstr ""
+
+#: casageo.logistics.matrix:10 of
+msgid "The parameter profile for route calculation."
+msgstr ""
+
+#: casageo.logistics.matrix:11 casageo.logistics.tsp:48 of
+msgid "Fixed identifier to be added to each result of this query."
+msgstr ""
+
+#: ../../casageo.logistics.rst
+msgid "Returns"
+msgstr ""
+
+#: casageo.logistics.matrix:13 of
+msgid ""
+"The matrix of travel distances in meters and travel times in minutes from"
+" each origin waypoint to each destination waypoint.  The shape of the "
+"dataframe is described under :ref:`logistics-matrix-output-columns` in "
+"the module documentation."
+msgstr ""
+
+#: casageo.logistics.matrix:13 of
+msgid ""
+"The matrix of travel distances in meters and travel times in minutes from"
+" each origin waypoint to each destination waypoint."
+msgstr ""
+
+#: casageo.logistics.matrix:17 of
+msgid ""
+"The shape of the dataframe is described under :ref:`logistics-matrix-"
+"output-columns` in the module documentation."
+msgstr ""
+
+#: ../../casageo.logistics.rst
+msgid "Return type"
+msgstr ""
+
+#: ../../casageo.logistics.rst
+msgid "Raises"
+msgstr ""
+
+#: casageo.logistics.matrix:22 casageo.logistics.tsp:60 of
+msgid "If the account does not have enough credits."
+msgstr ""
+
+#: casageo.logistics.matrix:23 casageo.logistics.tsp:61 of
+msgid "If the request could not be executed for another reason."
+msgstr ""
+
+#: casageo.logistics.tsp:3 of
+msgid "See :ref:`logistics-tsp-queries` in the module documentation."
+msgstr ""
+
+#: casageo.logistics.tsp:7 of
+msgid ""
+"The dataframe of waypoints to visit (see :ref:`logistics-tsp-input-"
+"columns`)."
+msgstr ""
+
+#: casageo.logistics.tsp:10 of
+msgid "Name of the starting waypoint, defaults to the first waypoint."
+msgstr ""
+
+#: casageo.logistics.tsp:12 of
+msgid "Name of the destination waypoint, if any."
+msgstr ""
+
+#: casageo.logistics.tsp:13 of
+msgid ""
+"Enables clustering of waypoints (see :py:class:`TspClusteringMode`). "
+"Waypoints in the same cluster always form a contiguous block in the "
+"result sequence."
+msgstr ""
+
+#: casageo.logistics.tsp:17 of
+msgid ""
+"Sets up to five break time slots. Each time slot consists of a starting "
+"datetime and a duration in minutes."
+msgstr ""
+
+#: casageo.logistics.tsp:19 of
+msgid ""
+"Sets a rest schedule for the driver. Set this to ``\"default\"`` to "
+"activate simplified European rules."
+msgstr ""
+
+#: casageo.logistics.tsp:21 of
+msgid "The mode of transport to use for routing (see :py:class:`TransportMode`)."
+msgstr ""
+
+#: casageo.logistics.tsp:23 of
+msgid ""
+"Whether to prefer ``\"fast\"`` or ``\"short\"`` routes (see "
+":py:class:`RoutingMode`)."
+msgstr ""
+
+#: casageo.logistics.tsp:25 of
+msgid ""
+"Whether to optimize the waypoint sequence for ``\"time\"`` or for "
+"``\"distance\"`` (see :py:class:`TspOptimizationTarget`)."
+msgstr ""
+
+#: casageo.logistics.tsp:27 of
+msgid "The date and time of departure for time-dependent routing."
+msgstr ""
+
+#: casageo.logistics.tsp:28 of
+msgid "Whether to consider traffic data during routing."
+msgstr ""
+
+#: casageo.logistics.tsp:29 of
+msgid "If set, these route features are avoided during routing."
+msgstr ""
+
+#: casageo.logistics.tsp:30 of
+msgid ""
+"If set, these countries are excluded from routing. Must be a sequence of "
+"valid `ISO 3166-1 alpha-3`_ country codes."
+msgstr ""
+
+#: casageo.logistics.tsp:32 of
+msgid "Specifies the length of the vehicle in centimeters, if known."
+msgstr ""
+
+#: casageo.logistics.tsp:34 of
+msgid "Specifies the width of the vehicle in centimeters, if known."
+msgstr ""
+
+#: casageo.logistics.tsp:35 of
+msgid "Specifies the height of the vehicle in centimeters, if known."
+msgstr ""
+
+#: casageo.logistics.tsp:37 of
+msgid "Specifies the per-axle weight of the vehicle in kilograms, if known."
+msgstr ""
+
+#: casageo.logistics.tsp:39 of
+msgid "Specifies the total weight of the vehicle in kilograms, if known."
+msgstr ""
+
+#: casageo.logistics.tsp:41 of
+msgid "Specifies the number of trailers attached to the vehicle, if known."
+msgstr ""
+
+#: casageo.logistics.tsp:43 of
+msgid ""
+"Specifies the types of hazardous cargo carried by the vehicle (see "
+":py:class:`TspHazardousCargoType`)."
+msgstr ""
+
+#: casageo.logistics.tsp:45 of
+msgid ""
+"Specifies the walking speed for pedestrian routing in meters per second, "
+"if known."
+msgstr ""
+
+#: casageo.logistics.tsp:47 of
+msgid "Whether to include numeric coordinates in the output."
+msgstr ""
+
+#: casageo.logistics.tsp:50 of
+msgid ""
+"The sorted list of waypoints as an EPSG:4326 GeoDataFrame. If waypoint "
+"constraints could not be satisfied, the offending waypoints are returned "
+"instead with an error code of ``\"failed_constraints\"``.  The shape of "
+"the dataframe is described under :ref:`logistics-tsp-output-columns` in "
+"the module documentation. The geometry column is the ``position`` column."
+msgstr ""
+
+#: casageo.logistics.tsp:50 of
+msgid ""
+"The sorted list of waypoints as an EPSG:4326 GeoDataFrame. If waypoint "
+"constraints could not be satisfied, the offending waypoints are returned "
+"instead with an error code of ``\"failed_constraints\"``."
+msgstr ""
+
+#: casageo.logistics.tsp:55 of
+msgid ""
+"The shape of the dataframe is described under :ref:`logistics-tsp-output-"
+"columns` in the module documentation. The geometry column is the "
+"``position`` column."
+msgstr ""
+
