@@ -92,6 +92,14 @@ build-docs-de() {
 # Supplementary Tasks #
 #######################
 
+run-against-localhost() {
+	uv run --env-file=env/localhost.env "$@"
+}
+
+run-against-production() {
+	uv run --env-file=env/production.env "$@"
+}
+
 sphinx-make() {
 	make -C docs SPHINXBUILD='uv run sphinx-build' "$@"
 }
