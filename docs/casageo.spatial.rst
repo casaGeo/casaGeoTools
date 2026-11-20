@@ -23,15 +23,15 @@ casageo.spatial module
 
    .. _spatial-isoline-queries:
 
-   Isolines Queries
-   ================
+   Isoline Queries
+   ===============
 
    Calculate isolines around locations.
 
    .. _spatial-isoline-query-options:
 
-   Isolines Query Options
-   ----------------------
+   Isoline Query Options
+   ---------------------
 
    departure_info : bool
       Include additional information about the departure time and location.
@@ -44,8 +44,8 @@ casageo.spatial module
 
    .. _spatial-isoline-input-columns:
 
-   Isolines Input Columns
-   ----------------------
+   Isoline Input Columns
+   ---------------------
 
    The following columns will be read from the input dataframe:
 
@@ -111,8 +111,8 @@ casageo.spatial module
 
    .. _spatial-isoline-output-columns:
 
-   Isolines Output Columns
-   -----------------------
+   Isoline Output Columns
+   ----------------------
 
    The resulting dataframe contains the following columns:
 
