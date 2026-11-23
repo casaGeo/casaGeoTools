@@ -19,7 +19,8 @@ casageo.spatial module
 
    All routing is done independently of time and traffic data by default. To
    include traffic data in the calculations, set the ``traffic`` parameter to
-   ``True`` and provide either a ``departure_time`` or an ``arrival_time``.
+   ``True`` and provide either a ``departure_time`` or an ``arrival_time``. If
+   you do not provide a time, only long-term traffic data will be used.
 
    .. _spatial-isoline-queries:
 
