@@ -111,7 +111,8 @@ casageo.coder module
 
    political_view : str
       The political view of the query regarding disputed territories. This must
-      be a valid `ISO 3166-1 alpha-3`_ country code.
+      be a valid `ISO 3166-1 alpha-3`_ country code. The value ``"XXX"`` selects
+      the default international political view.
 
    limit : int
       Limit on the number of results to return for each query. Must be between 1
@@ -367,7 +368,8 @@ casageo.coder module
 
    political_view : str
       The political view of the query regarding disputed territories. This must
-      be a valid `ISO 3166-1 alpha-3`_ country code.
+      be a valid `ISO 3166-1 alpha-3`_ country code. The value ``"XXX"`` selects
+      the default international political view.
 
    limit : int
       Limit on the number of results to return for each query. Must be between 1
