@@ -52,6 +52,10 @@ run-unit-tests() {
 # You should also set CASAGEOTOOLS_PROXY_SERVER.
 # Loading .env is supported due to pytest-dotenv.
 # Run with --log-cli-level=DEBUG for debug output.
+#
+# You should also supply CASAGEOTOOLS_EXPIRED_API_KEY
+# and CASAGEOTOOLS_EMPTY_API_KEY for their
+# corresponding tests.
 run-live-tests() {
 	uv run pytest "$@" tests/online_test_*.py
 }
